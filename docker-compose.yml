@@ -7,7 +7,7 @@ services:
     image: hmcts/am-role-assignment-refresh-batch
     container_name: am-role-assignment-refresh-batch
     ports:
-      - ${SERVER_PORT:-4098}:${SERVER_PORT:-4098}
+      - ${SERVER_PORT:-5333}:${SERVER_PORT:-5333}
     environment:
       - ROLE_ASSIGNMENT_DB_USERNAME=am
       - ROLE_ASSIGNMENT_DB_PASSWORD=am

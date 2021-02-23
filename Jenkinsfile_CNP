@@ -13,7 +13,7 @@ properties(
 
 def type = "java"
 def product = "am"
-def component = "role-assignment-batch-service"
+def component = "role-assignment-refresh-batch"
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
   [$class     : 'AzureKeyVaultSecret',
@@ -32,7 +32,7 @@ def vaultOverrides = [
 def secrets = []
 
 // Configure branches to sync with master branch
-def branchesToSync = ['demo', 'perftest']
+//def branchesToSync = ['demo', 'perftest']
 
 withPipeline(type, product, component) {
   onMaster {
@@ -50,7 +50,7 @@ withPipeline(type, product, component) {
   nonServiceApp()
 
   // Sync environment specific branches with master branch
-  syncBranchesWithMaster(branchesToSync)
+  //syncBranchesWithMaster(branchesToSync)
 
   after('test:preview') {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/site/serenity/**'

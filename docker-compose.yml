@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  am-role-assignment-refresh-batch:
+    build:
+      context: .
+    image: hmcts/am-role-assignment-refresh-batch
+    container_name: am-role-assignment-refresh-batch
+    ports:
+      - ${SERVER_PORT:-4098}:${SERVER_PORT:-4098}
+    environment:
+      - ROLE_ASSIGNMENT_DB_USERNAME=am
+      - ROLE_ASSIGNMENT_DB_PASSWORD=am
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - ROLE_ASSIGNMENT_DB_HOST=am-role-assignment-database
+      - ROLE_ASSIGNMENT_DB_NAME=role_assignment
+      - ROLE_ASSIGNMENT_DB_PORT=5432
+      - ROLE_ASSIGNMENT_DB_OPTIONS

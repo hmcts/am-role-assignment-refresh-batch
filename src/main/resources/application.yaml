@@ -1,0 +1,40 @@
+server:
+  port: ${PORT:5333}
+
+management:
+  health:
+    defaults:
+      enabled: true
+    diskspace:
+      enabled: true
+  endpoint:
+    health:
+      enabled: true
+      cache:
+        time-to-live: 5s
+      show-details: "always"
+  security:
+    enabled: false
+  endpoints:
+    health:
+      sensitive: false
+    web:
+      base-path: /
+      exposure:
+        include: 'health'
+
+#If you use a database then uncomment below lines and update db properties accordingly
+
+spring:
+  application:
+    name: Role Assignment Refresh Batch
+  main:
+    web-application-type: none
+  jackson:
+    default-property-inclusion: NON_NULL
+  batch:
+    initialize-schema: never
+
+delete-expired-records: deleteExpiredRecords
+batchjob-name: deleteExpiredRecords
+batch-size: 2

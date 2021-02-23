@@ -34,6 +34,21 @@ def secrets = []
 // Configure branches to sync with master branch
 //def branchesToSync = ['demo', 'perftest']
 
+// Vars needed for functional and smoke tests to run against AKS
+env.IDAM_URL = "https://idam-api.aat.platform.hmcts.net"
+env.IDAM_S2S_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+env.BEFTA_S2S_CLIENT_ID = "am_role_assignment_refresh_service"
+env.OAUTH2_CLIENT_ID = "am_role_assignment_refresh"
+env.OAUTH2_REDIRECT_URI = "http://am-role-assignment-refresh-service-aat.service.core-compute-aat
+.internal/oauth2redirect"
+env.OAUTH2_ACCESS_TOKEN_TYPE = "OIDC"
+env.BEFTA_RESPONSE_HEADER_CHECK_POLICY = "JUST_WARN"
+env.S2S_URL = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
+env.OAUTH2_SCOPE_VARIABLES = "openid%20profile%20roles%20authorities"
+env.IDAM_CLIENT_ID="am_role_assignment_refresh"
+env.OPENID_SCOPE_VARIABLES = "openid+profile+roles+authorities"
+env.MICROSERVICE_NAME = "am_role_assignment_refresh_service"
+
 withPipeline(type, product, component) {
   onMaster {
     enableSlackNotifications('#am-role-assignment-refresh-batch-builds')

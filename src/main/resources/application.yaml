@@ -34,6 +34,38 @@ spring:
     default-property-inclusion: NON_NULL
   batch:
     initialize-schema: never
+  security:
+    oauth2:
+      client:
+        provider:
+          oidc:
+            issuer-uri: ${OPEN_ID_API_BASE_URI:https://idam-web-public.aat.platform.hmcts.net/o}
+        registration:
+          oidc:
+            client-id: microservicekey-am-role-assignment-service
+            client-secret: ${AM_ROLE_ASSIGNMENT_SERVICE_SECRET:AAAAAAAAAAAAAAAA}
+
+idam:
+  s2s-auth:
+    # AAAAAAAAAAAAAAAA
+    totp_secret: ${AM_ROLE_ASSIGNMENT_SERVICE_SECRET:AAAAAAAAAAAAAAAA}
+    microservice: am_role_assignment_service
+    url: ${IDAM_S2S_URL:http://localhost:4502}
+  s2s-authorised:
+    services: ${ROLE_ASSIGNMENT_S2S_AUTHORISED_SERVICES:ccd_gw,am_role_assignment_service,am_org_role_mapping_service,xui_webapp}
+  api.url: ${IDAM_USER_URL:http://localhost:5000}
+  client:
+    id: ${ROLE_ASSIGNMENT_IDAM_CLIENT_ID:am_docker}
+    secret: ${ROLE_ASSIGNMENT_IDAM_CLIENT_SECRET:am_docker_secret}
+    redirect_uri: ${ROLE_ASSIGNMENT_IDAM_REDIRECT_URI:http://localhost:4096/oauth2redirect}
+    admin:
+      userId: ${ROLE_ASSIGNMENT_IDAM_ADMIN_USERID:ras-validation-system@hmcts.net}
+      secret: ${ROLE_ASSIGNMENT_IDAM_ADMIN_PASSWORD:Pa55word11}
+      scope: ${ROLE_ASSIGNMENT_IDAM_ADMIN_SCOPE:openid profile roles authorities}
+
+testS2S:
+  api:
+    url: "/testS2SAuthorization"
 
 delete-expired-records: deleteExpiredRecords
 batchjob-name: deleteExpiredRecords

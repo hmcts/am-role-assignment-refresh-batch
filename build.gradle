@@ -115,7 +115,7 @@ sonarqube {
         property "sonar.projectName", "am-role-assignment-refresh-batch"
         property "sonar.projectKey", "am-role-assignment-refresh-batch"
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-        property "sonar.exclusions", "**/RoleAssignmentRefreshApplication.java," + "**/config/**.java,"+ "**/util/**.java"
+        property "sonar.exclusions", "**.java"
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }

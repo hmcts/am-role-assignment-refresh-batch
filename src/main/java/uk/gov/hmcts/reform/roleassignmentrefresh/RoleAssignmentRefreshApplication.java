@@ -16,7 +16,7 @@ public class RoleAssignmentRefreshApplication {
     public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(RoleAssignmentRefreshApplication.class, args);
         //Sleep added to allow app-insights to flush the logs
-        Thread.sleep(1000 * 6);
+        Thread.sleep(1000 * 8);
         int exitCode = SpringApplication.exit(context);
         String exitCodeLog = String.format("RoleAssignmentRefreshApplication Application exiting with exit code %s",
                 exitCode);

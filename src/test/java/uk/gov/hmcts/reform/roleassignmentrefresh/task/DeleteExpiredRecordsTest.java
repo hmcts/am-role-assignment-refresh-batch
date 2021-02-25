@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.roleassignmentbatch.task;
+package uk.gov.hmcts.reform.roleassignmentrefresh.task;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
-import uk.gov.hmcts.reform.roleassignmentrefresh.task.DeleteExpiredRecords;
 
 import static org.junit.Assert.assertEquals;
 

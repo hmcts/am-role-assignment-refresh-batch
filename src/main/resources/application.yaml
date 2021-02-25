@@ -30,6 +30,7 @@ spring:
     name: Role Assignment Refresh Batch
   main:
     web-application-type: none
+    allow-bean-definition-overriding: true
   jackson:
     default-property-inclusion: NON_NULL
   batch:
@@ -42,8 +43,14 @@ spring:
             issuer-uri: ${OPEN_ID_API_BASE_URI:https://idam-web-public.aat.platform.hmcts.net/o}
         registration:
           oidc:
-            client-id: microservicekey-am-role-assignment-refresh-batch
+            client-id: microservicekey-am-role-assignment-service
             client-secret: ${AM_ROLE_ASSIGNMENT_SERVICE_SECRET:AAAAAAAAAAAAAAAA}
+  cache:
+    type: ${ENABLE_CACHE:}
+    cache-names: token
+    caffeine:
+      spec: maximumSize=50,expireAfterWrite=120s
+oidc.issuer: ${OIDC_ISSUER_URL:https://forgerock-am.service.core-compute-idam-aat.internal:8443/openam/oauth2/hmcts}
 
 idam:
   s2s-auth:
@@ -63,6 +70,17 @@ idam:
       secret: ${ROLE_ASSIGNMENT_IDAM_ADMIN_PASSWORD:Pa55word11}
       scope: ${ROLE_ASSIGNMENT_IDAM_ADMIN_SCOPE:openid profile roles authorities}
 
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
+      roleAssignmentApp:
+        url: ${ROLE_ASSIGNMENT_APP_URL:http://localhost:4096}
+roleAssignmentAppUrl: ${ROLE_ASSIGNMENT_APP_URL:http://localhost:4096}
+
 testS2S:
   api:
     url: "/testS2SAuthorization"
@@ -70,3 +88,9 @@ testS2S:
 delete-expired-records: deleteExpiredRecords
 batchjob-name: deleteExpiredRecords
 batch-size: 2
+
+launchdarkly:
+  sdk:
+    key: ${LD_SDK_KEY:}
+    environment: ${LAUNCH_DARKLY_ENV:pr}
+    user: am-${LAUNCH_DARKLY_ENV:local}

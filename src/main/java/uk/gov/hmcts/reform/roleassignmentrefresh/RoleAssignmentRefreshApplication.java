@@ -5,10 +5,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
+import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
+import uk.gov.hmcts.reform.idam.client.IdamApi;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @SuppressWarnings("HideUtilityClassConstructor")
+@EnableFeignClients(basePackages = {"uk.gov.hmcts.reform.roleassignmentrefresh"}, basePackageClasses = {IdamApi.class,
+        ServiceAuthorisationApi.class})
 public class RoleAssignmentRefreshApplication {
 
     private static final Logger log = LoggerFactory.getLogger(RoleAssignmentRefreshApplication.class);
@@ -23,4 +28,5 @@ public class RoleAssignmentRefreshApplication {
         log.info(exitCodeLog);
         System.exit(exitCode);
     }
+
 }

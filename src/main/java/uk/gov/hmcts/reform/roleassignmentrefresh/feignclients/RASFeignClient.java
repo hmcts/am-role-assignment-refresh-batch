@@ -12,7 +12,6 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.feignclients.configuration.RASF
 @FeignClient(value = "roleassignmentclient", url = "${feign.client.config.roleAssignmentApp.url}",
         configuration = FeignClientConfiguration.class,
         fallback = RASFeignClientFallback.class)
-
 public interface RASFeignClient {
 
     @GetMapping(value = "/")

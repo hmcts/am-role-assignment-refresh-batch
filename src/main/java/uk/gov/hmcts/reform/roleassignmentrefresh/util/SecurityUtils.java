@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.idam.client.models.UserInfo;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRoles;
+import uk.gov.hmcts.reform.roleassignmentrefresh.oidc.IdamRepository;
 import uk.gov.hmcts.reform.roleassignmentrefresh.oidc.JwtGrantedAuthoritiesConverter;
 
 import java.util.Collection;
@@ -25,15 +25,17 @@ public class SecurityUtils {
 
     private final AuthTokenGenerator authTokenGenerator;
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter;
+    private final IdamRepository idamRepository;
 
 
     @Autowired
     public SecurityUtils(final AuthTokenGenerator authTokenGenerator,
-                         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter
-    ) {
+                         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter,
+                         IdamRepository idamRepository) {
         this.authTokenGenerator = authTokenGenerator;
         this.jwtGrantedAuthoritiesConverter = jwtGrantedAuthoritiesConverter;
 
+        this.idamRepository = idamRepository;
     }
 
     public HttpHeaders authorizationHeaders() {
@@ -65,11 +67,6 @@ public class SecurityUtils {
                 .build();
     }
 
-
-    public String getUserToken() {
-        Jwt jwt = (Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return jwt.getTokenValue();
-    }
 
     public String getUserRolesHeader() {
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext()
@@ -104,4 +101,7 @@ public class SecurityUtils {
         return authTokenGenerator.generate();
     }
 
+    public String getUserToken() {
+        return idamRepository.getUserToken();
+    }
 }

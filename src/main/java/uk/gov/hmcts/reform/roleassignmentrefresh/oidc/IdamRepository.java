@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.oidc;
 
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +12,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import uk.gov.hmcts.reform.idam.client.IdamApi;
@@ -26,7 +25,6 @@ import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.http.HttpMethod.GET;
-import static uk.gov.hmcts.reform.roleassignmentrefresh.util.Constants.BEARER;
 
 @Component
 @Slf4j
@@ -39,11 +37,7 @@ public class IdamRepository {
     @Value("${idam.api.url}")
     protected String idamUrl;
 
-    @Value("${spring.cache.type}")
-    protected String cacheType;
-
-    private CacheManager cacheManager;
-
+    private static final String BEARER = "Bearer";
 
     @Autowired
     public IdamRepository(IdamApi idamApi,
@@ -54,19 +48,10 @@ public class IdamRepository {
         this.oidcAdminConfiguration = oidcAdminConfiguration;
         this.oauth2Configuration = oauth2Configuration;
         this.restTemplate = restTemplate;
-
-        this.cacheManager = cacheManager;
     }
 
     @Cacheable(value = "token")
-    @Retryable(maxAttempts = 3, backoff = @Backoff(delay = 2000, multiplier = 3))
     public UserInfo getUserInfo(String jwtToken) {
-        if (cacheType != null && !cacheType.equals("none")) {
-            CaffeineCache caffeineCache = (CaffeineCache) cacheManager.getCache("token");
-            com.github.benmanes.caffeine.cache.Cache<Object, Object> nativeCache = requireNonNull(caffeineCache)
-                    .getNativeCache();
-            log.info("generating Bearer Token, current size of cache: {}", nativeCache.estimatedSize());
-        }
         return idamApi.retrieveUserInfo(BEARER + jwtToken);
     }
 
@@ -94,14 +79,14 @@ public class IdamRepository {
         return null;
     }
 
-    private static HttpHeaders getHttpHeaders(String jwtToken) {
+    public static HttpHeaders getHttpHeaders(String jwtToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken);
         return headers;
     }
 
-
-    public String getManageUserToken() {
+    @Cacheable(value = "token")
+    public String getUserToken() {
         TokenRequest tokenRequest = new TokenRequest(
                 oauth2Configuration.getClientId(),
                 oauth2Configuration.getClientSecret(),
@@ -118,4 +103,3 @@ public class IdamRepository {
     }
 
 }
-

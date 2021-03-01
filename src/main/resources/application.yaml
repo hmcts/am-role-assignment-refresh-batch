@@ -72,6 +72,9 @@ feign:
         loggerLevel: FULL
       roleAssignmentApp:
         url: ${ROLE_ASSIGNMENT_APP_URL:http://localhost:4096}
+  hystrix:
+    enabled: ${ENABLE_FEIGN_HYSTRIX:false}
+
 roleAssignmentAppUrl: ${ROLE_ASSIGNMENT_APP_URL:http://localhost:4096}
 
 testS2S:

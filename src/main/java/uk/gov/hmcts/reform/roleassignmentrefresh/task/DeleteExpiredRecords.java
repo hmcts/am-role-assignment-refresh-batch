@@ -23,7 +23,6 @@ public class DeleteExpiredRecords implements Tasklet {
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
         log.info("Delete Expired records task starts::");
-        ras.getServiceStatus();
 
         log.info("Delete expired records is successful");
         return RepeatStatus.FINISHED;

@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         classpath("net.serenity-bdd:serenity-gradle-plugin:2.2.9")
-        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.5.0'
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.6.0'
     }
 }
 
@@ -215,7 +215,7 @@ dependencies {
 
     testCompile 'org.codehaus.sonar-plugins:sonar-pitest-plugin:0.5'
     testCompile group: 'org.pitest', name: 'pitest', version: versions.pitest
-    testCompile 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.4.7'
+    testCompile 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.6.0'
     testCompile 'org.codehaus.sonar-plugins:sonar-pitest-plugin:0.5'
     testCompile group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testCompile group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson

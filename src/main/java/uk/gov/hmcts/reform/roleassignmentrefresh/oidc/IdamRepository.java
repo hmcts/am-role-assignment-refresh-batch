@@ -42,7 +42,6 @@ public class IdamRepository {
         log.info("tokenrequest params: " + tokenRequest.getClientId());
         log.info("tokenrequest params: " + tokenRequest.getClientSecret());
         log.info("tokenrequest params: " + tokenRequest.getScope());
-        log.info("tokenrequest params: " + tokenRequest.getCode());
         log.info("tokenrequest params: " + tokenRequest.getPassword());
         log.info("tokenrequest params: " + tokenRequest.getUsername());
 

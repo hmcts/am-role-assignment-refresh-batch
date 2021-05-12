@@ -51,7 +51,7 @@ pmd {
     sourceSets = []
 }
 
-group = 'uk.gov.hmcts.reform.roleassignmentbatch'
+group = 'uk.gov.hmcts.reform.roleassignmentrefresh'
 version = '0.0.1'
 
 allprojects {

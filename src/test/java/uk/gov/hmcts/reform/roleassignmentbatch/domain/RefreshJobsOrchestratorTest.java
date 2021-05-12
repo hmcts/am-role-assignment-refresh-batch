@@ -1,8 +1,10 @@
 package uk.gov.hmcts.reform.roleassignmentbatch.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.hmcts.reform.roleassignmentbatch.helper.TestDataBuilder;
@@ -33,6 +35,12 @@ public class RefreshJobsOrchestratorTest {
 
     @InjectMocks
     private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, ormFeignClient);
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
+
 
     @Test
     void verifyProcessRefreshJobs() {

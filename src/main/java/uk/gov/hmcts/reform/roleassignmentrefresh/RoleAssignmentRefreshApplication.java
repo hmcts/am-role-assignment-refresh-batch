@@ -4,11 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.retry.annotation.EnableRetry;
 
 @SpringBootApplication
+@EnableCircuitBreaker
+@ConfigurationProperties
 @EnableRetry
 @EnableFeignClients(basePackages = {"uk.gov.hmcts.reform.roleassignmentrefresh"})
 public class RoleAssignmentRefreshApplication {

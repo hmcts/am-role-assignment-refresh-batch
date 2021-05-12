@@ -23,18 +23,92 @@ management:
       exposure:
         include: 'health'
 
-#If you use a database then uncomment below lines and update db properties accordingly
+security:
+  authorisedServices: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_S2S_AUTHORISED_SERVICES:am_role_assignment_refresh_batch_service}
 
 spring:
   application:
     name: Role Assignment Refresh Batch
-  main:
-    web-application-type: none
-  jackson:
-    default-property-inclusion: NON_NULL
   batch:
     initialize-schema: never
+    job:
+      enabled: true
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    default-property-inclusion: NON_NULL
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    log_statement: all
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${ORG_ROLE_MAPPING_DB_HOST:localhost}:${ORG_ROLE_MAPPING_DB_PORT:5451}/${ORG_ROLE_MAPPING_DB_NAME:org_role_mapping}${ORG_ROLE_MAPPING_DB_OPTIONS:?stringtype=unspecified}
+    username: ${ORG_ROLE_MAPPING_DB_USERNAME:am}
+    password: ${ORG_ROLE_MAPPING_DB_PASSWORD:am}
+    properties:
+      charSet: UTF-8
+  security:
+    oauth2:
+      client:
+        provider:
+          oidc:
+            issuer-uri: ${OPEN_ID_API_BASE_URI:https://idam-web-public.aat.platform.hmcts.net/o}
+        registration:
+          oidc:
+            client-id: microservicekey-am-role-assignment-refresh-batch
+            client-secret: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET:AAAAAAAAAAAAAAAA}
+  cache:
+    type: ${ENABLE_CACHE:}
+    cache-names: token
+    caffeine:
+      spec: maximumSize=50,expireAfterWrite=120s
+### dependency configuration
+auth.provider.service.client.baseUrl: ${IDAM_S2S_URL:http://localhost:4502}
+idam:
+  s2s-auth:
+    # AAAAAAAAAAAAAAAA
+    totp_secret: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET:AAAAAAAAAAAAAAAA}
+    microservice: am_role_assignment_refresh_batch
+    url: ${IDAM_S2S_URL:http://localhost:4502}
+  s2s-authorised:
+    services: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_S2S_AUTHORISED_SERVICES:am_role_assignment_refresh_batch}
+  api.url: ${IDAM_USER_URL:http://localhost:5000}
+  client:
+    id: ${ROLE_ASSIGNMENT_REFRESH_BATCH_IDAM_CLIENT_ID:am_docker}
+    secret: ${ROLE_ASSIGNMENT_REFRESH_BATCH_IDAM_CLIENT_SECRET:am_docker_secret}
+    redirect_uri: ${ROLE_ASSIGNMENT_REFRESH_BATCH_IDAM_REDIRECT_URI:http://localhost:4096/oauth2redirect}
+    admin:
+      userId: ${ROLE_ASSIGNMENT_REFRESH_BATCH_IDAM_ADMIN_USERID:}
+      secret: ${ROLE_ASSIGNMENT_REFRESH_BATCH_IDAM_ADMIN_PASSWORD:}
+      scope: ${ROLE_ASSIGNMENT_REFRESH_BATCH_IDAM_ADMIN_SCOPE:openid profile roles authorities}
 
-delete-expired-records: deleteExpiredRecords
-batchjob-name: deleteExpiredRecords
+auth.idam.client.baseUrl: ${IDAM_USER_URL:http://localhost:5000}
+testS2S:
+  api:
+    url: "/testS2SAuthorization"
+integrationTest:
+  api:
+    url: "/"
+
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+      ormClient:
+        url: ${AM_ORM_URL:http://localhost:4098}
+
+roleAssignmentRefreshBatchUrl: ${TEST_URL:http://localhost:5333}
+refresh-orm-records: refresh-orm-records
+batchjob-name: refreshORMRulesBatchJob
 batch-size: 2

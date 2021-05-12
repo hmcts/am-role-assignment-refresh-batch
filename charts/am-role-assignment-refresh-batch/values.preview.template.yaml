@@ -1,3 +1,7 @@
 job:
   image: ${IMAGE_NAME}
   ingressHost: ${SERVICE_FQDN}
+  kind: CronJob
+  schedule: "*/10 * * * *"
+  global:
+    jobKind: CronJob

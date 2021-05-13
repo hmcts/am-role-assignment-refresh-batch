@@ -30,7 +30,7 @@ spring:
   application:
     name: Role Assignment Refresh Batch
   batch:
-    initialize-schema: never
+    initialize-schema: always
     job:
       enabled: true
   main:
@@ -63,20 +63,10 @@ spring:
           oidc:
             client-id: microservicekey-am-role-assignment-refresh-batch
             client-secret: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET:AAAAAAAAAAAAAAAA}
-  cache:
-    type: ${ENABLE_CACHE:}
-    cache-names: token
-    caffeine:
-      spec: maximumSize=50,expireAfterWrite=120s
+
 ### dependency configuration
 auth.provider.service.client.baseUrl: ${IDAM_S2S_URL:http://localhost:4502}
 auth.idam.client.baseUrl: ${IDAM_USER_URL:http://localhost:5000}
-testS2S:
-  api:
-    url: "/testS2SAuthorization"
-integrationTest:
-  api:
-    url: "/"
 
 feign:
   hystrix:
@@ -93,7 +83,6 @@ feign:
 roleAssignmentRefreshBatchUrl: ${TEST_URL:http://localhost:5333}
 refresh-orm-records: refresh-orm-records
 batchjob-name: refreshORMRulesBatchJob
-delete-expired-records: deleteExpiredRecords
 batch-size: 20
 
 idam:

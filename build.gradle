@@ -170,7 +170,7 @@ dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: versions.springBoot)
     compile(group: 'org.springframework', name: 'spring-beans', version: '5.3.6')
     compile(group: 'org.springframework', name: 'spring-context', version: '5.3.6')
-    compile(group: 'org.springframework', name: 'spring-core', version: '5.3.6')
+    compile(group: 'org.springframework', name: 'spring-core', version: '5.3.7')
 
     compile(group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version: '0.1.0') {
         exclude group: "org.apache.tomcat.embed", module: "tomcat-embed-websocket"

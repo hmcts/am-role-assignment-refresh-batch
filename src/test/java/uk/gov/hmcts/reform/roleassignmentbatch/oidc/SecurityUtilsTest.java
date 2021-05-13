@@ -5,10 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.roleassignmentrefresh.constants.RefreshConstants;
@@ -31,9 +29,6 @@ class SecurityUtilsTest {
 
     @Mock
     private final AuthTokenGenerator authTokenGenerator = mock(AuthTokenGenerator.class);
-
-    @Mock
-    Authentication authentication = Mockito.mock(Authentication.class);
 
     @Mock
     SecurityContext securityContext = mock(SecurityContext.class);
@@ -99,7 +94,8 @@ class SecurityUtilsTest {
     @Test
     void getAuthorizationHeaders() {
         HttpHeaders result = securityUtils.authorizationHeaders();
-        assertEquals(serviceAuthorization, Objects.requireNonNull(result.get(RefreshConstants.SERVICE_AUTHORIZATION)).get(0));
+        assertEquals(serviceAuthorization, Objects.requireNonNull(
+                result.get(RefreshConstants.SERVICE_AUTHORIZATION)).get(0));
         assertNotNull(result.get(HttpHeaders.AUTHORIZATION));
     }
 }

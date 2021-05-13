@@ -4,19 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
-import org.springframework.retry.annotation.EnableRetry;
+import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
+import uk.gov.hmcts.reform.idam.client.IdamApi;
 
-@SpringBootApplication
-@EnableCircuitBreaker
-@ConfigurationProperties
-@EnableRetry
-@EnableFeignClients(basePackages = {"uk.gov.hmcts.reform.roleassignmentrefresh"})
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@EnableFeignClients(basePackages = {
+        "uk.gov.hmcts.reform.roleassignmentrefresh"},
+        basePackageClasses = {IdamApi.class, ServiceAuthorisationApi.class})
 @SuppressWarnings("HideUtilityClassConstructor")
-class RoleAssignmentRefreshApplication {
+public class RoleAssignmentRefreshApplication {
 
     private static final Logger log = LoggerFactory.getLogger(RoleAssignmentRefreshApplication.class);
 

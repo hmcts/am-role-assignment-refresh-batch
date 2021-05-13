@@ -44,7 +44,7 @@ public class RefreshJobsOrchestrator {
         List<RefreshJobEntity> failedJobs =  persistenceService.getNewJobsWithLinkedJob();
         for (RefreshJobEntity job: failedJobs) {
             RefreshJobEntity linkedJob = persistenceService.getByJobId(job.getLinkedJobId());
-            if (ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
+            if (linkedJob != null && ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
                 ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(
                         job.getJobId(), UserRequest.builder().userIds(linkedJob.getUserIds()).build());
                 if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {

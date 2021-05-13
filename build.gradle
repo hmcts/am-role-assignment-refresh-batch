@@ -200,7 +200,6 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.6'
     implementation 'commons-io:commons-io:2.8.0'
     implementation 'uk.gov.hmcts.reform:idam-client:v1.5.4'
-    implementation group: 'org.flywaydb', name: 'flyway-core', version: '6.5.7'
 
     testCompile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     testImplementation 'org.springframework.batch:spring-batch-test'

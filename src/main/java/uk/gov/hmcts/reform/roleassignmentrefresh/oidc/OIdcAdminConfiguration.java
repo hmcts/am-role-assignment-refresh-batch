@@ -1,11 +1,12 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.oidc;
 
-import lombok.Getter;
+
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Getter
+@Data
 @Component
 public class OIdcAdminConfiguration {
 

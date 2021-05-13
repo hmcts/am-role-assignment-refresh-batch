@@ -9,9 +9,11 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignC
 @Component
 public class ORMFeignClientFallback implements ORMFeignClient {
 
+    public static final String ORM_API_NOT_AVAILABLE = "The ORM API Service is not available";
+
     @Override
     public ResponseEntity<Object> sendJobToRoleAssignmentBatchService(Long jobId, UserRequest userRequest) {
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(ORM_API_NOT_AVAILABLE);
     }
 
 }

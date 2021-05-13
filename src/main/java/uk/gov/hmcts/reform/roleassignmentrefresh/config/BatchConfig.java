@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.config;
 
-import org.springframework.batch.core.*;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -30,7 +31,7 @@ public class BatchConfig extends DefaultBatchConfigurer {
                     .build();
     }
 
-   @Bean
+    @Bean
     public Job runRoutesJob(@Autowired JobBuilderFactory jobs,
                             @Autowired StepBuilderFactory steps,
                             @Autowired RefreshORMRules refreshORMRules) {

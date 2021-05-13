@@ -15,7 +15,8 @@ import org.springframework.retry.annotation.EnableRetry;
 @ConfigurationProperties
 @EnableRetry
 @EnableFeignClients(basePackages = {"uk.gov.hmcts.reform.roleassignmentrefresh"})
-public class RoleAssignmentRefreshApplication {
+@SuppressWarnings("HideUtilityClassConstructor")
+class RoleAssignmentRefreshApplication {
 
     private static final Logger log = LoggerFactory.getLogger(RoleAssignmentRefreshApplication.class);
 

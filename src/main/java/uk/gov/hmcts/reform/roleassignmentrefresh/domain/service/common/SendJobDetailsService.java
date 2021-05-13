@@ -8,14 +8,14 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
 
 @Service
 public class SendJobDetailsService {
-    private final ORMFeignClient ORMFeignClient;
+    private final ORMFeignClient ormFeignClient;
 
-    public SendJobDetailsService(ORMFeignClient ORMFeignClient) {
-        this.ORMFeignClient = ORMFeignClient;
+    public SendJobDetailsService(ORMFeignClient ormFeignClient) {
+        this.ormFeignClient = ormFeignClient;
     }
 
     @Retryable(maxAttempts = 3, backoff = @Backoff(delay = 2000, multiplier = 3))
     public ResponseEntity<Object> sendToRoleAssignmentBatchService(Long jobId, UserRequest userRequest) {
-        return ORMFeignClient.sendJobToRoleAssignmentBatchService(jobId, userRequest);
+        return ormFeignClient.sendJobToRoleAssignmentBatchService(jobId, userRequest);
     }
 }

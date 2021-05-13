@@ -39,11 +39,6 @@ public class IdamRepository {
                 "4",
                 ""
         );
-        log.info("tokenrequest params: " + tokenRequest.getClientId());
-        log.info("tokenrequest params: " + tokenRequest.getClientSecret());
-        log.info("tokenrequest params: " + tokenRequest.getScope());
-        log.info("tokenrequest params: " + tokenRequest.getPassword());
-        log.info("tokenrequest params: " + tokenRequest.getUsername());
 
         TokenResponse tokenResponse = idamApi.generateOpenIdToken(tokenRequest);
         return tokenResponse.accessToken;

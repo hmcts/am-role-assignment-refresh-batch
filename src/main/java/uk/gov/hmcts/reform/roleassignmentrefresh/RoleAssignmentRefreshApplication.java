@@ -4,15 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.idam.client.IdamApi;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@EnableFeignClients(basePackages = {
-        "uk.gov.hmcts.reform.roleassignmentrefresh"},
+@SpringBootApplication
+@EnableFeignClients(basePackages = { "uk.gov.hmcts.reform.roleassignmentrefresh"},
         basePackageClasses = {IdamApi.class, ServiceAuthorisationApi.class})
 @SuppressWarnings("HideUtilityClassConstructor")
 public class RoleAssignmentRefreshApplication {

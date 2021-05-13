@@ -52,7 +52,7 @@ pmd {
     sourceSets = []
 }
 
-group = 'uk.gov.hmcts.reform.roleassignmentbatch'
+group = 'uk.gov.hmcts.reform.roleassignmentrefresh'
 version = '0.0.1'
 
 allprojects {
@@ -199,6 +199,7 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.6'
     implementation 'commons-io:commons-io:2.8.0'
+    implementation 'uk.gov.hmcts.reform:idam-client:v1.5.4'
 
     testCompile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     testImplementation 'org.springframework.batch:spring-batch-test'

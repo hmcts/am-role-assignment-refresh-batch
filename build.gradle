@@ -36,7 +36,7 @@ def versions = [
         reformLogging      : '5.1.1',
         reformS2sClient    : '3.0.0',
         serenity           : '2.1.0',
-        springBoot         : '2.3.4.RELEASE',
+        springBoot         : '2.3.9.RELEASE',
         sonarPitest        : '0.5',
         springHystrix      : '2.1.1.RELEASE',
         rest_assured       : '3.3.0',
@@ -167,15 +167,16 @@ repositories {
 dependencies {
     compile (group: 'org.springframework.boot', name: 'spring-boot-starter-batch', version: '2.4.2')
 
-    compile(group: 'org.springframework', name: 'spring-jdbc', version: '5.3.3')
-    compile(group: 'org.springframework', name: 'spring-beans', version: '5.3.3')
-    compile(group: 'org.springframework', name: 'spring-context', version: '5.3.3')
+    compile(group: 'org.springframework', name: 'spring-beans', version: '5.3.6')
+    compile(group: 'org.springframework', name: 'spring-context', version: '5.3.6')
+    compile(group: 'org.springframework', name: 'spring-core', version: '5.3.6')
     compile group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
     implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.6'
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: versions.reformS2sClient
+
     compile(group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version: '0.1.0') {
         exclude group: "org.apache.tomcat.embed", module: "tomcat-embed-websocket"
         exclude group: "org.apache.tomcat.embed", module: "tomcat-embed-core"

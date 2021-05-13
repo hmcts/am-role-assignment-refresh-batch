@@ -168,7 +168,7 @@ repositories {
 dependencies {
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-batch', version: '2.4.5')
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: versions.springBoot)
-    compile(group: 'org.springframework', name: 'spring-beans', version: '5.3.6')
+    compile(group: 'org.springframework', name: 'spring-beans', version: '5.3.7')
     compile(group: 'org.springframework', name: 'spring-context', version: '5.3.6')
     compile(group: 'org.springframework', name: 'spring-core', version: '5.3.6')
 

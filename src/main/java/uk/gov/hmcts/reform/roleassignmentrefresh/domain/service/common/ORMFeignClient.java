@@ -10,7 +10,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.feignclients.configuration.Feig
 import uk.gov.hmcts.reform.roleassignmentrefresh.feignclients.configuration.ORMFeignClientFallback;
 import uk.gov.hmcts.reform.roleassignmentrefresh.feignclients.configuration.FeignClientConfiguration;
 
-@FeignClient(value = "orgrolemappingclient", url = "${feign.client.config.ormClient.url}",
+@FeignClient(value = "ormClient", url = "${feign.client.config.ormClient.url}",
         configuration = {FeignClientConfiguration.class, FeignClientInterceptor.class},
         fallback = ORMFeignClientFallback.class)
 public interface ORMFeignClient {

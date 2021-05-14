@@ -7,6 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.roleassignmentrefresh.oidc.SecurityUtils;
 
+import static uk.gov.hmcts.reform.roleassignmentrefresh.constants.RefreshConstants.BEARER;
+
 @Service
 public class FeignClientInterceptor {
 
@@ -16,8 +18,8 @@ public class FeignClientInterceptor {
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
-            requestTemplate.header("ServiceAuthorization", "Bearer " + securityUtils.getServiceToken());
-            requestTemplate.header(HttpHeaders.AUTHORIZATION, "Bearer " + securityUtils.getUserToken());
+            requestTemplate.header("ServiceAuthorization", BEARER + securityUtils.getServiceToken());
+            requestTemplate.header(HttpHeaders.AUTHORIZATION, BEARER + securityUtils.getUserToken());
             requestTemplate.header(HttpHeaders.CONTENT_TYPE, "application/json");
         };
     }

@@ -10,6 +10,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
+import uk.gov.hmcts.reform.roleassignmentrefresh.oidc.SecurityUtils;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class RefreshJobsOrchestrator {
 
     private final PersistenceService persistenceService;
     private final ORMFeignClient ormFeignClient;
+
+    @Autowired
+    SecurityUtils securityUtils;
 
     @Autowired
     public RefreshJobsOrchestrator(PersistenceService persistenceService,
@@ -32,6 +36,9 @@ public class RefreshJobsOrchestrator {
         long startTime = System.currentTimeMillis();
         // Get new job entries for refresh
         List<RefreshJobEntity> newJobs =  persistenceService.getNewJobs();
+        log.info("Service token : " + securityUtils.getServiceToken());
+        log.info("User token : " + securityUtils.getUserToken());
+        log.info(ormFeignClient.toString());
         for (RefreshJobEntity job: newJobs) {
             ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(job.getJobId(),
                     UserRequest.builder().build());

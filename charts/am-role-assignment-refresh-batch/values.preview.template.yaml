@@ -21,3 +21,4 @@ job:
     ORG_ROLE_MAPPING_DB_PASSWORD: org_role_mapping
     ORG_ROLE_MAPPING_DB_PORT: 5432
     ORG_ROLE_MAPPING_DB_OPTIONS: "?stringtype=unspecified"
+    AM_ORM_URL: http://am-org-role-mapping-service-pr-145.service.core-compute-preview.internal

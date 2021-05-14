@@ -36,13 +36,13 @@ public class RefreshJobsOrchestrator {
         long startTime = System.currentTimeMillis();
         // Get new job entries for refresh
         List<RefreshJobEntity> newJobs =  persistenceService.getNewJobs();
-        log.info("Service token : " + securityUtils.getServiceToken());
-        log.info("User token : " + securityUtils.getUserToken());
-        log.info(ormFeignClient.toString());
         for (RefreshJobEntity job: newJobs) {
             ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(job.getJobId(),
                     UserRequest.builder().build());
             if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
+                log.info("Service token : " + securityUtils.getServiceToken());
+                log.info("User token : " + securityUtils.getUserToken());
+                log.info(ormFeignClient.toString());
                 throw new RuntimeException(responseEntity.toString());
             }
         }

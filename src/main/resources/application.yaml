@@ -23,9 +23,6 @@ management:
       exposure:
         include: 'health'
 
-security:
-  authorisedServices: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_S2S_AUTHORISED_SERVICES:am_role_assignment_refresh_batch_service}
-
 spring:
   application:
     name: Role Assignment Refresh Batch
@@ -53,24 +50,11 @@ spring:
     password: ${ORG_ROLE_MAPPING_DB_PASSWORD:am}
     properties:
       charSet: UTF-8
-  security:
-    oauth2:
-      client:
-        provider:
-          oidc:
-            issuer-uri: ${OPEN_ID_API_BASE_URI:https://idam-web-public.aat.platform.hmcts.net/o}
-        registration:
-          oidc:
-            client-id: microservicekey-am-role-assignment-refresh-batch
-            client-secret: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET:AAAAAAAAAAAAAAAA}
 
-### dependency configuration
-auth.provider.service.client.baseUrl: ${IDAM_S2S_URL:http://localhost:4502}
-auth.idam.client.baseUrl: ${IDAM_USER_URL:http://localhost:5000}
 
 feign:
   hystrix:
-    enabled: true
+    enabled: false
   client:
     config:
       default:

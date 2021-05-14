@@ -171,11 +171,14 @@ dependencies {
     compile(group: 'org.springframework', name: 'spring-beans', version: '5.3.7')
     compile(group: 'org.springframework', name: 'spring-context', version: '5.3.7')
     compile(group: 'org.springframework', name: 'spring-core', version: '5.3.7')
+
     compile group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
+
     implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.6'
+
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: versions.reformS2sClient
 
     compile(group: 'uk.gov.hmcts.reform', name: 'properties-volume-spring-boot-starter', version: '0.1.0') {
@@ -193,13 +196,12 @@ dependencies {
     }
 
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.14'
-
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
     compile group: 'javax.inject', name: 'javax.inject', version: '1'
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformLogging
-    implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: '8.19'
-    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     compile group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.4.0'
+
+
     testCompile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     testImplementation 'org.springframework.batch:spring-batch-test'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: versions.junit
@@ -246,7 +248,6 @@ test {
     useJUnitPlatform()
     failFast = true
 }
-
 
 bootJar {
     archiveName = jarName

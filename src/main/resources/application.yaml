@@ -1,28 +1,6 @@
 server:
   port: ${PORT:5333}
 
-management:
-  health:
-    defaults:
-      enabled: true
-    diskspace:
-      enabled: true
-  endpoint:
-    health:
-      enabled: true
-      cache:
-        time-to-live: 5s
-      show-details: "always"
-  security:
-    enabled: false
-  endpoints:
-    health:
-      sensitive: false
-    web:
-      base-path: /
-      exposure:
-        include: 'health'
-
 spring:
   application:
     name: Role Assignment Refresh Batch

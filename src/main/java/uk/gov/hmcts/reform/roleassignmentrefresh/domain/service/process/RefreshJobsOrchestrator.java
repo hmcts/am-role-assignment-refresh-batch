@@ -10,7 +10,6 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
-import uk.gov.hmcts.reform.roleassignmentrefresh.oidc.SecurityUtils;
 
 import java.util.List;
 
@@ -20,9 +19,6 @@ public class RefreshJobsOrchestrator {
 
     private final PersistenceService persistenceService;
     private final ORMFeignClient ormFeignClient;
-
-    @Autowired
-    SecurityUtils securityUtils;
 
     @Autowired
     public RefreshJobsOrchestrator(PersistenceService persistenceService,
@@ -35,30 +31,27 @@ public class RefreshJobsOrchestrator {
     public void processRefreshJobs() {
         long startTime = System.currentTimeMillis();
         // Get new job entries for refresh
-        List<RefreshJobEntity> newJobs =  persistenceService.getNewJobs();
-        for (RefreshJobEntity job: newJobs) {
-            ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(job.getJobId(),
-                    UserRequest.builder().build());
-            if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
-                throw new RuntimeException(responseEntity.toString());
-            }
-        }
-
-        //get failed job entries to process linked users
-        List<RefreshJobEntity> failedJobs =  persistenceService.getNewJobsWithLinkedJob();
-        for (RefreshJobEntity job: failedJobs) {
-            RefreshJobEntity linkedJob = persistenceService.getByJobId(job.getLinkedJobId());
-            if (linkedJob != null && ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
-                ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(
-                        job.getJobId(), UserRequest.builder().userIds(linkedJob.getUserIds()).build());
-                if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
-                    throw new RuntimeException(responseEntity.toString());
+        List<RefreshJobEntity> jobs =  persistenceService.getNewJobs();
+        for (RefreshJobEntity job: jobs) {
+            if (job.getLinkedJobId() == null || job.getLinkedJobId() == 0) {
+                sendJobToORMService(job.getJobId(), UserRequest.builder().build());
+            } else {
+                RefreshJobEntity linkedJob = persistenceService.getByJobId(job.getLinkedJobId());
+                if (linkedJob != null && ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
+                    sendJobToORMService(job.getJobId(), UserRequest.builder().userIds(linkedJob.getUserIds()).build());
                 }
             }
         }
-        log.info(" >> Refresh Batch Job execution finished at {} . Time taken = {} milliseconds",
-                System.currentTimeMillis(), Math.subtractExact(System.currentTimeMillis(), startTime)
+        log.info(" >> Refresh Batch Job({}) execution finished at {} . Time taken = {} milliseconds",
+                jobs.size(), System.currentTimeMillis(), Math.subtractExact(System.currentTimeMillis(), startTime)
         );
+    }
+
+    private void sendJobToORMService(Long jobId, UserRequest userRequest) {
+        ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(jobId, userRequest);
+        if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
+            throw new RuntimeException(responseEntity.toString());
+        }
     }
 }
 

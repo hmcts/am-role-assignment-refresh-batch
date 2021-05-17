@@ -18,12 +18,7 @@ public class PersistenceService {
 
     @Retryable(maxAttempts = 3, backoff = @Backoff(delay = 2000, multiplier = 3))
     public List<RefreshJobEntity> getNewJobs() {
-        return refreshJobRepository.findByStatusAndLinkedJobIdIsNullOrderByCreatedDesc(Status.NEW.name());
-    }
-
-    @Retryable(maxAttempts = 3, backoff = @Backoff(delay = 2000, multiplier = 3))
-    public List<RefreshJobEntity> getNewJobsWithLinkedJob() {
-        return refreshJobRepository.findByStatusAndLinkedJobIdIsNotNullOrderByCreatedDesc(Status.NEW.name());
+        return refreshJobRepository.findByStatusOrderByCreatedDesc(Status.NEW.name());
     }
 
     public RefreshJobEntity getByJobId(Long jobId) {

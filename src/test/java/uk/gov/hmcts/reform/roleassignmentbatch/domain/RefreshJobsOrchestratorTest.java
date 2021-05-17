@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.gov.hmcts.reform.roleassignmentbatch.helper.TestDataBuilder;
+import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
@@ -15,6 +16,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.Persisten
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process.RefreshJobsOrchestrator;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -45,12 +47,10 @@ public class RefreshJobsOrchestratorTest {
     @Test
     void verifyProcessRefreshJobs() {
 
-        when(refreshJobRepository.findByStatusAndLinkedJobIdIsNullOrderByCreatedDesc(any(String.class)))
-                .thenReturn(TestDataBuilder.buildRefreshJobEntities(Status.NEW.name()));
-
-        when(refreshJobRepository.findByStatusAndLinkedJobIdIsNotNullOrderByCreatedDesc(any(String.class)))
-                .thenReturn(TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
-
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
         when(refreshJobRepository.findById(any(Long.class)))
                 .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
 
@@ -64,10 +64,7 @@ public class RefreshJobsOrchestratorTest {
     @Test
     void verifyProcessRefreshJobs_noJobs() {
 
-        when(refreshJobRepository.findByStatusAndLinkedJobIdIsNullOrderByCreatedDesc(any(String.class)))
-                .thenReturn(Collections.emptyList());
-
-        when(refreshJobRepository.findByStatusAndLinkedJobIdIsNotNullOrderByCreatedDesc(any(String.class)))
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
                 .thenReturn(Collections.emptyList());
 
         sut.processRefreshJobs();
@@ -77,11 +74,10 @@ public class RefreshJobsOrchestratorTest {
     @Test
     void verifyProcessRefreshJobs_invalidStatus() {
 
-        when(refreshJobRepository.findByStatusAndLinkedJobIdIsNullOrderByCreatedDesc(any(String.class)))
-                .thenReturn(TestDataBuilder.buildRefreshJobEntities(Status.NEW.name()));
-
-        when(refreshJobRepository.findByStatusAndLinkedJobIdIsNotNullOrderByCreatedDesc(any(String.class)))
-                .thenReturn(TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
 
         when(refreshJobRepository.findById(any(Long.class)))
                 .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
@@ -98,11 +94,10 @@ public class RefreshJobsOrchestratorTest {
     @Test
     void verifyProcessRefreshJobs_linkedJobInvalidStatus() {
 
-        when(refreshJobRepository.findByStatusAndLinkedJobIdIsNullOrderByCreatedDesc(any(String.class)))
-                .thenReturn(Collections.emptyList());
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
 
-        when(refreshJobRepository.findByStatusAndLinkedJobIdIsNotNullOrderByCreatedDesc(any(String.class)))
-                .thenReturn(TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
 
         when(refreshJobRepository.findById(any(Long.class)))
                 .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));

@@ -15,9 +15,9 @@ public class TestDataBuilder {
         return List.of(buildRefreshJobEntity(status));
     }
 
-    public static List<RefreshJobEntity> buildNewWithLinkedJobRefreshJobEntities() {
-        return List.of(RefreshJobEntity.builder().jobId(2L).jurisdiction("IA").roleCategory("JUDICIAL").linkedJobId(1L)
-                .status(Status.NEW.name()).build());
+    public static RefreshJobEntity buildNewWithLinkedJobRefreshJobEntities() {
+        return RefreshJobEntity.builder().jobId(2L).jurisdiction("IA").roleCategory("JUDICIAL").linkedJobId(1L)
+                .status(Status.NEW.name()).build();
     }
 
     public static RefreshJobEntity buildRefreshJobEntity(String status) {

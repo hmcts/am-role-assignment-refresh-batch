@@ -8,8 +8,6 @@ import java.util.List;
 @Repository
 public interface RefreshJobRepository extends CrudRepository<RefreshJobEntity, Long> {
 
-    List<RefreshJobEntity> findByStatusAndLinkedJobIdIsNullOrderByCreatedDesc(String status);
-
-    List<RefreshJobEntity> findByStatusAndLinkedJobIdIsNotNullOrderByCreatedDesc(String status);
+    List<RefreshJobEntity> findByStatusOrderByCreatedDesc(String status);
 
 }

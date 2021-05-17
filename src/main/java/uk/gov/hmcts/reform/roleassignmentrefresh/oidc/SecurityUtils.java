@@ -33,8 +33,6 @@ public class SecurityUtils {
     }
 
     public String getServiceToken() {
-        log.info("AuthTokenGenerator is : " + authTokenGenerator);
-        log.info("AuthTokenGenerator is : " + authTokenGenerator);
         return authTokenGenerator.generate();
     }
 }

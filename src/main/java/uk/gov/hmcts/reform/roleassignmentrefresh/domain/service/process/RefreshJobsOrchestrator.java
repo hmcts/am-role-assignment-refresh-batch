@@ -40,9 +40,6 @@ public class RefreshJobsOrchestrator {
             ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(job.getJobId(),
                     UserRequest.builder().build());
             if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
-                log.info("Service token : " + securityUtils.getServiceToken());
-                log.info("User token : " + securityUtils.getUserToken());
-                log.info(ormFeignClient.toString());
                 throw new RuntimeException(responseEntity.toString());
             }
         }

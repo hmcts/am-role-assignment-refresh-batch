@@ -1,43 +1,50 @@
 server:
   port: ${PORT:5333}
 
-management:
-  health:
-    defaults:
-      enabled: true
-    diskspace:
-      enabled: true
-  endpoint:
-    health:
-      enabled: true
-      cache:
-        time-to-live: 5s
-      show-details: "always"
-  security:
-    enabled: false
-  endpoints:
-    health:
-      sensitive: false
-    web:
-      base-path: /
-      exposure:
-        include: 'health'
-
-#If you use a database then uncomment below lines and update db properties accordingly
-
 spring:
   application:
     name: Role Assignment Refresh Batch
+  batch:
+    initialize-schema: always
+    job:
+      enabled: true
   main:
-    web-application-type: none
     allow-bean-definition-overriding: true
   jackson:
     default-property-inclusion: NON_NULL
-  batch:
-    initialize-schema: never
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    log_statement: all
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://${ORG_ROLE_MAPPING_DB_HOST:localhost}:${ORG_ROLE_MAPPING_DB_PORT:5451}/${ORG_ROLE_MAPPING_DB_NAME:org_role_mapping}${ORG_ROLE_MAPPING_DB_OPTIONS:?stringtype=unspecified}
+    username: ${ORG_ROLE_MAPPING_DB_USERNAME:am}
+    password: ${ORG_ROLE_MAPPING_DB_PASSWORD:am}
+    properties:
+      charSet: UTF-8
 
-delete-expired-records: deleteExpiredRecords
-batchjob-name: deleteExpiredRecords
+feign:
+  hystrix:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+      ormClient:
+        url: ${AM_ORM_URL:http://localhost:4098}
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 4000
+
+roleAssignmentRefreshBatchUrl: ${TEST_URL:http://localhost:5333}
+refresh-orm-records: refresh-orm-records
+batchjob-name: refreshORMRulesBatchJob
 batch-size: 20
 
 idam:

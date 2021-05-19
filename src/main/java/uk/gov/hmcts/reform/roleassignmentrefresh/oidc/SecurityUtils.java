@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.oidc;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.roleassignmentrefresh.constants.RefreshConstants;
 
 @Service
+@Slf4j
 public class SecurityUtils {
 
     private final AuthTokenGenerator authTokenGenerator;

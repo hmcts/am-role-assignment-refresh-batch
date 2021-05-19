@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-import uk.gov.hmcts.reform.roleassignmentrefresh.task.DeleteExpiredRecords;
+import uk.gov.hmcts.reform.roleassignmentrefresh.task.RefreshORMRules;
 
 import static org.junit.Assert.assertEquals;
 
@@ -19,7 +19,7 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
 
     private static final Logger logger = LoggerFactory.getLogger(RoleAssignmentRefreshIntegrationTest.class);
 
-    private DeleteExpiredRecords sut;
+    private RefreshORMRules sut;
 
     @Before
     public void setUp() {

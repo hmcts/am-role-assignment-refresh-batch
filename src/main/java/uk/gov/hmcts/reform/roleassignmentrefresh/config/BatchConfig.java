@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.config;
 
+import com.launchdarkly.sdk.server.LDClient;
 import feign.Feign;
 import feign.jackson.JacksonEncoder;
 import org.springframework.batch.core.Job;
@@ -60,5 +61,10 @@ public class BatchConfig extends DefaultBatchConfigurer {
             @Value("${idam.s2s-auth.microservice}") final String microService,
             final ServiceAuthorisationApi serviceAuthorisationApi) {
         return new ServiceAuthTokenGenerator(secret, microService, serviceAuthorisationApi);
+    }
+
+    @Bean
+    public LDClient ldClient(@Value("${launchdarkly.sdk.key}") String sdkKey) {
+        return new LDClient(sdkKey);
     }
 }

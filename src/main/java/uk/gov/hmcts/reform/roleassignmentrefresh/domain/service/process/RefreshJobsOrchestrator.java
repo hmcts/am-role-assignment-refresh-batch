@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 
 import java.util.List;
 
@@ -18,13 +18,13 @@ import java.util.List;
 public class RefreshJobsOrchestrator {
 
     private final PersistenceService persistenceService;
-    private final ORMFeignClient ormFeignClient;
+    private final SendJobDetailsService jobDetailsService;
 
     @Autowired
     public RefreshJobsOrchestrator(PersistenceService persistenceService,
-                                   ORMFeignClient ormFeignClient) {
+                                   SendJobDetailsService jobDetailsService) {
         this.persistenceService = persistenceService;
-        this.ormFeignClient = ormFeignClient;
+        this.jobDetailsService = jobDetailsService;
 
     }
 
@@ -48,7 +48,7 @@ public class RefreshJobsOrchestrator {
     }
 
     private void sendJobToORMService(Long jobId, UserRequest userRequest) {
-        ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(jobId, userRequest);
+        ResponseEntity<Object> responseEntity =  jobDetailsService.sendToRoleAssignmentBatchService(jobId, userRequest);
         if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
             throw new RuntimeException(responseEntity.toString());
         }

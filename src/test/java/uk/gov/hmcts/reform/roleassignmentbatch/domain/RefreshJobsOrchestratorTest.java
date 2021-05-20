@@ -13,6 +13,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process.RefreshJobsOrchestrator;
 
 import java.util.Collections;
@@ -36,7 +37,10 @@ public class RefreshJobsOrchestratorTest {
     private final PersistenceService persistenceService = new PersistenceService();
 
     @InjectMocks
-    private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, ormFeignClient);
+    private final SendJobDetailsService sendJobDetailsService = new SendJobDetailsService(ormFeignClient);
+
+    @InjectMocks
+    private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService);
 
     @BeforeEach
     void setUp() {

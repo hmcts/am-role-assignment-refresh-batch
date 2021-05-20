@@ -54,6 +54,7 @@ public class BatchConfig extends DefaultBatchConfigurer {
                 .target(ServiceAuthorisationApi.class, s2sUrl);
     }
 
+
     @Bean
     public ServiceAuthTokenGenerator authTokenGenerator(
             @Value("${idam.s2s-auth.totp_secret}") final String secret,

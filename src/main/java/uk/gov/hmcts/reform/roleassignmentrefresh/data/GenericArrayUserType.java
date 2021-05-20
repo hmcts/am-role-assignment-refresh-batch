@@ -24,7 +24,6 @@ public class GenericArrayUserType<T extends Serializable> implements UserType {
 
     @Override
     public Object deepCopy(Object value) throws HibernateException {
-        
         return value;
     }
 

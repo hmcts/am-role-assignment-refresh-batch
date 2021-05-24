@@ -12,6 +12,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.Persisten
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -33,7 +34,7 @@ public class RefreshJobsOrchestrator {
         // Get new job entries for refresh
         List<RefreshJobEntity> jobs =  persistenceService.getNewJobs();
         for (RefreshJobEntity job: jobs) {
-            if (job.getLinkedJobId() == null || job.getLinkedJobId() == 0) {
+            if (Objects.isNull(job.getLinkedJobId()) ||  job.getLinkedJobId().equals(0L)) {
                 sendJobToORMService(job.getJobId(), UserRequest.builder().build());
             } else {
                 RefreshJobEntity linkedJob = persistenceService.getByJobId(job.getLinkedJobId());

@@ -23,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class RefreshJobsOrchestratorTest {
@@ -59,6 +61,8 @@ public class RefreshJobsOrchestratorTest {
 
         sut.processRefreshJobs();
         assertTrue(true);
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
     @Test
@@ -66,6 +70,23 @@ public class RefreshJobsOrchestratorTest {
 
         when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
                 .thenReturn(Collections.emptyList());
+
+        sut.processRefreshJobs();
+        assertTrue(true);
+    }
+
+    @Test
+    void verifyProcessRefreshJobs_oddJobs() {
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        jobEntities.get(0).setLinkedJobId(0L);
+
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
+        when(refreshJobRepository.findById(any(Long.class)))
+                .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
+        when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
 
         sut.processRefreshJobs();
         assertTrue(true);

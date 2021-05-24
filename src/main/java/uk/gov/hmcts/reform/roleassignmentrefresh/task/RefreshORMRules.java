@@ -26,7 +26,4 @@ public class RefreshORMRules implements Tasklet {
         return RepeatStatus.FINISHED;
     }
 
-
-
-
 }

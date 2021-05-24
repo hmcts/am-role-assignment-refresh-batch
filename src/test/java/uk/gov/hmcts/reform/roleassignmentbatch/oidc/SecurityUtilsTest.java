@@ -76,6 +76,13 @@ class SecurityUtilsTest {
     }
 
     @Test
+    void getServiceToken() {
+        String result = securityUtils.getServiceToken();
+        assertNotNull(result);
+        assertTrue(result.contains("eyJhbG"));
+    }
+
+    @Test
     void getUserTokenNoContext() {
         when(securityContext.getAuthentication()).thenReturn(null);
         when(idamRepository.getUserToken()).thenReturn(serviceAuthorization);

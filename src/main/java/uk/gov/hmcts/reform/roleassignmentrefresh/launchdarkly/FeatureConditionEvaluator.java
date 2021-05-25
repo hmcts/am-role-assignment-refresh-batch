@@ -38,6 +38,7 @@ public class FeatureConditionEvaluator {
         log.info("userName:" + userName);
         log.info("Env:" + environment);
         log.info("user:" + user);
+        log.info("serviceName:" + serviceName);
         log.info("Flag value: " + ldClient.boolVariation(flagName, user, false));
         log.info("LDClient: " + ldClient.toString());
         return ldClient.boolVariation(flagName, user, false);

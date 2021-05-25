@@ -73,6 +73,8 @@ public class RefreshJobsOrchestratorTest {
 
         sut.processRefreshJobs();
         assertTrue(true);
+
+        verify(ormFeignClient, times(0)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
     @Test
@@ -90,6 +92,8 @@ public class RefreshJobsOrchestratorTest {
 
         sut.processRefreshJobs();
         assertTrue(true);
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
     @Test
@@ -106,10 +110,12 @@ public class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> sut.processRefreshJobs(),
+        RuntimeException thrown = assertThrows(RuntimeException.class, sut::processRefreshJobs,
                 "Expected processRefreshJobs() to throw, but it didn't"
         );
         // assertFalse(thrown.getMessage().contains("202"))
+
+        verify(ormFeignClient, times(1)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
     @Test
@@ -126,10 +132,12 @@ public class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> sut.processRefreshJobs(),
+        RuntimeException thrown = assertThrows(RuntimeException.class, sut::processRefreshJobs,
                 "Expected processRefreshJobs() to throw, but it didn't"
         );
         assertFalse(thrown.getMessage().contains("202"));
+
+        verify(ormFeignClient, times(1)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 }
 

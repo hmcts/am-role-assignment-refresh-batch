@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.UnprocessableEntityException;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
@@ -38,7 +39,7 @@ public class RefreshJobsOrchestrator {
                 sendJobToORMService(job.getJobId(), UserRequest.builder().build());
             } else {
                 RefreshJobEntity linkedJob = persistenceService.getByJobId(job.getLinkedJobId());
-                if (linkedJob != null && ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
+                if (Objects.nonNull(linkedJob) && ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
                     sendJobToORMService(job.getJobId(), UserRequest.builder().userIds(linkedJob.getUserIds()).build());
                 }
             }
@@ -51,7 +52,7 @@ public class RefreshJobsOrchestrator {
     private void sendJobToORMService(Long jobId, UserRequest userRequest) {
         ResponseEntity<Object> responseEntity =  ormFeignClient.sendJobToRoleAssignmentBatchService(jobId, userRequest);
         if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
-            throw new RuntimeException(responseEntity.toString());
+            throw new UnprocessableEntityException(responseEntity.toString());
         }
     }
 }

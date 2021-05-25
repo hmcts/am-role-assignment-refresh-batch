@@ -33,15 +33,6 @@ public class FeatureConditionEvaluator {
                 .lastName(USER)
                 .custom(SERVICE_NAME, serviceName)
                 .build();
-        log.info("Env:" + environment);
-
-        log.info("userName:" + userName);
-        log.info("Env:" + environment);
-        log.info("user:" + user);
-        log.info("serviceName:" + serviceName);
-        log.info("flagName:" + flagName);
-        log.info("Flag value: " + ldClient.boolVariation(flagName, user, false));
-        log.info("LDClient: " + ldClient.toString());
         return ldClient.boolVariation(flagName, user, false);
     }
 

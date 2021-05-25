@@ -4,6 +4,7 @@ import com.launchdarkly.sdk.LDUser;
 import com.launchdarkly.sdk.server.LDClient;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 @NoArgsConstructor
+@Slf4j
 public class FeatureConditionEvaluator {
 
     public static final String USER = "user";
@@ -31,7 +33,13 @@ public class FeatureConditionEvaluator {
                 .lastName(USER)
                 .custom(SERVICE_NAME, serviceName)
                 .build();
+        log.info("Env:" + environment);
 
+        log.info("userName:" + userName);
+        log.info("Env:" + environment);
+        log.info("user:" + user);
+        log.info("Flag value: " + ldClient.boolVariation(flagName, user, false));
+        log.info("LDClient: " + ldClient.toString());
         return ldClient.boolVariation(flagName, user, false);
     }
 

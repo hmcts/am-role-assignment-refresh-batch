@@ -1,7 +1,9 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.config;
 
+import com.launchdarkly.sdk.server.LDClient;
 import feign.Feign;
 import feign.jackson.JacksonEncoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
@@ -14,12 +16,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.gov.hmcts.reform.roleassignmentrefresh.task.RefreshORMRules;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.ServiceAuthTokenGenerator;
+import uk.gov.hmcts.reform.roleassignmentrefresh.task.RefreshORMRules;
 
 @Configuration
 @EnableBatchProcessing
+@Slf4j
 public class BatchConfig extends DefaultBatchConfigurer {
 
     @Value("${refresh-orm-records}")
@@ -32,8 +35,8 @@ public class BatchConfig extends DefaultBatchConfigurer {
     public Step stepOrchestration(@Autowired StepBuilderFactory steps,
                                   @Autowired RefreshORMRules refreshORMRules) {
         return steps.get(taskParent)
-                    .tasklet(refreshORMRules)
-                    .build();
+                .tasklet(refreshORMRules)
+                .build();
     }
 
     @Bean
@@ -41,9 +44,9 @@ public class BatchConfig extends DefaultBatchConfigurer {
                             @Autowired StepBuilderFactory steps,
                             @Autowired RefreshORMRules refreshORMRules) {
         return jobs.get(jobName)
-                   .incrementer(new RunIdIncrementer())
-                   .start(stepOrchestration(steps, refreshORMRules))
-                   .build();
+                .incrementer(new RunIdIncrementer())
+                .start(stepOrchestration(steps, refreshORMRules))
+                .build();
     }
 
     @Bean
@@ -60,5 +63,10 @@ public class BatchConfig extends DefaultBatchConfigurer {
             @Value("${idam.s2s-auth.microservice}") final String microService,
             final ServiceAuthorisationApi serviceAuthorisationApi) {
         return new ServiceAuthTokenGenerator(secret, microService, serviceAuthorisationApi);
+    }
+
+    @Bean
+    public LDClient ldClient(@Value("${launchdarkly.sdk.key}") String sdkKey) {
+        return new LDClient(sdkKey);
     }
 }

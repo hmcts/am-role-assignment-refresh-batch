@@ -8,22 +8,34 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.ForbiddenException;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process.RefreshJobsOrchestrator;
+import uk.gov.hmcts.reform.roleassignmentrefresh.launchdarkly.FeatureConditionEvaluator;
 
 @Component
 public class RefreshORMRules implements Tasklet {
 
     private static final Logger log = LoggerFactory.getLogger(RefreshORMRules.class);
 
+    private static final String SERVICE_NAME = "am_role_assignment_refresh_batch";
+
     @Autowired
     private RefreshJobsOrchestrator refreshJobsOrchestrator;
 
+    @Autowired
+    private FeatureConditionEvaluator featureConditionEvaluator;
+
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
-        log.debug("Refresh Job task starts::");
-        refreshJobsOrchestrator.processRefreshJobs();
-        log.debug("Refresh Job is successful");
-        return RepeatStatus.FINISHED;
+        if (featureConditionEvaluator.isFlagEnabled(SERVICE_NAME, "orm-refresh-role")) {
+            log.debug("Refresh Job task starts::");
+            refreshJobsOrchestrator.processRefreshJobs();
+            log.debug("Refresh Job is successful");
+            return RepeatStatus.FINISHED;
+        } else {
+            throw new ForbiddenException(String.format("Launch Darkly flag is not enabled for the batch job %s",
+                    SERVICE_NAME));
+        }
     }
 
 

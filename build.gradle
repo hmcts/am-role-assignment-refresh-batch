@@ -109,13 +109,33 @@ jacoco {
     toolVersion = "0.8.2"
 }
 
+pitest {
+    pitestVersion = "1.5.2"
+    testPlugin = "junit5"
+    targetClasses = ['uk.gov.hmcts.reform.*']
+    excludedClasses = ['uk.gov.hmcts.reform.roleassignmentrefresh.*Application',
+                       '*config*',
+                       '*exception*',
+                       '*GenericArrayUserType*',
+                       '*RefreshORMRules*,',
+                       'uk.gov.hmcts.reform.roleassignmentrefresh.util.Swagger2SpringBoot']
+    excludedMethods = ['']
+    threads = 15
+    outputFormats = ['XML', 'HTML']
+    timestampedReports = true
+    mutationThreshold = 60
+}
 
 sonarqube {
     properties {
         property "sonar.projectName", "am-role-assignment-refresh-batch"
         property "sonar.projectKey", "am-role-assignment-refresh-batch"
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-        property "sonar.exclusions", "**.java"
+        property "sonar.exclusions", "**config**," +
+                "**exception**," +
+                "**GenericArrayUserType**," +
+                "**Application.java,"
+                "**RefreshORMRules.java"
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }

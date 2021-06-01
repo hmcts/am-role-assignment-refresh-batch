@@ -186,7 +186,7 @@ repositories {
 
 
 dependencies {
-    compile (group: 'org.springframework.boot', name: 'spring-boot-starter-batch', version: '2.4.2')
+    compile (group: 'org.springframework.boot', name: 'spring-boot-starter-batch', version: '2.5.0')
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: versions.springBoot)
     compile(group: 'org.springframework', name: 'spring-beans', version: '5.3.7')
     compile(group: 'org.springframework', name: 'spring-context', version: '5.3.7')

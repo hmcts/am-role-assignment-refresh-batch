@@ -13,6 +13,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process.RefreshJobsOrchestrator;
 
 import java.util.Collections;
@@ -23,6 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class RefreshJobsOrchestratorTest {
@@ -36,7 +39,10 @@ public class RefreshJobsOrchestratorTest {
     private final PersistenceService persistenceService = new PersistenceService();
 
     @InjectMocks
-    private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, ormFeignClient);
+    private final SendJobDetailsService sendJobDetailsService = new SendJobDetailsService(ormFeignClient);
+
+    @InjectMocks
+    private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService);
 
     @BeforeEach
     void setUp() {
@@ -59,6 +65,8 @@ public class RefreshJobsOrchestratorTest {
 
         sut.processRefreshJobs();
         assertTrue(true);
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
     @Test
@@ -69,6 +77,27 @@ public class RefreshJobsOrchestratorTest {
 
         sut.processRefreshJobs();
         assertTrue(true);
+
+        verify(ormFeignClient, times(0)).sendJobToRoleAssignmentBatchService(any(), any());
+    }
+
+    @Test
+    void verifyProcessRefreshJobs_oddJobs() {
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        jobEntities.get(0).setLinkedJobId(0L);
+
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
+        when(refreshJobRepository.findById(any(Long.class)))
+                .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
+        when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+
+        sut.processRefreshJobs();
+        assertTrue(true);
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
     @Test
@@ -85,10 +114,12 @@ public class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> sut.processRefreshJobs(),
+        RuntimeException thrown = assertThrows(RuntimeException.class, sut::processRefreshJobs,
                 "Expected processRefreshJobs() to throw, but it didn't"
         );
         // assertFalse(thrown.getMessage().contains("202"))
+
+        verify(ormFeignClient, times(1)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
     @Test
@@ -105,10 +136,12 @@ public class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> sut.processRefreshJobs(),
+        RuntimeException thrown = assertThrows(RuntimeException.class, sut::processRefreshJobs,
                 "Expected processRefreshJobs() to throw, but it didn't"
         );
         assertFalse(thrown.getMessage().contains("202"));
+
+        verify(ormFeignClient, times(1)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 }
 

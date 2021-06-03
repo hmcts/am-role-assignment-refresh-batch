@@ -18,6 +18,9 @@ def vaultOverrides = [
 
 withNightlyPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
-
+  enableAksStagingDeployment()
+  disableLegacyDeploymentOnAAT()
+  disableLegacyDeployment()
+  nonServiceApp()
   enableMutationTest()
 }

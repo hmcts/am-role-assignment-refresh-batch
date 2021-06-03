@@ -136,6 +136,8 @@ sonarqube {
         property "sonar.exclusions", "**config**," +
                 "**exception**," +
                 "**GenericArrayUserType**," +
+                "**launchdarkly**," +
+                "**oidc**," +
                 "**Application.java,"
                 "**RefreshORMRules.java"
         property "sonar.pitest.mode", "reuseReport"

@@ -139,7 +139,7 @@ sonarqube {
                 "**launchdarkly**," +
                 "**oidc**," +
                 "**Application.java," +
-                "**RefreshORMRules.java"
+                "**RefreshORMRules**"
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }

@@ -9,7 +9,7 @@ locals {
 }
 
 data "azurerm_key_vault" "am_key_vault" {
-  name                = local.key_vault_name
+  name                = local.am_key_vault_name
   resource_group_name = local.am_key_vault_rg_name
 }
 

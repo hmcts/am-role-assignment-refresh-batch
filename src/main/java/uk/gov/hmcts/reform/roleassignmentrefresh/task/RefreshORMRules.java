@@ -31,8 +31,8 @@ public class RefreshORMRules implements Tasklet {
         log.info("Sys outing the details");
         log.info("ORM_IDAM_CLIENT_ID: " + System.getenv("ORM_IDAM_CLIENT_ID"));
         log.info("ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET: " + System.getenv("ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET"));
-        log.info("ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD: " + System.getenv("ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD"));
-        log.info("AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET: " + System.getenv("AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET"));
+        log.info("IDAM_ADMIN_PASSWORD: " + System.getenv("ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD"));
+        log.info("BATCH_SECRET: " + System.getenv("AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET"));
         log.info("LD_SDK_KEY: " + System.getenv("LD_SDK_KEY"));
         log.info("ORG_ROLE_MAPPING_DB_PASSWORD: " + System.getenv("ORG_ROLE_MAPPING_DB_PASSWORD"));
         log.info("Sys outing the details : end");

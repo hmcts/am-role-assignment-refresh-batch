@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.roleassignmentbatch.oidc;
+package uk.gov.hmcts.reform.roleassignmentrefresh.oidc;
 
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.context.SecurityContext;
 import uk.gov.hmcts.reform.authorisation.generators.AuthTokenGenerator;
 import uk.gov.hmcts.reform.roleassignmentrefresh.constants.RefreshConstants;
-import uk.gov.hmcts.reform.roleassignmentrefresh.oidc.IdamRepository;
-import uk.gov.hmcts.reform.roleassignmentrefresh.oidc.SecurityUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +51,7 @@ class SecurityUtilsTest {
             + ".LH3aiNniHNMlTwuSdzgRic9sD_4inQv5oUqJ0kkRKVasS4RfhIz2tRdttf-sSMkUga1p1teOt2iCq4BQBDS7KB";
 
     private void mockSecurityContextData() {
-        List<String> collection = new ArrayList<String>();
+        List<String> collection = new ArrayList<>();
         collection.add("string");
         Map<String, Object> headers = new HashMap<>();
         headers.put("header", "head");

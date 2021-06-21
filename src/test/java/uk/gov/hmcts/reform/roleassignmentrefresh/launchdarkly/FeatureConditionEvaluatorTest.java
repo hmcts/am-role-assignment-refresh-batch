@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.roleassignmentbatch.launchdarkly;
+package uk.gov.hmcts.reform.roleassignmentrefresh.launchdarkly;
 
 import com.launchdarkly.sdk.server.LDClient;
 import org.junit.Before;
@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import uk.gov.hmcts.reform.roleassignmentrefresh.launchdarkly.FeatureConditionEvaluator;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

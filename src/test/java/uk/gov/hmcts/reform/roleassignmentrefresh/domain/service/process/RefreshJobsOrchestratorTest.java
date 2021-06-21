@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.roleassignmentbatch.domain;
+package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,14 +7,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.gov.hmcts.reform.roleassignmentbatch.helper.TestDataBuilder;
+import uk.gov.hmcts.reform.roleassignmentrefresh.helper.TestDataBuilder;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process.RefreshJobsOrchestrator;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +27,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class RefreshJobsOrchestratorTest {
+class RefreshJobsOrchestratorTest {
 
     @Mock
     private final RefreshJobRepository refreshJobRepository = mock(RefreshJobRepository.class);

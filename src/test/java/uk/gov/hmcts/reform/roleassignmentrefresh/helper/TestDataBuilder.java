@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.roleassignmentbatch.helper;
+package uk.gov.hmcts.reform.roleassignmentrefresh.helper;
 
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;

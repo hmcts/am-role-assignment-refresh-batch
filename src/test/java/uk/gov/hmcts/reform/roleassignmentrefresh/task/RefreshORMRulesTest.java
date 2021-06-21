@@ -1,4 +1,4 @@
-package uk.gov.hmcts.reform.roleassignmentbatch.task;
+package uk.gov.hmcts.reform.roleassignmentrefresh.task;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,6 @@ import org.springframework.batch.repeat.RepeatStatus;
 import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.ForbiddenException;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process.RefreshJobsOrchestrator;
 import uk.gov.hmcts.reform.roleassignmentrefresh.launchdarkly.FeatureConditionEvaluator;
-import uk.gov.hmcts.reform.roleassignmentrefresh.task.RefreshORMRules;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

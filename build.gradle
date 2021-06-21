@@ -135,11 +135,11 @@ sonarqube {
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
         property "sonar.exclusions", "**config**," +
                 "**exception**," +
-                "**GenericArrayUserType**," +
-                "**launchdarkly**," +
-                "**oidc**," +
-                "**Application.java," +
-                "**RefreshORMRules**"
+                "**constants**," +
+                "src/main/java/uk/gov/hmcts/reform/roleassignmentrefresh/data/**," +
+                "**model**,"+
+                "**OIdcAdminConfiguration**,"+
+                "**Application.java,"
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }

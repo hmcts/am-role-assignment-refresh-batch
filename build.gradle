@@ -260,7 +260,7 @@ dependencies {
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
 
-    //Dependency added as part of GenericArrayUserTypeTest
+    // AM-1447-Junit fix for GenericArrayUserTypeTest
     implementation 'org.jetbrains:annotations:20.1.0'
 
     integrationTestCompile sourceSets.main.runtimeClasspath

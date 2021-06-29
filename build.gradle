@@ -135,11 +135,11 @@ sonarqube {
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
         property "sonar.exclusions", "**config**," +
                 "**exception**," +
-                "**GenericArrayUserType**," +
-                "**launchdarkly**," +
-                "**oidc**," +
-                "**Application.java," +
-                "**RefreshORMRules**"
+                "**constants**," +
+                "src/main/java/uk/gov/hmcts/reform/roleassignmentrefresh/data/Refresh*," +
+                "**model**,"+
+                "**OIdcAdminConfiguration**,"+
+                "**Application.java,"
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"
     }
@@ -259,6 +259,9 @@ dependencies {
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-junit', version: versions.serenity
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-rest-assured', version: versions.serenity
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
+
+    // AM-1447-Junit fix for GenericArrayUserTypeTest
+    implementation 'org.jetbrains:annotations:20.1.0'
 
     integrationTestCompile sourceSets.main.runtimeClasspath
     integrationTestCompile sourceSets.test.runtimeClasspath

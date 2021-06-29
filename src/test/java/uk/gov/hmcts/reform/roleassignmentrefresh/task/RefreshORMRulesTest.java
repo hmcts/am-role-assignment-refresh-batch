@@ -10,7 +10,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
-import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.ForbiddenException;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process.RefreshJobsOrchestrator;
 import uk.gov.hmcts.reform.roleassignmentrefresh.launchdarkly.FeatureConditionEvaluator;
 
@@ -42,8 +41,10 @@ public class RefreshORMRulesTest {
         assertEquals(RepeatStatus.FINISHED, status);
     }
 
-    @Test(expected = ForbiddenException.class)
-    public void getExceptionForFlagFromJob() {
-        refreshORMRules.execute(mock(StepContribution.class), mock(ChunkContext.class));
+    @Test
+    public void shouldFinishTaskWhenLDIsDisabled() {
+        when(featureConditionEvaluator.isFlagEnabled(any(), any())).thenReturn(false);
+        RepeatStatus status = refreshORMRules.execute(mock(StepContribution.class), mock(ChunkContext.class));
+        assertEquals(RepeatStatus.FINISHED, status);
     }
 }

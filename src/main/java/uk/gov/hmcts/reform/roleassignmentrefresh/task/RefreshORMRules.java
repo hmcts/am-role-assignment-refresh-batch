@@ -30,10 +30,8 @@ public class RefreshORMRules implements Tasklet {
             log.debug("Refresh Job task starts::");
             refreshJobsOrchestrator.processRefreshJobs();
             log.debug("Refresh Job is successful");
-            return RepeatStatus.FINISHED;
         } else {
-            log.info(String.format("Launch Darkly flag is not enabled for the batch job %s",
-                    SERVICE_NAME));
+            log.info("Launch Darkly flag is not enabled for the batch job ");
         }
         return RepeatStatus.FINISHED;
     }

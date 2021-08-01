@@ -226,7 +226,7 @@ dependencies {
     compile group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.4.0'
 
 
-    testCompile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    testCompile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
     testImplementation 'org.springframework.batch:spring-batch-test'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

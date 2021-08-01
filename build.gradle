@@ -209,7 +209,7 @@ dependencies {
         exclude group: "org.apache.tomcat.embed", module: "tomcat-embed-websocket"
         exclude group: "org.apache.tomcat.embed", module: "tomcat-embed-core"
     }
-    implementation 'commons-io:commons-io:2.8.0'
+    implementation 'commons-io:commons-io:2.11.0'
     implementation 'uk.gov.hmcts.reform:idam-client:v1.5.4'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.3.RELEASE'
 

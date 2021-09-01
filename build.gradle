@@ -261,7 +261,7 @@ dependencies {
     integrationTestCompile group: 'net.serenity-bdd', name: 'serenity-spring', version: versions.serenity
 
     // AM-1447-Junit fix for GenericArrayUserTypeTest
-    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation 'org.jetbrains:annotations:22.0.0'
 
     integrationTestCompile sourceSets.main.runtimeClasspath
     integrationTestCompile sourceSets.test.runtimeClasspath

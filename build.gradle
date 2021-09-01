@@ -199,7 +199,7 @@ dependencies {
     compile group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
 
     implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.4.6'
-    implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.4.6'
+    implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.5.2'
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.6'
 

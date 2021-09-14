@@ -24,8 +24,8 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://${ORG_ROLE_MAPPING_DB_HOST:localhost}:${ORG_ROLE_MAPPING_DB_PORT:5451}/${ORG_ROLE_MAPPING_DB_NAME:org_role_mapping}${ORG_ROLE_MAPPING_DB_OPTIONS:?stringtype=unspecified}
-    username: ${ORG_ROLE_MAPPING_DB_USERNAME:am}
-    password: ${ORG_ROLE_MAPPING_DB_PASSWORD:am}
+    username: ${ORG_ROLE_MAPPING_DB_USERNAME:}
+    password: ${ORG_ROLE_MAPPING_DB_PASSWORD:}
     properties:
       charSet: UTF-8
 

@@ -24,8 +24,8 @@ spring:
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://${ORG_ROLE_MAPPING_DB_HOST:localhost}:${ORG_ROLE_MAPPING_DB_PORT:5451}/${ORG_ROLE_MAPPING_DB_NAME:org_role_mapping}${ORG_ROLE_MAPPING_DB_OPTIONS:?stringtype=unspecified}
-    username: ${ORG_ROLE_MAPPING_DB_USERNAME:am}
-    password: ${ORG_ROLE_MAPPING_DB_PASSWORD:am}
+    username: ${ORG_ROLE_MAPPING_DB_USERNAME:}
+    password: ${ORG_ROLE_MAPPING_DB_PASSWORD:}
     properties:
       charSet: UTF-8
 
@@ -49,13 +49,13 @@ batch-size: 20
 
 idam:
   s2s-auth:
-    totp_secret: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET:AAAAAAAAAAAAAAAA}
+    totp_secret: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET:}
     microservice: am_role_assignment_refresh_batch
     url: ${IDAM_S2S_URL:http://localhost:4502}
   api.url: ${IDAM_USER_URL:http://localhost:5000}
   client:
     id: ${ORM_IDAM_CLIENT_ID:am_docker}
-    secret: ${ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET:am_docker_secret}
+    secret: ${ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET:}
     redirect_uri: ${ORG_ROLE_MAPPING_IDAM_REDIRECT_URI:http://localhost:4096/oauth2redirect}
     admin:
       userId: ${ORG_ROLE_MAPPING_IDAM_ADMIN_USERID:}

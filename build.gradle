@@ -204,7 +204,7 @@ dependencies {
     compile(group: 'org.springframework', name: 'spring-context', version: '5.3.7')
     compile(group: 'org.springframework', name: 'spring-core', version: '5.3.7')
 
-    compile group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
+    compile group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
 
     implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.4.6'

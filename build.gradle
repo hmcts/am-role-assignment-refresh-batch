@@ -228,7 +228,7 @@ dependencies {
         exclude group: 'uk.gov.hmcts.reform', module: 'java-logging-spring'
     }
 
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.14'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.24'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
     compile group: 'javax.inject', name: 'javax.inject', version: '1'
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformLogging

@@ -210,6 +210,7 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.5.1'
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.6'
+    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.12'
 
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: versions.reformS2sClient
 
@@ -228,7 +229,7 @@ dependencies {
         exclude group: 'uk.gov.hmcts.reform', module: 'java-logging-spring'
     }
 
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.14'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.1'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
     compile group: 'javax.inject', name: 'javax.inject', version: '1'
     compile group: 'uk.gov.hmcts.reform', name: 'logging', version: versions.reformLogging

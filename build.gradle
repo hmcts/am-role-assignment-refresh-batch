@@ -196,7 +196,7 @@ repositories {
 
 
 dependencies {
-    compile (group: 'org.springframework.boot', name: 'spring-boot-starter-batch', version: '2.4.2') {
+    compile (group: 'org.springframework.boot', name: 'spring-boot-starter-batch', version: '2.5.6') {
         exclude group: 'org.glassfish', module: 'jakarta.el'
     }
     compile(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: versions.springBoot)
@@ -210,6 +210,7 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.4.6'
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.5.1'
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.4.6'
+    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.12'
 
     compile group: 'uk.gov.hmcts.reform', name: 'service-auth-provider-client', version: versions.reformS2sClient
 

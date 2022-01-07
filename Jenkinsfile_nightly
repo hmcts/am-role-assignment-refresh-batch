@@ -2,7 +2,7 @@
 
 properties([
   // H allow predefined but random minute see https://en.wikipedia.org/wiki/Cron#Non-standard_characters
-  pipelineTriggers([cron('21 01 * * *')])
+  pipelineTriggers([cron('52 05 * * *')])
 ])
 
 @Library("Infrastructure")
@@ -18,10 +18,10 @@ def vaultOverrides = [
 
 withNightlyPipeline(type, product, component) {
   overrideVaultEnvironments(vaultOverrides)
-  enableAksStagingDeployment()
-  disableLegacyDeploymentOnAAT()
-  disableLegacyDeployment()
-  nonServiceApp()
+  // enableAksStagingDeployment()
+  // disableLegacyDeploymentOnAAT()
+  // disableLegacyDeployment()
+  // nonServiceApp()
   enableMutationTest()
   enableFortifyScan()
 

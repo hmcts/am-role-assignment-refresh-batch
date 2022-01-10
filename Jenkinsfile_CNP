@@ -32,7 +32,7 @@ def vaultOverrides = [
 def secrets = []
 
 // Configure branches to sync with master branch
-//def branchesToSync = ['demo', 'perftest']
+def branchesToSync = ['demo', 'perftest', 'ithc']
 
 withPipeline(type, product, component) {
   onMaster {
@@ -49,8 +49,14 @@ withPipeline(type, product, component) {
   disableLegacyDeployment()
   nonServiceApp()
 
+  enableFortifyScan()
+
+  after('fortify-scan') {
+    steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/Fortify Scan/**/*'
+  }
+
   // Sync environment specific branches with master branch
-  //syncBranchesWithMaster(branchesToSync)
+  syncBranchesWithMaster(branchesToSync)
 
   after('test:preview') {
     steps.archiveArtifacts allowEmptyArchive: true, artifacts: '**/target/site/serenity/**'

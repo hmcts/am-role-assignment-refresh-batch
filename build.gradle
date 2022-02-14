@@ -222,6 +222,9 @@ dependencies {
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
     implementation 'com.github.hmcts:properties-volume-spring-boot-starter:0.1.1'
     implementation 'commons-io:commons-io:2.8.0'
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '10.0.16'
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.58'
+
 
     compile group: 'com.github.hmcts', name: 'idam-java-client', version: '2.0.1'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.10.RELEASE'
@@ -279,6 +282,11 @@ dependencies {
 test {
     useJUnitPlatform()
     failFast = true
+}
+
+configurations {
+    runtime.exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
+    runtime.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
 }
 
 bootJar {

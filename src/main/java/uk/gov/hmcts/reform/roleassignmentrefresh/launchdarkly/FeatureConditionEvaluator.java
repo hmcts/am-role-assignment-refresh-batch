@@ -1,7 +1,7 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.launchdarkly;
 
 import com.launchdarkly.sdk.LDUser;
-import com.launchdarkly.sdk.server.LDClient;
+import com.launchdarkly.sdk.server.interfaces.LDClientInterface;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,7 @@ public class FeatureConditionEvaluator {
     public static final String SERVICE_NAME = "servicename";
 
     @Autowired
-    private LDClient ldClient;
+    private LDClientInterface ldClient;
 
     @Value("${launchdarkly.sdk.environment}")
     private String environment;
@@ -35,5 +35,10 @@ public class FeatureConditionEvaluator {
                 .build();
         return ldClient.boolVariation(flagName, user, false);
     }
+
+    public boolean isValidFlag(String flagName) {
+        return ldClient.isFlagKnown(flagName);
+    }
+
 
 }

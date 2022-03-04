@@ -1,6 +1,7 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.config;
 
 import com.launchdarkly.sdk.server.LDClient;
+import com.launchdarkly.sdk.server.interfaces.LDClientInterface;
 import feign.Feign;
 import feign.jackson.JacksonEncoder;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class BatchConfig extends DefaultBatchConfigurer {
 
     @Value("${batchjob-name}")
     String jobName;
+
+    @Value("${launchdarkly.runOnStartup:true}")
+    private boolean runOnStartup;
 
     @Bean
     public Step stepOrchestration(@Autowired StepBuilderFactory steps,
@@ -67,7 +71,7 @@ public class BatchConfig extends DefaultBatchConfigurer {
     }
 
     @Bean
-    public LDClient ldClient(@Value("${launchdarkly.sdk.key}") String sdkKey) {
-        return new LDClient(sdkKey);
+    public LDClientInterface ldClient(@Value("${launchdarkly.sdk.key}") String sdkKey) {
+        return runOnStartup ? new LDClient(sdkKey) : new LDDummyClient();
     }
 }

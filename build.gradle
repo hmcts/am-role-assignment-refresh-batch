@@ -228,7 +228,7 @@ dependencies {
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '10.0.16'
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.58'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2.1'
-    implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: '2.13.2.20220324', ext: 'pom'
+    implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: '2.13.2.20220328', ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '2.0.1'
     implementation(group: 'com.github.hmcts', name: 'auth-checker-lib', version: '2.1.4')
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'

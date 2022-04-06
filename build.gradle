@@ -6,17 +6,17 @@ buildscript {
     }
     dependencies {
         classpath("net.serenity-bdd:serenity-gradle-plugin:2.4.24")
-        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.7.0'
+        classpath 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.7.4'
     }
 }
 
 plugins {
     id 'application'
-    id 'uk.gov.hmcts.java' version '0.12.12'
+    id 'uk.gov.hmcts.java' version '0.12.21'
     id 'pmd'
     id 'jacoco'
     id 'org.springframework.boot' version '2.6.6'
-    id 'info.solidsoft.pitest' version '1.6.0'
+    id 'info.solidsoft.pitest' version '1.7.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'com.github.ben-manes.versions' version '0.40.0'
@@ -226,9 +226,9 @@ dependencies {
     implementation 'com.github.hmcts:properties-volume-spring-boot-starter:0.1.1'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '10.0.16'
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.58'
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '10.0.20'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.2.1'
-    implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: '2.13.2.20220324', ext: 'pom'
+    implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: '2.13.2.20220328', ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '2.0.1'
     implementation(group: 'com.github.hmcts', name: 'auth-checker-lib', version: '2.1.4')
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'

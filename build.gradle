@@ -41,7 +41,7 @@ def versions = [
         pitest         : '1.7.4',
         springBoot     : '2.6.6',
         springHystrix  : '2.1.1.RELEASE',
-        spring         : '5.3.18',
+        spring         : '5.3.19',
         rest_assured   : '3.3.0',
         feign_jackson  : '9.7.0',
         log4JVersion   : '2.17.1'

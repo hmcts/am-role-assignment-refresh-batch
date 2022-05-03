@@ -12,10 +12,10 @@ buildscript {
 
 plugins {
     id 'application'
-    id 'uk.gov.hmcts.java' version '0.12.21'
+    id 'uk.gov.hmcts.java' version '0.12.23'
     id 'pmd'
     id 'jacoco'
-    id 'org.springframework.boot' version '2.6.6'
+    id 'org.springframework.boot' version '2.6.7'
     id 'info.solidsoft.pitest' version '1.7.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
@@ -214,18 +214,18 @@ dependencies {
     implementation(group: 'org.springframework', name: 'spring-context', version: versions.spring)
     implementation(group: 'org.springframework', name: 'spring-core', version: versions.spring)
 
-    implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.6.2'
-    implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.6.2'
+    implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.6.3'
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.6.3'
-    implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.6.2'
+    implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.6.3'
+    implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '5.6.3'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.10.RELEASE'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.0'
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.2'
 
     implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: versions.reformLogging
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.3'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.3.4'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
     implementation 'com.github.hmcts:properties-volume-spring-boot-starter:0.1.1'
     implementation 'commons-io:commons-io:20030203.000550'
@@ -236,7 +236,7 @@ dependencies {
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '2.0.1'
     implementation group: 'uk.gov.hmcts.reform.auth', name: 'auth-checker-lib', version: '2.1.4'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-    implementation group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.6.5'
+    implementation group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.8.0'
     implementation 'org.jetbrains:annotations:23.0.0'
     implementation group: 'org.springframework', name: 'spring-aop', version: '5.3.19'
     implementation group: 'org.springframework', name: 'spring-aspects', version: '5.3.19'
@@ -274,7 +274,7 @@ dependencies {
 
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson
-    testImplementation('com.opentable.components:otj-pg-embedded:1.0.0')
+    testImplementation('com.opentable.components:otj-pg-embedded:1.0.1')
     testImplementation 'com.github.hmcts:fortify-client:1.2.0:all'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok

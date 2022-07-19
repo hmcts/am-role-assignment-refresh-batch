@@ -63,13 +63,11 @@ public class BatchConfig extends DefaultBatchConfigurer {
             @Value("${idam.s2s-auth.totp_secret}") final String secret,
             @Value("${idam.s2s-auth.microservice}") final String microService,
             final ServiceAuthorisationApi serviceAuthorisationApi) {
-        log.info("secret -------------------------------->" + secret);
         return new ServiceAuthTokenGenerator(secret, microService, serviceAuthorisationApi);
     }
 
     @Bean
     public LDClient ldClient(@Value("${launchdarkly.sdk.key}") String sdkKey) {
-        log.info("sdkKey -------------------------------->" + sdkKey);
 
         return new LDClient(sdkKey);
     }

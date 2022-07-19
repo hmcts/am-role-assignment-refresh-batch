@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: Role Assignment Refresh Batch
+  config:
+    import: "optional:configtree:/mnt/secrets/am"
   batch:
     initialize-schema: always
     job:

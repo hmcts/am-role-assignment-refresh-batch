@@ -68,6 +68,7 @@ public class BatchConfig extends DefaultBatchConfigurer {
 
     @Bean
     public LDClient ldClient(@Value("${launchdarkly.sdk.key}") String sdkKey) {
+
         return new LDClient(sdkKey);
     }
 }

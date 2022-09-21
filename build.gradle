@@ -287,7 +287,6 @@ dependencies {
 configurations.all {
     exclude group: 'org.springframework.security', module: 'spring-security-rsa'
     exclude group: 'org.codehaus.jettison', module: 'jettison'
-    exclude group: 'org.springframework.security', module: 'spring-security-crypto'
 }
 
 test {

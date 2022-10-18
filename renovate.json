@@ -2,6 +2,4 @@
   "extends": [
     "config:base"
   ]
-  "separateMajorMinor": false,
-  "groupName": "all"
 }

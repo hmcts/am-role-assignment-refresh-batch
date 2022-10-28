@@ -53,7 +53,7 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
         logger.info(" Record count in refresh_jobs table : {}", getTotalRefreshJobsCount());
         int count = getTotalRefreshJobsCount();
         logger.info(" Total Jobs to refresh from refresh_job table...{} ", count);
-        assertEquals("Job Id", 4, count);
+        assertEquals(4, count);
     }
 
     @Test
@@ -79,17 +79,17 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
 
     @NotNull
     private List<String> getUserIdsBasedOnLinkedJobId(int linkedJobId) throws SQLException {
-        Array userIds = template.queryForObject(GET_FAILED_USER_IDS_QUERY, new Object[]{linkedJobId}, Array.class);
+        Array userIds = template.queryForObject(GET_FAILED_USER_IDS_QUERY, Array.class, new Object[]{linkedJobId});
         return Arrays.asList((String[]) userIds.getArray());
     }
 
     private Integer getLinkedJobIds() {
-        return template.queryForObject(GET_REFRESH_JOBS_FOR_FAILED_RECORDS_QUERY, new Object[]{REFRESH_JOB_STATUS},
-                Integer.class);
+        return template.queryForObject(GET_REFRESH_JOBS_FOR_FAILED_RECORDS_QUERY, Integer.class,
+                new Object[]{REFRESH_JOB_STATUS});
     }
 
     private Integer getNewRefreshJobs(Object[] parameters) {
-        return template.queryForObject(GET_REFRESH_JOBS_QUERY, parameters, Integer.class);
+        return template.queryForObject(GET_REFRESH_JOBS_QUERY, Integer.class, parameters);
     }
 
     private Integer getTotalRefreshJobsCount() {

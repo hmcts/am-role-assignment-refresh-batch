@@ -48,18 +48,16 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
     }
 
     @Test
-    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts =
-            {"classpath:sql/insert_refresh_jobs.sql"})
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:sql/insert_refresh_jobs.sql"})
     public void shouldGetAllRecordsFromRefreshJobs() {
         logger.info(" Record count in refresh_jobs table : {}", getTotalRefreshJobsCount());
         int count = getTotalRefreshJobsCount();
         logger.info(" Total Jobs to refresh from refresh_job table...{} ", count);
-        assertEquals("Job Id", 4, count);
+        assertEquals(4, count);
     }
 
     @Test
-    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts =
-            {"classpath:sql/insert_refresh_jobs.sql"})
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:sql/insert_refresh_jobs.sql"})
     public void shouldGetNewRecordsFromRefreshJobs() {
         int jobId = getNewRefreshJobs(new Object[]{REFRESH_JOB_STATUS});
         logger.info(" Job Id to refresh jobs from refresh_job table...{} ", jobId);
@@ -67,8 +65,7 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
     }
 
     @Test
-    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts =
-            {"classpath:sql/insert_refresh_jobs.sql"})
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:sql/insert_refresh_jobs.sql"})
     public void shouldGetNewRefreshJobsForFailedUsers() throws SQLException {
         int linkedJobId = getLinkedJobIds();
         logger.info(" Linked job Id fetched from refresh_job table...{} ", linkedJobId);
@@ -82,17 +79,17 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
 
     @NotNull
     private List<String> getUserIdsBasedOnLinkedJobId(int linkedJobId) throws SQLException {
-        Array userIds = template.queryForObject(GET_FAILED_USER_IDS_QUERY, new Object[]{linkedJobId}, Array.class);
+        Array userIds = template.queryForObject(GET_FAILED_USER_IDS_QUERY, Array.class, new Object[]{linkedJobId});
         return Arrays.asList((String[]) userIds.getArray());
     }
 
     private Integer getLinkedJobIds() {
-        return template.queryForObject(GET_REFRESH_JOBS_FOR_FAILED_RECORDS_QUERY, new Object[]{REFRESH_JOB_STATUS},
-                Integer.class);
+        return template.queryForObject(GET_REFRESH_JOBS_FOR_FAILED_RECORDS_QUERY, Integer.class,
+                new Object[]{REFRESH_JOB_STATUS});
     }
 
     private Integer getNewRefreshJobs(Object[] parameters) {
-        return template.queryForObject(GET_REFRESH_JOBS_QUERY, parameters, Integer.class);
+        return template.queryForObject(GET_REFRESH_JOBS_QUERY, Integer.class, parameters);
     }
 
     private Integer getTotalRefreshJobsCount() {

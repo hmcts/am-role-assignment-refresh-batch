@@ -48,8 +48,7 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
     }
 
     @Test
-    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts =
-            {"classpath:sql/insert_refresh_jobs.sql"})
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:sql/insert_refresh_jobs.sql"})
     public void shouldGetAllRecordsFromRefreshJobs() {
         logger.info(" Record count in refresh_jobs table : {}", getTotalRefreshJobsCount());
         int count = getTotalRefreshJobsCount();
@@ -58,8 +57,7 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
     }
 
     @Test
-    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts =
-            {"classpath:sql/insert_refresh_jobs.sql"})
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:sql/insert_refresh_jobs.sql"})
     public void shouldGetNewRecordsFromRefreshJobs() {
         int jobId = getNewRefreshJobs(new Object[]{REFRESH_JOB_STATUS});
         logger.info(" Job Id to refresh jobs from refresh_job table...{} ", jobId);
@@ -67,8 +65,7 @@ public class RoleAssignmentRefreshIntegrationTest extends BaseTest {
     }
 
     @Test
-    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts =
-            {"classpath:sql/insert_refresh_jobs.sql"})
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:sql/insert_refresh_jobs.sql"})
     public void shouldGetNewRefreshJobsForFailedUsers() throws SQLException {
         int linkedJobId = getLinkedJobIds();
         logger.info(" Linked job Id fetched from refresh_job table...{} ", linkedJobId);

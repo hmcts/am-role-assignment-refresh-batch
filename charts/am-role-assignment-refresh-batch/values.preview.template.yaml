@@ -18,8 +18,8 @@ job:
     #ORG_ROLE_MAPPING_DB_HOST: "{{ .Release.Name }}-postgresql"
     AM_ORM_URL: http://am-org-role-mapping-service-pr-989.service.core-compute-preview.internal
     ORG_ROLE_MAPPING_DB_HOST: am-org-role-mapping-service-pr-989-postgresql
-    ORG_ROLE_MAPPING_DB_NAME: "{{ .Values.postgresql.postgresqlDatabase}}"
-    ORG_ROLE_MAPPING_DB_USERNAME: "{{ .Values.postgresql.postgresqlUsername}}"
-    ORG_ROLE_MAPPING_DB_PASSWORD: "{{ .Values.postgresql.postgresqlPassword}}"
+    ORG_ROLE_MAPPING_DB_NAME: "{{ .Values.postgresql.auth.database}}"
+    ORG_ROLE_MAPPING_DB_USERNAME: "{{ .Values.postgresql.auth.username}}"
+    ORG_ROLE_MAPPING_DB_PASSWORD: "{{ .Values.postgresql.auth.password}}"
     ORG_ROLE_MAPPING_DB_PORT: 5432
     ORG_ROLE_MAPPING_DB_OPTIONS: "?stringtype=unspecified"

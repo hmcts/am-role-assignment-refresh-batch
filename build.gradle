@@ -31,20 +31,20 @@ apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 
 def versions = [
-        junit          : '5.5.0',
-        lombok         : '1.18.22',
-        reformLogging  : '5.1.7',
-        reformS2sClient: '4.0.2',
+        junit          : '5.9.1',
+        lombok         : '1.18.24',
+        reformLogging  : '5.1.9',
+        reformS2sClient: '4.1.1',
         serenity       : '2.1.0',
         sonarPitest    : '0.5',
         pitest         : '1.7.4',
         springBoot     : '2.7.6',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.20',
-        springSecurity : '5.7.5',
+        springSecurity : '5.8.0',
         rest_assured   : '3.3.0',
-        feign_jackson  : '9.7.0',
-        log4JVersion   : '2.17.2'
+        feign_jackson  : '12.1',
+        log4JVersion   : '2.19.0'
 ]
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'
@@ -227,7 +227,7 @@ dependencies {
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
     implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: versions.reformLogging
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
-    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'com.github.hmcts:properties-volume-spring-boot-starter:0.1.1'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '9.0.69'
@@ -301,7 +301,7 @@ dependencyManagement {
             entry 'log4j-api'
             entry 'log4j-to-slf4j'
         }
-        dependencySet(group: 'com.fasterxml.jackson.core', version: '2.13.2') {
+        dependencySet(group: 'com.fasterxml.jackson.core', version: '2.14.1') {
             entry 'jackson-databind'
             entry 'jackson-core'
             entry 'jackson-annotations'

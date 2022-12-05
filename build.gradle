@@ -34,7 +34,7 @@ def versions = [
         junit          : '5.5.0',
         lombok         : '1.18.24',
         reformLogging  : '5.1.7',
-        reformS2sClient: '4.0.2',
+        reformS2sClient: '4.1.1',
         serenity       : '2.1.0',
         sonarPitest    : '0.5',
         pitest         : '1.7.4',

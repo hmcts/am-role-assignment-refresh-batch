@@ -237,7 +237,7 @@ dependencies {
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '2.1.1'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
     implementation group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.10.2'
-    implementation 'org.jetbrains:annotations:23.0.0'
+    implementation 'org.jetbrains:annotations:23.1.0'
     implementation group: 'org.springframework', name: 'spring-aop', version: '5.3.23'
     implementation group: 'org.springframework', name: 'spring-aspects', version: '5.3.23'
     implementation group: 'org.springframework', name: 'spring-expression', version: '5.3.23'

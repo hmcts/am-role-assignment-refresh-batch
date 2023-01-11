@@ -40,7 +40,7 @@ def versions = [
         pitest         : '1.7.4',
         springBoot     : '2.6.7',
         springHystrix  : '2.1.1.RELEASE',
-        spring         : '5.3.20',
+        spring         : '5.3.25',
         springSecurity : '5.8.0',
         rest_assured   : '3.3.0',
         feign_jackson  : '12.1',
@@ -238,15 +238,15 @@ dependencies {
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
     implementation group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.10.2'
     implementation 'org.jetbrains:annotations:23.0.0'
-    implementation group: 'org.springframework', name: 'spring-aop', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-aspects', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-expression', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-jcl', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.23'
+    implementation group: 'org.springframework', name: 'spring-aop', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-aspects', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-expression', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-jcl', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.25'
 
 
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'

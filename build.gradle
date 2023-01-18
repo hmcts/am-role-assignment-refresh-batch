@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
     id 'application'
-    id 'uk.gov.hmcts.java' version '0.12.32'
+    id 'uk.gov.hmcts.java' version '0.12.36'
     id 'pmd'
     id 'jacoco'
     id 'org.springframework.boot' version '2.6.7'
@@ -31,16 +31,16 @@ apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
 
 def versions = [
-        junit          : '5.9.1',
+        junit          : '5.9.2',
         lombok         : '1.18.24',
         reformLogging  : '5.1.9',
-        reformS2sClient: '4.1.1',
+        reformS2sClient: '5.0.0',
         serenity       : '2.1.0',
         sonarPitest    : '0.5',
-        pitest         : '1.7.4',
+        pitest         : '1.10.4',
         springBoot     : '2.6.7',
         springHystrix  : '2.1.1.RELEASE',
-        spring         : '5.3.20',
+        spring         : '5.3.25',
         springSecurity : '5.8.0',
         rest_assured   : '3.3.0',
         feign_jackson  : '12.1',
@@ -231,22 +231,22 @@ dependencies {
     implementation 'com.github.hmcts:properties-volume-spring-boot-starter:0.1.1'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '9.0.69'
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.69'
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.71'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.1'
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: '2.14.1', ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '2.1.1'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-    implementation group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.10.2'
+    implementation group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.10.5'
     implementation 'org.jetbrains:annotations:23.0.0'
-    implementation group: 'org.springframework', name: 'spring-aop', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-aspects', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-expression', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-jcl', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.23'
-    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.23'
+    implementation group: 'org.springframework', name: 'spring-aop', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-aspects', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-expression', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-jcl', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.25'
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.25'
 
 
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'

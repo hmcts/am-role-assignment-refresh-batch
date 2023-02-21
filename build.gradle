@@ -45,7 +45,7 @@ def versions = [
         springSecurity : '5.8.0',
         rest_assured   : '3.3.0',
         feign_jackson  : '12.1',
-        log4JVersion   : '2.19.0'
+        log4JVersion   : '2.20.0'
 ]
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'

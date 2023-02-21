@@ -42,7 +42,7 @@ def versions = [
         springBoot     : '2.6.7',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.25',
-        springSecurity : '5.8.0',
+        springSecurity : '5.8.2',
         rest_assured   : '3.3.0',
         feign_jackson  : '12.1',
         log4JVersion   : '2.19.0'

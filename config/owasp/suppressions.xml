@@ -38,6 +38,10 @@
     <notes>cucumber:datatable pom contains com.googlecode.java-diff-utils:diffutils which has the CVE vulnerability, no fix has been released yet for this</notes>
     <cve>CVE-2021-4277</cve>
   </suppress>
+   <suppress until="2023-07-05">
+     <notes>suppressing due to no working updated version for jackson</notes>
+     <cve>CVE-2022-45688</cve>
+  </suppress>
     <suppress>
         <notes>SpringBoot only uses snakeYaml to parse application.yaml file so this security vulnerability should not be a risk, info in AM-2517 comments</notes>
         <packageUrl regex="true">^pkg:maven/org\.yaml/snakeyaml@.*$</packageUrl>

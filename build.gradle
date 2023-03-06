@@ -52,7 +52,7 @@ mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefresh
 def jarName = 'am-role-assignment-refresh-batch.jar'
 
 pmd {
-    toolVersion = '6.54.0'
+    toolVersion = '6.55.0'
     sourceSets = []
 }
 

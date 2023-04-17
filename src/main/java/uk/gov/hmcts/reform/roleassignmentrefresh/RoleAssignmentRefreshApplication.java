@@ -26,6 +26,7 @@ public class RoleAssignmentRefreshApplication {
     public RoleAssignmentRefreshApplication(TelemetryClient client) {
         RoleAssignmentRefreshApplication.client = client;
     }
+
     public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(RoleAssignmentRefreshApplication.class, args);
 

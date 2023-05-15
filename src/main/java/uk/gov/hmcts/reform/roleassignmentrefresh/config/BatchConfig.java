@@ -63,6 +63,7 @@ public class BatchConfig extends DefaultBatchConfigurer {
             @Value("${idam.s2s-auth.totp_secret}") final String secret,
             @Value("${idam.s2s-auth.microservice}") final String microService,
             final ServiceAuthorisationApi serviceAuthorisationApi) {
+        log.info("Creating ServiceAuthTokenGenerator: {}", secret);
         return new ServiceAuthTokenGenerator(secret, microService, serviceAuthorisationApi);
     }
 

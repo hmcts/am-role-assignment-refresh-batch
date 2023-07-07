@@ -15,7 +15,7 @@ plugins {
     id 'uk.gov.hmcts.java' version '0.12.43'
     id 'pmd'
     id 'jacoco'
-    id 'org.springframework.boot' version '2.7.9'
+    id 'org.springframework.boot' version '2.7.12'
     id 'info.solidsoft.pitest' version '1.7.4'
     id 'io.spring.dependency-management' version '1.1.0'
     id 'java'
@@ -41,10 +41,10 @@ def versions = [
         serenity       : '2.2.12',
         sonarPitest    : '0.5',
         pitest         : '1.12.0',
-        springBoot     : '2.7.9',
+        springBoot     : '2.7.12',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.27',
-        springSecurity : '5.8.2',
+        springSecurity : '5.8.3',
         rest_assured   : '3.3.0',
         feign_jackson  : '12.3',
         log4JVersion   : '2.20.0'
@@ -228,30 +228,31 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'com.github.hmcts.java-logging', name: 'logging-appinsights', version: versions.reformLogging
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'com.github.hmcts:properties-volume-spring-boot-starter:0.1.1'
     implementation 'commons-io:commons-io:20030203.000550'
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '9.0.72'
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.74'
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '9.0.76'
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.76'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.2'
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: '2.15.0', ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.0.0'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
     implementation group: 'com.launchdarkly', name: 'launchdarkly-java-server-sdk' , version: '5.10.8'
     implementation 'org.jetbrains:annotations:24.0.0'
-    implementation group: 'org.springframework', name: 'spring-aop', version: '5.3.27'
-    implementation group: 'org.springframework', name: 'spring-aspects', version: '5.3.27'
-    implementation group: 'org.springframework', name: 'spring-expression', version: '5.3.27'
-    implementation group: 'org.springframework', name: 'spring-jcl', version: '5.3.27'
-    implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.3.27'
-    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.27'
-    implementation group: 'org.springframework', name: 'spring-tx', version: '5.3.27'
-    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.27'
-    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.27'
+    implementation group: 'org.springframework', name: 'spring-aop', version: versions.spring
+    implementation group: 'org.springframework', name: 'spring-aspects', version: versions.spring
+    implementation group: 'org.springframework', name: 'spring-expression', version: versions.spring
+    implementation group: 'org.springframework', name: 'spring-jcl', version: versions.spring
+    implementation group: 'org.springframework', name: 'spring-jdbc', version: versions.spring
+    implementation group: 'org.springframework', name: 'spring-orm', version: versions.spring
+    implementation group: 'org.springframework', name: 'spring-tx', version: versions.spring
+    implementation group: 'org.springframework', name: 'spring-web', version: versions.spring
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
 
+    implementation group: 'com.microsoft.azure', name: 'applicationinsights-spring-boot-starter', version: '2.6.4'
+    
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
     testImplementation 'org.springframework.batch:spring-batch-test:5.0.1'
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {

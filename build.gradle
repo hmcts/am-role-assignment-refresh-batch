@@ -34,7 +34,7 @@ apply plugin: 'io.spring.dependency-management'
 ext['snakeyaml.version'] = '1.32'
 
 def versions = [
-        junit          : '5.9.2',
+        junit          : '5.9.3',
         lombok         : '1.18.26',
         reformLogging  : '5.1.9',
         reformS2sClient: '4.0.2',

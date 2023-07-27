@@ -49,6 +49,8 @@ roleAssignmentRefreshBatchUrl: ${TEST_URL:http://localhost:5333}
 refresh-orm-records: refresh-orm-records
 batchjob-name: refreshORMRulesBatchJob
 batch-size: 20
+refresh-job-delay-enabled: ${REFRESH_JOB_DELAY_ENABLED:false}
+refresh-job-delay-duration: ${REFRESH_JOB_DELAY_DURATION:1000}
 
 idam:
   s2s-auth:

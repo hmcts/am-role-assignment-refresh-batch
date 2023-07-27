@@ -3,6 +3,7 @@ package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,12 @@ public class RefreshJobsOrchestrator {
 
     private final PersistenceService persistenceService;
     private final SendJobDetailsService jobDetailsService;
+
+    @Value("${refresh-job-delay-enabled}")
+    private boolean refreshJobDelayEnabled;
+
+    @Value("${refresh-job-delay-duration}")
+    private int refreshJobDelayDuration;
 
     @Autowired
     public RefreshJobsOrchestrator(PersistenceService persistenceService,
@@ -41,6 +48,13 @@ public class RefreshJobsOrchestrator {
                 RefreshJobEntity linkedJob = persistenceService.getByJobId(job.getLinkedJobId());
                 if (Objects.nonNull(linkedJob) && ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
                     sendJobToORMService(job.getJobId(), UserRequest.builder().userIds(linkedJob.getUserIds()).build());
+                }
+            }
+            if (refreshJobDelayEnabled) {
+                try {
+                    Thread.sleep(refreshJobDelayDuration);
+                } catch (InterruptedException e) {
+                    log.error("Role Assignment Refresh Batch delay was interrupted");
                 }
             }
         }

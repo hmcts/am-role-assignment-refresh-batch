@@ -92,7 +92,7 @@ class RefreshJobsOrchestratorTest {
     }
 
     @Test
-    void verifyExceptionThrownDuringProcessRefreshJobsWithDelayIfInterrupted() {
+    void verifyInterruptExceptionHandledDuringProcessRefreshJobsWithDelayIfInterrupted() {
 
         ReflectionTestUtils.setField(sut, "refreshJobDelayDuration", 500);
 
@@ -109,11 +109,9 @@ class RefreshJobsOrchestratorTest {
         // ensure that delay is interrupted
         Thread.currentThread().interrupt();
 
-        RuntimeException exception = assertThrows(RuntimeException.class, sut::processRefreshJobs);
+        sut.processRefreshJobs();
 
-        verify(ormFeignClient, times(1)).sendJobToRoleAssignmentBatchService(any(), any());
-        assertThat(exception.getMessage(),
-                containsString("Refresh batch delay interrupted whilst executing refresh batch job"));
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
     @Test

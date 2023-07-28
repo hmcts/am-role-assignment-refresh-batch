@@ -60,7 +60,8 @@ public class RefreshJobsOrchestrator {
         try {
             Thread.sleep(refreshJobDelayDuration);
         } catch (InterruptedException e) {
-            throw new RuntimeException("Refresh batch delay interrupted whilst executing refresh batch job");
+            log.error("Refresh batch delay interrupted whilst executing refresh batch job");
+            Thread.currentThread().interrupt();
         }
     }
 

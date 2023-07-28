@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 import uk.gov.hmcts.reform.roleassignmentrefresh.helper.TestDataBuilder;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
@@ -18,6 +19,8 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDe
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -66,6 +69,51 @@ class RefreshJobsOrchestratorTest {
         assertTrue(true);
 
         verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
+    }
+
+    @Test
+    void verifyProcessRefreshJobsWithDelay() {
+
+        ReflectionTestUtils.setField(sut, "refreshJobDelayDuration", 500);
+
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
+        when(refreshJobRepository.findById(any(Long.class)))
+                .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
+
+        when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+
+        sut.processRefreshJobs();
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
+    }
+
+    @Test
+    void verifyExceptionThrownDuringProcessRefreshJobsWithDelayIfInterrupted() {
+
+        ReflectionTestUtils.setField(sut, "refreshJobDelayDuration", 500);
+
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
+        when(refreshJobRepository.findById(any(Long.class)))
+                .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
+
+        when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+
+        // ensure that delay is interrupted
+        Thread.currentThread().interrupt();
+
+        RuntimeException exception = assertThrows(RuntimeException.class, sut::processRefreshJobs);
+
+        verify(ormFeignClient, times(1)).sendJobToRoleAssignmentBatchService(any(), any());
+        assertThat(exception.getMessage(),
+                containsString("Refresh batch delay interrupted whilst executing refresh batch job"));
     }
 
     @Test

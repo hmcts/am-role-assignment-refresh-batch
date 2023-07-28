@@ -23,11 +23,8 @@ public class RefreshJobsOrchestrator {
     private final PersistenceService persistenceService;
     private final SendJobDetailsService jobDetailsService;
 
-    @Value("${refresh-job-delay-enabled}")
-    private boolean refreshJobDelayEnabled;
-
     @Value("${refresh-job-delay-duration}")
-    private int refreshJobDelayDuration;
+    private long refreshJobDelayDuration;
 
     @Autowired
     public RefreshJobsOrchestrator(PersistenceService persistenceService,
@@ -50,17 +47,21 @@ public class RefreshJobsOrchestrator {
                     sendJobToORMService(job.getJobId(), UserRequest.builder().userIds(linkedJob.getUserIds()).build());
                 }
             }
-            if (refreshJobDelayEnabled) {
-                try {
-                    Thread.sleep(refreshJobDelayDuration);
-                } catch (InterruptedException e) {
-                    log.error("Role Assignment Refresh Batch delay was interrupted");
-                }
+            if (refreshJobDelayDuration > 0) {
+                refreshJobDelay(refreshJobDelayDuration);
             }
         }
         log.info(" >> Refresh Batch Job({}) execution finished at {} . Time taken = {} milliseconds",
                 jobs.size(), System.currentTimeMillis(), Math.subtractExact(System.currentTimeMillis(), startTime)
         );
+    }
+
+    private void refreshJobDelay(final long refreshJobDelayDuration) {
+        try {
+            Thread.sleep(refreshJobDelayDuration);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Refresh batch delay interrupted whilst executing refresh batch job");
+        }
     }
 
     private void sendJobToORMService(Long jobId, UserRequest userRequest) {

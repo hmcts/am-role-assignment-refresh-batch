@@ -36,7 +36,7 @@ ext['snakeyaml.version'] = '2.0'
 def versions = [
         junit          : '5.9.3',
         lombok         : '1.18.28',
-        reformLogging  : '5.1.9',
+        reformLogging  : '6.0.1',
         reformS2sClient: '4.0.2',
         serenity       : '2.2.12',
         sonarPitest    : '0.5',

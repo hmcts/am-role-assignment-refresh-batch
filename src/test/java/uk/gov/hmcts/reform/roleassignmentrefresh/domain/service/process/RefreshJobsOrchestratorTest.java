@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 import uk.gov.hmcts.reform.roleassignmentrefresh.helper.TestDataBuilder;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
@@ -64,6 +65,49 @@ class RefreshJobsOrchestratorTest {
 
         sut.processRefreshJobs();
         assertTrue(true);
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
+    }
+
+    @Test
+    void verifyProcessRefreshJobsWithDelay() {
+
+        ReflectionTestUtils.setField(sut, "refreshJobDelayDuration", 500);
+
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
+        when(refreshJobRepository.findById(any(Long.class)))
+                .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
+
+        when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+
+        sut.processRefreshJobs();
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
+    }
+
+    @Test
+    void verifyInterruptExceptionHandledDuringProcessRefreshJobsWithDelayIfInterrupted() {
+
+        ReflectionTestUtils.setField(sut, "refreshJobDelayDuration", 500);
+
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
+        when(refreshJobRepository.findById(any(Long.class)))
+                .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
+
+        when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+
+        // ensure that delay is interrupted
+        Thread.currentThread().interrupt();
+
+        sut.processRefreshJobs();
 
         verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
     }

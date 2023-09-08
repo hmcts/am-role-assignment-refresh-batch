@@ -20,7 +20,7 @@ public class FeignClientInterceptor {
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
-            log.debug("The Request template URL is {}",requestTemplate.url());
+            log.info("The Request template URL is {}",requestTemplate.url());
             if (!requestTemplate.url().equals("/lease")) {
                 requestTemplate.header("ServiceAuthorization", BEARER + securityUtils.getServiceToken());
                 requestTemplate.header(HttpHeaders.AUTHORIZATION, BEARER + securityUtils.getUserToken());

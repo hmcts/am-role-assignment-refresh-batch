@@ -21,7 +21,7 @@ public class FeignClientInterceptor {
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
             log.info("The Request template URL is {}",requestTemplate.url());
-            if (!requestTemplate.url().equals("/lease") || !requestTemplate.url().equals("/o/token")) {
+            if (!requestTemplate.url().equals("/lease") && !requestTemplate.url().equals("/o/token")) {
                 requestTemplate.header("ServiceAuthorization", BEARER + securityUtils.getServiceToken());
                 requestTemplate.header(HttpHeaders.AUTHORIZATION, BEARER + securityUtils.getUserToken());
                 requestTemplate.header(HttpHeaders.CONTENT_TYPE, "application/json");

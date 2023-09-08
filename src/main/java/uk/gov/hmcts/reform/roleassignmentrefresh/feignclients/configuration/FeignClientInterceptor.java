@@ -20,10 +20,12 @@ public class FeignClientInterceptor {
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
-            log.info("The Request template URL is {}",requestTemplate.url());
-            requestTemplate.header("ServiceAuthorization", BEARER + securityUtils.getServiceToken());
-            requestTemplate.header(HttpHeaders.AUTHORIZATION, BEARER + securityUtils.getUserToken());
-            requestTemplate.header(HttpHeaders.CONTENT_TYPE, "application/json");
+            log.debug("The Request template URL is {}",requestTemplate.url());
+            if (!requestTemplate.url().equals("/lease")) {
+                requestTemplate.header("ServiceAuthorization", BEARER + securityUtils.getServiceToken());
+                requestTemplate.header(HttpHeaders.AUTHORIZATION, BEARER + securityUtils.getUserToken());
+                requestTemplate.header(HttpHeaders.CONTENT_TYPE, "application/json");
+            }
         };
     }
 

@@ -53,17 +53,17 @@ refresh-job-delay-duration: ${REFRESH_JOB_DELAY_DURATION:60000}
 
 idam:
   s2s-auth:
-    totp_secret: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET:AAAAAAAAAAAAAAAA}
+    totp_secret: ${AM_ROLE_ASSIGNMENT_REFRESH_BATCH_SECRET:}
     microservice: am_role_assignment_refresh_batch
     url: ${IDAM_S2S_URL:http://localhost:4502}
   api.url: ${IDAM_USER_URL:http://localhost:5000}
   client:
     id: ${ORM_IDAM_CLIENT_ID:am_docker}
-    secret: ${ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET:am_docker_secret}
+    secret: ${ORG_ROLE_MAPPING_IDAM_CLIENT_SECRET:}
     redirect_uri: ${ORG_ROLE_MAPPING_IDAM_REDIRECT_URI:http://localhost:4096/oauth2redirect}
     admin:
-      userId: orm.admin@hmcts.net
-      secret: ${ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD:Pa55word11}
+      userId: ${ORG_ROLE_MAPPING_IDAM_ADMIN_USERID:}
+      secret: ${ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD:}
       scope: ${ORG_ROLE_MAPPING_IDAM_ADMIN_SCOPE:openid profile roles authorities}
 
 logging.level.uk.gov.hmcts: ${APPLICATION_LOGGING_LEVEL:INFO}

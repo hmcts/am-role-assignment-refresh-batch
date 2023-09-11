@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process.RefreshJobsOrchestrator;
 import uk.gov.hmcts.reform.roleassignmentrefresh.launchdarkly.FeatureConditionEvaluator;
+import io.opentelemetry.api.trace.SpanKind;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
+
 
 @Component
 public class RefreshORMRules implements Tasklet {
@@ -25,6 +28,7 @@ public class RefreshORMRules implements Tasklet {
     private FeatureConditionEvaluator featureConditionEvaluator;
 
     @Override
+    @WithSpan(value = "Refresh ORM Rules ", kind = SpanKind.SERVER)
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
         if (featureConditionEvaluator.isFlagEnabled(SERVICE_NAME, "orm-refresh-role")) {
             log.debug("Refresh Job task starts::");

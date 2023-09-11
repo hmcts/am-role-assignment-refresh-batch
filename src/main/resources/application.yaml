@@ -66,6 +66,8 @@ idam:
       secret: ${ORG_ROLE_MAPPING_IDAM_ADMIN_PASSWORD:}
       scope: ${ORG_ROLE_MAPPING_IDAM_ADMIN_SCOPE:openid profile roles authorities}
 
+logging.level.uk.gov.hmcts: ${APPLICATION_LOGGING_LEVEL:INFO}
+
 launchdarkly:
   sdk:
     key: ${LD_SDK_KEY:}

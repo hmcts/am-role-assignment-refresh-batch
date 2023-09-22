@@ -11,6 +11,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.UnprocessableE
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendGetUserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 
 import java.util.List;
@@ -22,20 +23,26 @@ public class RefreshJobsOrchestrator {
 
     private final PersistenceService persistenceService;
     private final SendJobDetailsService jobDetailsService;
+    private final SendGetUserCountService userCountService;
 
     @Value("${refresh-job-delay-duration}")
     private long refreshJobDelayDuration;
 
     @Autowired
     public RefreshJobsOrchestrator(PersistenceService persistenceService,
-                                   SendJobDetailsService jobDetailsService) {
+                                   SendJobDetailsService jobDetailsService,
+                                   SendGetUserCountService userCountService) {
         this.persistenceService = persistenceService;
         this.jobDetailsService = jobDetailsService;
+        this.userCountService = userCountService;
 
     }
 
     public void processRefreshJobs() {
-        long startTime = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
+        log.info("Calling RAS User Count Before Refresh");
+        sendGetUserCountToRASService();
+
         // Get new job entries for refresh
         List<RefreshJobEntity> jobs =  persistenceService.getNewJobs();
         for (RefreshJobEntity job: jobs) {
@@ -51,6 +58,9 @@ public class RefreshJobsOrchestrator {
                 refreshJobDelay(refreshJobDelayDuration);
             }
         }
+        log.info("Calling RAS User Count After Refresh");
+        sendGetUserCountToRASService();
+
         log.info(" >> Refresh Batch Job({}) execution finished at {} . Time taken = {} milliseconds",
                 jobs.size(), System.currentTimeMillis(), Math.subtractExact(System.currentTimeMillis(), startTime)
         );
@@ -67,6 +77,13 @@ public class RefreshJobsOrchestrator {
 
     private void sendJobToORMService(Long jobId, UserRequest userRequest) {
         ResponseEntity<Object> responseEntity =  jobDetailsService.sendToRoleAssignmentBatchService(jobId, userRequest);
+        if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
+            throw new UnprocessableEntityException(responseEntity.toString());
+        }
+    }
+
+    private void sendGetUserCountToRASService() {
+        ResponseEntity<Object> responseEntity =  userCountService.sendGetUserCountToRoleAssignmentService();
         if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
             throw new UnprocessableEntityException(responseEntity.toString());
         }

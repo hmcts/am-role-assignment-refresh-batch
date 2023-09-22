@@ -8,13 +8,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.RASFeignClient;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendGetUserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.helper.TestDataBuilder;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +36,7 @@ class RefreshJobsOrchestratorTest {
     private final RefreshJobRepository refreshJobRepository = mock(RefreshJobRepository.class);
 
     private final ORMFeignClient ormFeignClient = mock(ORMFeignClient.class);
+    private final RASFeignClient rasFeignClient = mock(RASFeignClient.class);
 
     @InjectMocks
     private final PersistenceService persistenceService = new PersistenceService();
@@ -42,7 +45,11 @@ class RefreshJobsOrchestratorTest {
     private final SendJobDetailsService sendJobDetailsService = new SendJobDetailsService(ormFeignClient);
 
     @InjectMocks
-    private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService);
+    private final SendGetUserCountService sendGetUserCountService = new SendGetUserCountService(rasFeignClient);
+
+    @InjectMocks
+    private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService,
+            sendGetUserCountService);
 
     @BeforeEach
     void setUp() {

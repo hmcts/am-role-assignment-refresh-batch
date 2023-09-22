@@ -58,6 +58,7 @@ public class RefreshJobsOrchestrator {
                 refreshJobDelay(refreshJobDelayDuration);
             }
         }
+
         log.info("Calling RAS User Count After Refresh");
         sendGetUserCountToRASService();
 
@@ -82,7 +83,7 @@ public class RefreshJobsOrchestrator {
         }
     }
 
-    private void sendGetUserCountToRASService() {
+    public void sendGetUserCountToRASService() {
         ResponseEntity<Object> responseEntity =  userCountService.sendGetUserCountToRoleAssignmentService();
         if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
             throw new UnprocessableEntityException(responseEntity.toString());

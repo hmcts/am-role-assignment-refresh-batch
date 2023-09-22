@@ -36,6 +36,8 @@ public class RefreshORMRules implements Tasklet {
             log.debug("Refresh Job is successful");
         } else {
             log.info("Launch Darkly flag is not enabled for the batch job.");
+            // always call RAS User Count
+            refreshJobsOrchestrator.sendGetUserCountToRASService();
         }
         return RepeatStatus.FINISHED;
     }

@@ -1,12 +1,11 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.task;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.repeat.RepeatStatus;
@@ -15,11 +14,12 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.launchdarkly.FeatureConditionEv
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
-@RunWith(MockitoJUnitRunner.class)
-public class RefreshORMRulesTest {
+class RefreshORMRulesTest {
     @Mock
     private RefreshJobsOrchestrator refreshJobsOrchestrator;
 
@@ -29,22 +29,23 @@ public class RefreshORMRulesTest {
     @InjectMocks
     RefreshORMRules refreshORMRules;
 
-    @Before
+    @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void verifyBatchJobFromTaskTest() {
+    void verifyBatchJobFromTaskTest() {
         when(featureConditionEvaluator.isFlagEnabled(any(), any())).thenReturn(true);
         RepeatStatus status = refreshORMRules.execute(mock(StepContribution.class), mock(ChunkContext.class));
         assertEquals(RepeatStatus.FINISHED, status);
     }
 
     @Test
-    public void shouldFinishTaskWhenLDIsDisabled() {
+    void shouldFinishTaskWhenLDIsDisabled() {
         when(featureConditionEvaluator.isFlagEnabled(any(), any())).thenReturn(false);
         RepeatStatus status = refreshORMRules.execute(mock(StepContribution.class), mock(ChunkContext.class));
         assertEquals(RepeatStatus.FINISHED, status);
+        verify(refreshJobsOrchestrator, times(1)).sendGetUserCountToRASService();
     }
 }

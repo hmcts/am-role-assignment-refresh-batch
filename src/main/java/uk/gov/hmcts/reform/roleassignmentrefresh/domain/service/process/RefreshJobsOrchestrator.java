@@ -85,8 +85,8 @@ public class RefreshJobsOrchestrator {
 
     public void sendGetUserCountToRASService() {
         ResponseEntity<Object> responseEntity =  userCountService.sendGetUserCountToRoleAssignmentService();
-        if (responseEntity.getStatusCode() != HttpStatus.ACCEPTED) {
-            throw new UnprocessableEntityException(responseEntity.toString());
+        if (responseEntity.getStatusCode() != HttpStatus.OK) {
+            log.error("Error return from RAS User Count: " + responseEntity.toString());
         }
     }
 }

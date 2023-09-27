@@ -15,7 +15,7 @@ class UserCountServiceTest {
     UserCountService sut = new UserCountService(rasFeignClient);
 
     @Test
-    void shouldReturnSuccessResponseTest() {
+    void getRasUserCountsReturnSuccessTest() {
         Mockito.when(rasFeignClient.getUserCounts())
                 .thenReturn(ResponseEntity.status(HttpStatus.CREATED).body("UserCountRequest"));
         ResponseEntity<Object> responseEntity = sut.getRasUserCounts();

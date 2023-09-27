@@ -46,6 +46,6 @@ class RefreshORMRulesTest {
         when(featureConditionEvaluator.isFlagEnabled(any(), any())).thenReturn(false);
         RepeatStatus status = refreshORMRules.execute(mock(StepContribution.class), mock(ChunkContext.class));
         assertEquals(RepeatStatus.FINISHED, status);
-        verify(refreshJobsOrchestrator, times(1)).sendGetUserCountToRASService();
+        verify(refreshJobsOrchestrator, times(1)).triggerRASUserCount();
     }
 }

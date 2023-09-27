@@ -11,7 +11,7 @@ public class RASFeignClientFallback implements RASFeignClient {
     public static final String RAS_API_NOT_AVAILABLE = "The RAS API Service is not available";
 
     @Override
-    public ResponseEntity<Object> sendGetUserCountToRoleAssignmentService() {
+    public ResponseEntity<Object> getUserCounts() {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(RAS_API_NOT_AVAILABLE);
     }
 }

@@ -13,5 +13,5 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.feignclients.configuration.RASF
 public interface RASFeignClient {
 
     @GetMapping(value = "/am/role-assignments/user-count")
-    ResponseEntity<Object> sendGetUserCountToRoleAssignmentService();
+    ResponseEntity<Object> getUserCounts();
 }

@@ -11,7 +11,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.UnprocessableE
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendGetUserCountService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.UserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class RefreshJobsOrchestrator {
 
     private final PersistenceService persistenceService;
     private final SendJobDetailsService jobDetailsService;
-    private final SendGetUserCountService userCountService;
+    private final UserCountService userCountService;
 
     @Value("${refresh-job-delay-duration}")
     private long refreshJobDelayDuration;
@@ -31,7 +31,7 @@ public class RefreshJobsOrchestrator {
     @Autowired
     public RefreshJobsOrchestrator(PersistenceService persistenceService,
                                    SendJobDetailsService jobDetailsService,
-                                   SendGetUserCountService userCountService) {
+                                   UserCountService userCountService) {
         this.persistenceService = persistenceService;
         this.jobDetailsService = jobDetailsService;
         this.userCountService = userCountService;
@@ -41,7 +41,7 @@ public class RefreshJobsOrchestrator {
     public void processRefreshJobs() {
         final long startTime = System.currentTimeMillis();
         log.info("Calling RAS User Count Before Refresh");
-        sendGetUserCountToRASService();
+        triggerRASUserCount();
 
         // Get new job entries for refresh
         List<RefreshJobEntity> jobs =  persistenceService.getNewJobs();
@@ -60,7 +60,7 @@ public class RefreshJobsOrchestrator {
         }
 
         log.info("Calling RAS User Count After Refresh");
-        sendGetUserCountToRASService();
+        triggerRASUserCount();
 
         log.info(" >> Refresh Batch Job({}) execution finished at {} . Time taken = {} milliseconds",
                 jobs.size(), System.currentTimeMillis(), Math.subtractExact(System.currentTimeMillis(), startTime)
@@ -83,8 +83,8 @@ public class RefreshJobsOrchestrator {
         }
     }
 
-    public void sendGetUserCountToRASService() {
-        ResponseEntity<Object> responseEntity =  userCountService.sendGetUserCountToRoleAssignmentService();
+    public void triggerRASUserCount() {
+        ResponseEntity<Object> responseEntity =  userCountService.getRasUserCounts();
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             log.error("Error return from RAS User Count: " + responseEntity.toString());
         }

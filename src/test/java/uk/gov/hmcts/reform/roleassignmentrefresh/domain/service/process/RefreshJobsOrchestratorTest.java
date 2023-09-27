@@ -12,7 +12,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignC
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.RASFeignClient;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendGetUserCountService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.UserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.helper.TestDataBuilder;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
@@ -45,11 +45,11 @@ class RefreshJobsOrchestratorTest {
     private final SendJobDetailsService sendJobDetailsService = new SendJobDetailsService(ormFeignClient);
 
     @InjectMocks
-    private final SendGetUserCountService sendGetUserCountService = new SendGetUserCountService(rasFeignClient);
+    private final UserCountService userCountService = new UserCountService(rasFeignClient);
 
     @InjectMocks
     private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService,
-            sendGetUserCountService);
+            userCountService);
 
     @BeforeEach
     void setUp() {
@@ -70,7 +70,7 @@ class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
 
-        when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         sut.processRefreshJobs();
@@ -94,7 +94,7 @@ class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
 
-        when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         sut.processRefreshJobs();
@@ -117,7 +117,7 @@ class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
 
-        when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         // ensure that delay is interrupted
@@ -134,7 +134,7 @@ class RefreshJobsOrchestratorTest {
         when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
                 .thenReturn(Collections.emptyList());
 
-        when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.FORBIDDEN));
 
         sut.processRefreshJobs();
@@ -148,7 +148,7 @@ class RefreshJobsOrchestratorTest {
         when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
                 .thenReturn(Collections.emptyList());
 
-        when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         sut.processRefreshJobs();
@@ -169,7 +169,7 @@ class RefreshJobsOrchestratorTest {
                 .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
-        when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         sut.processRefreshJobs();
@@ -192,7 +192,7 @@ class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         RuntimeException thrown = assertThrows(RuntimeException.class, sut::processRefreshJobs,
@@ -217,7 +217,7 @@ class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
-        when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         RuntimeException thrown = assertThrows(RuntimeException.class, sut::processRefreshJobs,

@@ -8,17 +8,17 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-class SendGetUserCountServiceTest {
+class UserCountServiceTest {
 
     RASFeignClient rasFeignClient = mock(RASFeignClient.class);
 
-    SendGetUserCountService sut = new SendGetUserCountService(rasFeignClient);
+    UserCountService sut = new UserCountService(rasFeignClient);
 
     @Test
-    void sendToRoleAssignmentBatchServiceTest() {
-        Mockito.when(rasFeignClient.sendGetUserCountToRoleAssignmentService())
+    void shouldReturnSuccessResponseTest() {
+        Mockito.when(rasFeignClient.getUserCounts())
                 .thenReturn(ResponseEntity.status(HttpStatus.CREATED).body("UserCountRequest"));
-        ResponseEntity<Object> responseEntity = sut.sendGetUserCountToRoleAssignmentService();
+        ResponseEntity<Object> responseEntity = sut.getRasUserCounts();
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     }
 

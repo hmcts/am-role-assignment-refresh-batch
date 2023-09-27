@@ -21,6 +21,4 @@ class UserCountServiceTest {
         ResponseEntity<Object> responseEntity = sut.getRasUserCounts();
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
     }
-
-
 }

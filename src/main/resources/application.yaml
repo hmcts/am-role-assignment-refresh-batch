@@ -43,6 +43,8 @@ feign:
         loggerLevel: basic
       ormClient:
         url: ${AM_ORM_URL:http://localhost:4098}
+      rasClient:
+        url: ${AM_RAS_URL:http://localhost:4096}
 hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 4000
 
 roleAssignmentRefreshBatchUrl: ${TEST_URL:http://localhost:5333}

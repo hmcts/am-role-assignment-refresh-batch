@@ -8,13 +8,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.RASFeignClient;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.UserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.helper.TestDataBuilder;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +36,7 @@ class RefreshJobsOrchestratorTest {
     private final RefreshJobRepository refreshJobRepository = mock(RefreshJobRepository.class);
 
     private final ORMFeignClient ormFeignClient = mock(ORMFeignClient.class);
+    private final RASFeignClient rasFeignClient = mock(RASFeignClient.class);
 
     @InjectMocks
     private final PersistenceService persistenceService = new PersistenceService();
@@ -42,7 +45,11 @@ class RefreshJobsOrchestratorTest {
     private final SendJobDetailsService sendJobDetailsService = new SendJobDetailsService(ormFeignClient);
 
     @InjectMocks
-    private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService);
+    private final UserCountService userCountService = new UserCountService(rasFeignClient);
+
+    @InjectMocks
+    private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService,
+            userCountService);
 
     @BeforeEach
     void setUp() {
@@ -62,6 +69,9 @@ class RefreshJobsOrchestratorTest {
 
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+
+        when(rasFeignClient.getUserCounts())
+                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         sut.processRefreshJobs();
         assertTrue(true);
@@ -84,6 +94,9 @@ class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
 
+        when(rasFeignClient.getUserCounts())
+                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
+
         sut.processRefreshJobs();
 
         verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
@@ -104,6 +117,9 @@ class RefreshJobsOrchestratorTest {
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
 
+        when(rasFeignClient.getUserCounts())
+                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
+
         // ensure that delay is interrupted
         Thread.currentThread().interrupt();
 
@@ -113,10 +129,27 @@ class RefreshJobsOrchestratorTest {
     }
 
     @Test
+    void verifyProcessRefreshJobs_noExceptionWhenUserCountFails() {
+
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(Collections.emptyList());
+
+        when(rasFeignClient.getUserCounts())
+                .thenReturn(new ResponseEntity<>(HttpStatus.FORBIDDEN));
+
+        sut.processRefreshJobs();
+
+        verify(ormFeignClient, times(0)).sendJobToRoleAssignmentBatchService(any(), any());
+    }
+
+    @Test
     void verifyProcessRefreshJobs_noJobs() {
 
         when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
                 .thenReturn(Collections.emptyList());
+
+        when(rasFeignClient.getUserCounts())
+                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         sut.processRefreshJobs();
         assertTrue(true);
@@ -136,6 +169,8 @@ class RefreshJobsOrchestratorTest {
                 .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+        when(rasFeignClient.getUserCounts())
+                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         sut.processRefreshJobs();
         assertTrue(true);
@@ -155,6 +190,9 @@ class RefreshJobsOrchestratorTest {
                 .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
 
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
+
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         RuntimeException thrown = assertThrows(RuntimeException.class, sut::processRefreshJobs,
@@ -177,6 +215,9 @@ class RefreshJobsOrchestratorTest {
                 .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
 
         when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.OK));
+
+        when(rasFeignClient.getUserCounts())
                 .thenReturn(new ResponseEntity<>(HttpStatus.OK));
 
         RuntimeException thrown = assertThrows(RuntimeException.class, sut::processRefreshJobs,

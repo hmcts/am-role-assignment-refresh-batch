@@ -45,6 +45,7 @@ def versions = [
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.30',
         springSecurity : '5.8.6',
+        tomcat         : '9.0.82',
         rest_assured   : '3.3.0',
         feign_jackson  : '12.5',
         log4JVersion   : '2.20.0'
@@ -232,8 +233,8 @@ dependencies {
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'com.github.hmcts:properties-volume-spring-boot-starter:0.1.1'
     implementation 'commons-io:commons-io:20030203.000550'
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: '9.0.81'
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '9.0.81'
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: versions.tomcat
+    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: versions.tomcat
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.2'
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: '2.15.2', ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.0.1'

@@ -48,7 +48,7 @@ def versions = [
         tomcat         : '9.0.82',
         rest_assured   : '3.3.0',
         feign_jackson  : '12.5',
-        log4JVersion   : '2.20.0'
+        log4JVersion   : '2.21.1'
 ]
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'

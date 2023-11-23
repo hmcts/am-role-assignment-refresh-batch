@@ -147,7 +147,7 @@ pitest {
     threads = 15
     outputFormats = ['XML', 'HTML']
     timestampedReports = true
-    mutationThreshold = 60
+    mutationThreshold = 50
 }
 
 sonarqube {

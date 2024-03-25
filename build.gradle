@@ -12,7 +12,7 @@ buildscript {
 
 plugins {
     id 'application'
-    id 'uk.gov.hmcts.java' version '0.12.57'
+    id 'uk.gov.hmcts.java' version '0.12.58'
     id 'pmd'
     id 'jacoco'
     id 'org.springframework.boot' version '2.7.18'
@@ -43,13 +43,13 @@ def versions = [
         pitest         : '1.15.8',
         springBoot     : '2.7.18',
         springHystrix  : '2.1.1.RELEASE',
-        spring         : '5.3.32',
+        spring         : '5.3.33',
         springSecurity : '5.8.10',
-        tomcat         : '9.0.86',
+        tomcat         : '9.0.87',
         rest_assured   : '3.3.0',
         feign_jackson  : '13.2.1',
         jacksondata    : '2.16.1',
-        log4JVersion   : '2.23.0',
+        log4JVersion   : '2.23.1',
         logbackVersion : '1.2.13'
 ]
 
@@ -231,7 +231,7 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '33.0.0-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.2'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.3'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'com.github.hmcts:properties-volume-spring-boot-starter:0.1.1'
     implementation 'commons-io:commons-io:20030203.000550'

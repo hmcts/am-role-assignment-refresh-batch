@@ -146,7 +146,6 @@ pitest {
     excludedClasses = ['uk.gov.hmcts.reform.roleassignmentrefresh.*Application',
                        '*config*',
                        '*exception*',
-                       '*GenericArrayUserType*',
                        '*launchdarkly*',
                        '*oidc*',
                        '*RefreshORMRules*,',

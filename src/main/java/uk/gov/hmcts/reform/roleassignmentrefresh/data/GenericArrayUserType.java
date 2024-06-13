@@ -82,7 +82,6 @@ public class GenericArrayUserType<T extends Serializable> implements UserType {
         return javaArray;
     }
 
-    //    @Override
     public Object nullSafeGet(ResultSet resultSet, String[] names, SharedSessionContractImplementor session,
                               Object owner)
             throws HibernateException, SQLException {
@@ -114,7 +113,6 @@ public class GenericArrayUserType<T extends Serializable> implements UserType {
         return typeParameterClass;
     }
 
-    //@Override
     public int[] sqlTypes() {
         return new int[]{Types.ARRAY};
     }

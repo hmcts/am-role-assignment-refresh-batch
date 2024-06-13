@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-//import org.hibernate.annotations.Type;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,7 +44,6 @@ public class RefreshJobEntity {
     private String comments;
 
     @Column(name = "user_ids")
-    //@Type(type = "uk.gov.hmcts.reform.roleassignmentrefresh.data.GenericArrayUserType")
     private String[] userIds;
 
     @Column(name = "log")

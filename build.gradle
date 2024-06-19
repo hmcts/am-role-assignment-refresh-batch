@@ -44,7 +44,7 @@ def versions = [
         springBoot     : '2.7.18',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.37',
-        springSecurity : '5.8.12',
+        springSecurity : '5.8.13',
         tomcat         : '9.0.89',
         rest_assured   : '3.3.0',
         feign_jackson  : '13.2.1',

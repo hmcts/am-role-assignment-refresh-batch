@@ -40,31 +40,51 @@ public class RefreshJobsOrchestrator {
 
     public void processRefreshJobs() {
         final long startTime = System.currentTimeMillis();
-        log.info("Calling RAS User Count Before Refresh");
-        triggerRASUserCount();
 
         // Get new job entries for refresh
         List<RefreshJobEntity> jobs =  persistenceService.getNewJobs();
-        for (RefreshJobEntity job: jobs) {
-            if (Objects.isNull(job.getLinkedJobId()) ||  job.getLinkedJobId().equals(0L)) {
-                sendJobToORMService(job.getJobId(), UserRequest.builder().build());
-            } else {
-                RefreshJobEntity linkedJob = persistenceService.getByJobId(job.getLinkedJobId());
-                if (Objects.nonNull(linkedJob) && ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
-                    sendJobToORMService(job.getJobId(), UserRequest.builder().userIds(linkedJob.getUserIds()).build());
+
+        if (jobs.isEmpty()) {
+            log.info("No NEW refresh jobs found to execute");
+
+            // NB: always call RAS User Count at least once
+            triggerRASUserCount();
+
+        } else {
+            log.info("Calling RAS User Count Before Refresh");
+            triggerRASUserCount();
+
+            for (RefreshJobEntity job : jobs) {
+                runRefreshJob(job);
+
+                // refresh job is an async call, so allow time for job to complete before next job or final user count
+                if (refreshJobDelayDuration > 0) {
+                    refreshJobDelay(refreshJobDelayDuration);
                 }
             }
-            if (refreshJobDelayDuration > 0) {
-                refreshJobDelay(refreshJobDelayDuration);
-            }
-        }
 
-        log.info("Calling RAS User Count After Refresh");
-        triggerRASUserCount();
+            log.info("Calling RAS User Count After Refresh");
+            triggerRASUserCount();
+        }
 
         log.info(" >> Refresh Batch Job({}) execution finished at {} . Time taken = {} milliseconds",
                 jobs.size(), System.currentTimeMillis(), Math.subtractExact(System.currentTimeMillis(), startTime)
         );
+    }
+
+    private void runRefreshJob(RefreshJobEntity job) {
+        if (Objects.isNull(job.getLinkedJobId()) || job.getLinkedJobId().equals(0L)) {
+            log.info("Trigger refresh job with ID = {}", job.getJobId());
+            sendJobToORMService(job.getJobId(), UserRequest.builder().build());
+        } else {
+            RefreshJobEntity linkedJob = persistenceService.getByJobId(job.getLinkedJobId());
+            if (Objects.nonNull(linkedJob) && ArrayUtils.isNotEmpty(linkedJob.getUserIds())) {
+                log.info("Trigger refresh job with ID = {}", job.getJobId());
+                sendJobToORMService(job.getJobId(), UserRequest.builder().userIds(linkedJob.getUserIds()).build());
+            } else {
+                log.error("Skipping refresh job with ID = {} as issue with linked job", job.getJobId());
+            }
+        }
     }
 
     private void refreshJobDelay(final long refreshJobDelayDuration) {
@@ -89,5 +109,5 @@ public class RefreshJobsOrchestrator {
             log.error("Error return from RAS User Count: " + responseEntity.toString());
         }
     }
-}
 
+}

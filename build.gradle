@@ -36,7 +36,7 @@ ext['snakeyaml.version'] = '2.0'
 def versions = [
         junit          : '5.9.3',
         lombok         : '1.18.32',
-        reformLogging  : '6.1.4',
+        reformLogging  : '6.1.5',
         reformS2sClient: '4.0.2',
         serenity       : '3.3.10',
         sonarPitest    : '0.5',
@@ -253,8 +253,8 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-web', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
-
-    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.4.0'
+    
+    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.5.0'
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.4.11'
     
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.13'
@@ -279,7 +279,7 @@ dependencies {
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson
     testImplementation('com.opentable.components:otj-pg-embedded:1.0.3')
-    testImplementation 'com.github.hmcts:fortify-client:1.4.2:all'
+    testImplementation 'com.github.hmcts:fortify-client:1.4.3:all'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok

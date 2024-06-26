@@ -90,11 +90,24 @@ jacocoTestCoverageVerification {
 sourceSets {
     integrationTest {
         java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
+            compileClasspath += main.output
+            compileClasspath += main.compileClasspath
+            compileClasspath += test.compileClasspath
+            runtimeClasspath += main.output
+            runtimeClasspath += main.runtimeClasspath
+            runtimeClasspath += test.runtimeClasspath
+
             srcDir file('src/integrationTest/java')
         }
         resources.srcDir file('src/integrationTest/resources')
+    }
+}
+
+idea {
+    module {
+        // config to allow IntelliJ to mark test source and resource files correctly to help linting tools
+        testSources.from(java.sourceSets.integrationTest.java.srcDirs)
+        testResources.from(java.sourceSets.integrationTest.resources.srcDirs)
     }
 }
 
@@ -157,11 +170,7 @@ sonarqube {
         property "sonar.projectKey", "am-role-assignment-refresh-batch"
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
         property "sonar.exclusions", "**config**," +
-                "**exception**," +
-                "**constants**," +
                 "src/main/java/uk/gov/hmcts/reform/roleassignmentrefresh/data/Refresh*," +
-                "**model**,"+
-                "**OIdcAdminConfiguration**,"+
                 "**Application.java,"
         property "sonar.pitest.mode", "reuseReport"
         property "sonar.pitest.reportsDirectory", "build/reports/pitest"

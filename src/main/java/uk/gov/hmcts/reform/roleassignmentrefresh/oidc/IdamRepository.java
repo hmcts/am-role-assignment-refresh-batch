@@ -13,9 +13,9 @@ import uk.gov.hmcts.reform.idam.client.models.TokenResponse;
 @Slf4j
 public class IdamRepository {
 
-    private IdamApi idamApi;
-    private OIdcAdminConfiguration oidcAdminConfiguration;
-    private OAuth2Configuration oauth2Configuration;
+    private final IdamApi idamApi;
+    private final OIdcAdminConfiguration oidcAdminConfiguration;
+    private final OAuth2Configuration oauth2Configuration;
 
     @Autowired
     public IdamRepository(IdamApi idamApi,

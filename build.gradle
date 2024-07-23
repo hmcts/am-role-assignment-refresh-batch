@@ -37,15 +37,14 @@ def versions = [
         junit          : '5.9.3',
         lombok         : '1.18.34',
         reformLogging  : '6.1.5',
-        reformS2sClient: '4.0.2',
+        reformS2sClient: '5.1.2',
         serenity       : '3.3.10',
         sonarPitest    : '0.5',
         pitest         : '1.16.1',
-        springBoot     : '3.0.13',
-        springHystrix  : '2.1.1.RELEASE',
+        springBoot     : '3.1.12',
         spring         : '6.0.14',
         springSecurity : '6.0.8',
-        tomcat         : '9.0.90',
+        tomcat         : '10.0.27',
         rest_assured   : '5.0.1',
         feign_jackson  : '13.3',
         jacksondata    : '2.17.2',
@@ -235,8 +234,6 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: versions.springSecurity
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: versions.springSecurity
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurity
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.10.RELEASE'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.9'
 
     implementation group: 'com.google.guava', name: 'guava', version: '33.2.1-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
@@ -244,7 +241,7 @@ dependencies {
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.3'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'commons-io:commons-io:20030203.000550'
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: versions.tomcat
+    //implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: versions.tomcat
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: versions.tomcat
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksondata
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: versions.jacksondata, ext: 'pom'
@@ -262,6 +259,7 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-web', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
+    implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
     
     implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.5.0'
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.4.11'

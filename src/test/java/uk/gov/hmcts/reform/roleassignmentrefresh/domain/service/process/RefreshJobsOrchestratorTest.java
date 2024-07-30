@@ -80,6 +80,7 @@ class RefreshJobsOrchestratorTest {
     void verifyProcessRefreshJobsWithDelay() {
 
         ReflectionTestUtils.setField(sut, "refreshJobDelayDuration", 500);
+        ReflectionTestUtils.setField(sut, "refreshJobCountDelayDuration", 500);
 
         List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
                 TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
@@ -105,6 +106,7 @@ class RefreshJobsOrchestratorTest {
     void verifyInterruptExceptionHandledDuringProcessRefreshJobsWithDelayIfInterrupted() {
 
         ReflectionTestUtils.setField(sut, "refreshJobDelayDuration", 500);
+        ReflectionTestUtils.setField(sut, "refreshJobCountDelayDuration", 500);
 
         List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
                 TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());

@@ -28,7 +28,7 @@ public class RefreshJobsOrchestrator {
     @Value("${refresh-job-delay-duration}")
     private long refreshJobDelayDuration;
 
-    @Value("${refresh-job-count-delay-duration")
+    @Value("${refresh-job-count-delay-duration}")
     private long refreshJobCountDelayDuration;
 
     @Autowired

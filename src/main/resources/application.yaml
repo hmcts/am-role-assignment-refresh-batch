@@ -51,9 +51,12 @@ roleAssignmentRefreshBatchUrl: ${TEST_URL:http://localhost:5333}
 refresh-orm-records: refresh-orm-records
 batchjob-name: refreshORMRulesBatchJob
 batch-size: 20
-# Refresh job is an async call, so allow time for job to complete before next job or final user count
-#      300000 milliseconds = 5 minutes (for sample timings see DTSAM-319)
-refresh-job-delay-duration: ${REFRESH_JOB_DELAY_DURATION:300000}
+# Refresh job is an async call, delay to keep the RD calls apart
+#      60000 milliseconds = 1 minutes (for sample timings see DTSAM-319)
+refresh-job-delay-duration: ${REFRESH_JOB_DELAY_DURATION:60000}
+# Refresh job is an async call, delay to allow the last refresh to complete before user count is run
+#      540000 milliseconds = 9 minutes
+refresh-job-count-delay-duration: ${REFRESH_JOB_COUNT_DELAY_DURATION:540000}
 
 idam:
   s2s-auth:

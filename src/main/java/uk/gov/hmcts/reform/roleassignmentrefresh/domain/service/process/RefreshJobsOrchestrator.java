@@ -67,7 +67,7 @@ public class RefreshJobsOrchestrator {
             }
 
             // delay here to ensure the refresh is completed before the count is calculated
-            refreshJobCountDelay(refreshJobCountDelayDuration);
+            refreshJobDelay(refreshJobCountDelayDuration);
 
             log.info("Calling RAS User Count After Refresh");
             triggerRASUserCount();
@@ -98,15 +98,6 @@ public class RefreshJobsOrchestrator {
             Thread.sleep(refreshJobDelayDuration);
         } catch (InterruptedException e) {
             log.error("Refresh batch delay interrupted whilst executing refresh batch job");
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    private void refreshJobCountDelay(final long refreshJobCountDelayDuration) {
-        try {
-            Thread.sleep(refreshJobCountDelayDuration);
-        } catch (InterruptedException e) {
-            log.error("Refresh batch count delay interrupted whilst executing refresh batch job");
             Thread.currentThread().interrupt();
         }
     }

@@ -45,7 +45,7 @@ def versions = [
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.37',
         springSecurity : '5.8.13',
-        tomcat         : '9.0.91',
+        tomcat         : '9.0.93',
         rest_assured   : '3.3.0',
         feign_jackson  : '13.3',
         jacksondata    : '2.17.2',
@@ -266,7 +266,7 @@ dependencies {
 
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-spring-boot-starter', version: '2.6.4'
     
-    testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.13'
+    testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.16'
     testImplementation 'org.springframework.batch:spring-batch-test:5.1.2'
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

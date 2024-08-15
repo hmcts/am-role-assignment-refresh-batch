@@ -28,6 +28,9 @@ public class RefreshJobsOrchestrator {
     @Value("${refresh-job-delay-duration}")
     private long refreshJobDelayDuration;
 
+    @Value("${refresh-job-count-delay-duration}")
+    private long refreshJobCountDelayDuration;
+
     @Autowired
     public RefreshJobsOrchestrator(PersistenceService persistenceService,
                                    SendJobDetailsService jobDetailsService,
@@ -57,11 +60,14 @@ public class RefreshJobsOrchestrator {
             for (RefreshJobEntity job : jobs) {
                 runRefreshJob(job);
 
-                // refresh job is an async call, so allow time for job to complete before next job or final user count
+                // refresh job is an async call, delay to keep the rd calls apart
                 if (refreshJobDelayDuration > 0) {
                     refreshJobDelay(refreshJobDelayDuration);
                 }
             }
+
+            // delay here to ensure the refresh is completed before the count is calculated
+            refreshJobDelay(refreshJobCountDelayDuration);
 
             log.info("Calling RAS User Count After Refresh");
             triggerRASUserCount();

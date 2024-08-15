@@ -44,7 +44,8 @@ import static org.mockito.Mockito.when;
         UserCountService.class
     },
     properties = {
-        "refresh-job-delay-duration=500"
+        "refresh-job-delay-duration=500",
+        "refresh-job-count-delay-duration=500"
     }
 )
 public class RefreshJobsOrchestratorIntegrationTest {

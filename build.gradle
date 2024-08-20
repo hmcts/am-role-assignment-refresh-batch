@@ -43,7 +43,7 @@ def versions = [
         pitest         : '1.16.1',
         springBoot     : '2.7.18',
         springHystrix  : '2.1.1.RELEASE',
-        spring         : '5.3.37',
+        spring         : '5.3.39',
         springSecurity : '5.8.13',
         tomcat         : '9.0.93',
         rest_assured   : '3.3.0',

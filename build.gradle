@@ -36,7 +36,7 @@ ext['snakeyaml.version'] = '2.0'
 def versions = [
         junit          : '5.9.3',
         lombok         : '1.18.34',
-        reformLogging  : '6.1.5',
+        reformLogging  : '6.1.6',
         reformS2sClient: '4.0.2',
         serenity       : '2.2.12',
         sonarPitest    : '0.5',
@@ -237,7 +237,7 @@ dependencies {
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.10.RELEASE'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.9'
 
-    implementation group: 'com.google.guava', name: 'guava', version: '33.2.1-jre'
+    implementation group: 'com.google.guava', name: 'guava', version: '33.3.0-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.3'
@@ -288,7 +288,7 @@ dependencies {
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson
     testImplementation('com.opentable.components:otj-pg-embedded:1.1.0')
-    testImplementation 'com.github.hmcts:fortify-client:1.4.3:all'
+    testImplementation 'com.github.hmcts:fortify-client:1.4.4:all'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok

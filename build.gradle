@@ -43,7 +43,7 @@ def versions = [
         pitest         : '1.16.1',
         springBoot     : '2.7.18',
         springHystrix  : '2.1.1.RELEASE',
-        spring         : '5.3.37',
+        spring         : '5.3.39',
         springSecurity : '5.8.13',
         tomcat         : '9.0.93',
         rest_assured   : '3.3.0',
@@ -240,7 +240,7 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '33.3.0-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.3'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.4'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: versions.tomcat
@@ -262,7 +262,7 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
 
-    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.6.0'
+    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.7.0'
 
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-spring-boot-starter', version: '2.6.4'
     

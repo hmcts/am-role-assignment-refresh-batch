@@ -40,7 +40,7 @@ def versions = [
         reformS2sClient: '4.0.2',
         serenity       : '3.3.10',
         sonarPitest    : '0.5',
-        pitest         : '1.16.1',
+        pitest         : '1.16.2',
         springBoot     : '3.0.13',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '6.0.14',
@@ -57,7 +57,7 @@ mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefresh
 def jarName = 'am-role-assignment-refresh-batch.jar'
 
 pmd {
-    toolVersion = '7.4.0'
+    toolVersion = '7.5.0'
     sourceSets = []
 }
 

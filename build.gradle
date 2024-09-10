@@ -40,7 +40,7 @@ def versions = [
         reformS2sClient: '4.0.2',
         serenity       : '2.2.12',
         sonarPitest    : '0.5',
-        pitest         : '1.16.2',
+        pitest         : '1.16.3',
         springBoot     : '2.7.18',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.39',
@@ -49,7 +49,7 @@ def versions = [
         rest_assured   : '3.3.0',
         feign_jackson  : '13.3',
         jacksondata    : '2.17.2',
-        log4JVersion   : '2.23.1',
+        log4JVersion   : '2.24.0',
         logbackVersion : '1.2.13'
 ]
 

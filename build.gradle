@@ -153,7 +153,6 @@ pitest {
                        '*config*',
                        '*exception*',
                        '*GenericArrayUserType*',
-                       '*launchdarkly*',
                        '*oidc*',
                        '*RefreshORMRules*,',
                        'uk.gov.hmcts.reform.roleassignmentrefresh.util.Swagger2SpringBoot']

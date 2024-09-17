@@ -45,7 +45,7 @@ def versions = [
         springHystrix  : '2.1.1.RELEASE',
         spring         : '6.0.14',
         springSecurity : '6.0.8',
-        tomcat         : '9.0.93',
+        tomcat         : '9.0.94',
         rest_assured   : '5.0.1',
         feign_jackson  : '13.3',
         jacksondata    : '2.17.2',
@@ -263,7 +263,7 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
     
-    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.7.0'
+    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.8.0'
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.4.11'
     
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.16'

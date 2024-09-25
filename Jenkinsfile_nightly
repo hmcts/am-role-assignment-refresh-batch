@@ -5,6 +5,8 @@ properties([
   pipelineTriggers([cron('42 07 * * 1-5')])
 ])
 
+import uk.gov.hmcts.contino.GithubAPI
+
 @Library("Infrastructure")
 
 def type = "java"
@@ -27,7 +29,7 @@ withNightlyPipeline(type, product, component) {
   // disableLegacyDeploymentOnAAT()
   // disableLegacyDeployment()
   // nonServiceApp()
-  // enableMutationTest()
+  enableMutationTest()
 
   enableFortifyScan()
 

@@ -27,7 +27,7 @@ withNightlyPipeline(type, product, component) {
   // disableLegacyDeploymentOnAAT()
   // disableLegacyDeployment()
   // nonServiceApp()
-  // enableMutationTest()
+  enableMutationTest()
 
   enableFortifyScan()
 

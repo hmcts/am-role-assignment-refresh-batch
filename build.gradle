@@ -48,7 +48,7 @@ def versions = [
         tomcat         : '9.0.95',
         rest_assured   : '3.3.0',
         feign_jackson  : '13.4',
-        jacksondata    : '2.17.2',
+        jacksondata    : '2.18.0',
         log4JVersion   : '2.24.0',
         logbackVersion : '1.2.13'
 ]

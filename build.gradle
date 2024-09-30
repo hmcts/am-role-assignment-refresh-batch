@@ -40,7 +40,7 @@ def versions = [
         reformS2sClient: '4.0.2',
         serenity       : '3.3.10',
         sonarPitest    : '0.5',
-        pitest         : '1.16.3',
+        pitest         : '1.17.0',
         springBoot     : '3.0.13',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '6.0.14',
@@ -147,6 +147,7 @@ jacoco {
 }
 
 pitest {
+    pitestVersion = versions.pitest
     junit5PluginVersion = '1.2.1'
     targetClasses = ['uk.gov.hmcts.reform.*']
     excludedClasses = ['uk.gov.hmcts.reform.roleassignmentrefresh.*Application',

@@ -49,7 +49,7 @@ def versions = [
         rest_assured   : '3.3.0',
         feign_jackson  : '13.4',
         jacksondata    : '2.18.0',
-        log4JVersion   : '2.24.0',
+        log4JVersion   : '2.24.1',
         logbackVersion : '1.2.13'
 ]
 

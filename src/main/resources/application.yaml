@@ -75,8 +75,5 @@ idam:
 
 logging.level.uk.gov.hmcts: ${APPLICATION_LOGGING_LEVEL:INFO}
 
-launchdarkly:
-  sdk:
-    key: ${LD_SDK_KEY:}
-    environment: ${LAUNCH_DARKLY_ENV:pr}
-    user: am-${LAUNCH_DARKLY_ENV:local}
+refresh:
+  environment: ${REFRESH_ENV:}

@@ -33,6 +33,7 @@ import java.util.Objects;
 @Slf4j
 @Service
 public class RefreshJobsOrchestrator {
+    public static final String EMAIL_SUBJECT = "Refresh Job Task";
 
     private final PersistenceService persistenceService;
     private final SendJobDetailsService jobDetailsService;
@@ -258,9 +259,7 @@ public class RefreshJobsOrchestrator {
 
         EmailData emailData = EmailData
                 .builder()
-                .runId("some runID")
-                .emailSubject("someSubject")
-                //.module("someModule")
+                .emailSubject(EMAIL_SUBJECT)
                 .templateMap(templateMap)
                 .build();
         emailService.sendEmail(emailData);

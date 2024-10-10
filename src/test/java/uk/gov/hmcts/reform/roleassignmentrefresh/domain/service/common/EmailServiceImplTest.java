@@ -107,7 +107,6 @@ class EmailServiceImplTest {
         EmailData emailData = EmailData.builder()
                 .emailSubject(TEST_SUBJECT)
                 .templateMap(templateMap)
-                //.module(module)
                 .build();
 
         when(templateEngine.process(anyString(), any())).thenReturn(TEST_CONTENT);

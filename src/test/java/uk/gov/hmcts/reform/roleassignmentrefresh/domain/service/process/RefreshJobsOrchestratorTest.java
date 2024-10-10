@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
+import com.sendgrid.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,7 +12,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.UnprocessableEntityException;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.Count;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.EmailData;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.EmailService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.RASFeignClient;
@@ -19,10 +23,15 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDe
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.UserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.helper.TestDataBuilder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.any;
@@ -51,8 +60,16 @@ class RefreshJobsOrchestratorTest {
     private final UserCountService userCountService = new UserCountService(rasFeignClient);
 
     @InjectMocks
+    private final EmailService emailService = new EmailService() {
+        @Override
+        public Response sendEmail(EmailData emailData) {
+            return null;
+        }
+    };
+
+    @InjectMocks
     private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService,
-            userCountService);
+            userCountService, emailService);
 
     @Test
     void verifyProcessRefreshJobs() {
@@ -277,4 +294,104 @@ class RefreshJobsOrchestratorTest {
         verify(ormFeignClient, never()).sendJobToRoleAssignmentBatchService(any(), any());
     }
 
+    @Test
+    @SuppressWarnings("unchecked")
+    void verifyProcessRefreshJobsWithCountEmail() throws IOException {
+
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
+        when(refreshJobRepository.findById(any(Long.class)))
+                .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
+
+        when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+
+
+        String beforeFilePath = "src/test/resources/countResponseBefore.json";
+        String beforeResponseString = new String(Files.readAllBytes(Paths.get(beforeFilePath)));
+
+        String afterFilePath = "src/test/resources/countResponseAfter.json";
+        String afterResponseString = new String(Files.readAllBytes(Paths.get(afterFilePath)));
+
+        when(rasFeignClient.getUserCounts())
+                .thenReturn(new ResponseEntity<>(beforeResponseString, HttpStatus.OK))
+                .thenReturn(new ResponseEntity<>(afterResponseString, HttpStatus.OK));
+
+        sut.processRefreshJobs();
+        assertTrue(true);
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
+        verify(rasFeignClient, times(2)).getUserCounts();
+
+        Map<String,Object> templateMap = sut.getTemplateMap();
+
+        List<Count> jurisdictionCounts = (List<Count>) templateMap.get("jurisdictionCount");
+
+        // assertions for jurisdictionCounts
+        assertEquals(4, jurisdictionCounts.size());
+
+        assertCount(jurisdictionCounts.get(0), null, "LEGAL_OPERATIONS", null, 3, 2, -1);
+        assertCount(jurisdictionCounts.get(1), "CIVIL", "LEGAL_OPERATIONS", null, 0, 2, 2);
+        assertCount(jurisdictionCounts.get(2), "IA", "JUDICIAL", null, 7, 8, 1);
+        assertCount(jurisdictionCounts.get(3), "IA", "LEGAL_OPERATIONS", null, 3, 0, 0);
+
+        List<Count> jurisdictionAndRoleNameCounts = (List<Count>) templateMap.get("jurisdictionAndRoleNameCount");
+
+        // assertions for jurisdictionAndRoleNameCounts
+        assertEquals(9, jurisdictionAndRoleNameCounts.size());
+
+        assertCount(jurisdictionAndRoleNameCounts.get(0), null, "LEGAL_OPERATIONS", "hmcts-legal-operations", 3, 4, 1);
+        assertCount(jurisdictionAndRoleNameCounts.get(1), "CIVIL", "LEGAL_OPERATIONS", "hmcts-legal-operations",
+                0, 4, 4);
+        assertCount(jurisdictionAndRoleNameCounts.get(2), "IA", "JUDICIAL", "judge", 7, 8, 1);
+        assertCount(jurisdictionAndRoleNameCounts.get(3), "IA", "LEGAL_OPERATIONS", "case-allocator", 3, 0, 0);
+        assertCount(jurisdictionAndRoleNameCounts.get(4), "IA", "LEGAL_OPERATIONS", "hearing-manager", 3, 2, -1);
+        assertCount(jurisdictionAndRoleNameCounts.get(5), "IA", "LEGAL_OPERATIONS", "hearing-viewer", 3, 3, 0);
+        assertCount(jurisdictionAndRoleNameCounts.get(6), "IA", "LEGAL_OPERATIONS", "senior-tribunal-caseworker",
+                3, 3, 0);
+        assertCount(jurisdictionAndRoleNameCounts.get(7), "IA", "LEGAL_OPERATIONS", "task-supervisor", 3, 3, 0);
+        assertCount(jurisdictionAndRoleNameCounts.get(8), "IA", "LEGAL_OPERATIONS", "tribunal-caseworker", 3, 3, 0);
+    }
+
+    @Test
+    void verifyProcessRefreshJobsWithCountEmailBeforeCountResponseBrackets() throws IOException {
+
+        List<RefreshJobEntity> jobEntities = List.of(TestDataBuilder.buildRefreshJobEntity(Status.NEW.name()),
+                TestDataBuilder.buildNewWithLinkedJobRefreshJobEntities());
+        when(refreshJobRepository.findByStatusOrderByCreatedDesc(any(String.class)))
+                .thenReturn(jobEntities);
+        when(refreshJobRepository.findById(any(Long.class)))
+                .thenReturn(TestDataBuilder.buildOptionalRefreshJobEntity(Status.ABORTED.name()));
+
+        when(ormFeignClient.sendJobToRoleAssignmentBatchService(any(), any()))
+                .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
+
+        String beforeResponseString = "{}";
+
+        String afterFilePath = "src/test/resources/countResponseAfter.json";
+        String afterResponseString = new String(Files.readAllBytes(Paths.get(afterFilePath)));
+
+        when(rasFeignClient.getUserCounts())
+                .thenReturn(new ResponseEntity<>(beforeResponseString, HttpStatus.OK))
+                .thenReturn(new ResponseEntity<>(afterResponseString, HttpStatus.OK));
+
+        sut.processRefreshJobs();
+        assertTrue(true);
+
+        verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
+        verify(rasFeignClient, times(2)).getUserCounts();
+    }
+
+    private void assertCount(Count count, String expectedJurisdiction, String expectedRoleCategory,
+                             String expectedRoleName, int expectedBeforeCount, int expectedAfterCount,
+                             int expectedDifference) {
+        assertEquals(expectedJurisdiction, count.getJurisdiction());
+        assertEquals(expectedRoleCategory, count.getRoleCategory());
+        assertEquals(expectedRoleName, count.getRoleName());
+        assertEquals(expectedBeforeCount, count.getBeforeCount());
+        assertEquals(expectedAfterCount, count.getAfterCount());
+        assertEquals(expectedDifference, count.getDifference());
+    }
 }

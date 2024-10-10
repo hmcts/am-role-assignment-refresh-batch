@@ -28,6 +28,8 @@ job:
           alias: ORG_ROLE_MAPPING_DB_USERNAME
         - name: org-role-mapping-service-POSTGRES-HOST
           alias: ORG_ROLE_MAPPING_DB_HOST
+        - name: role-assignment-refresh-batch-EMAIL-LIST
+          alias: EMAIL_LIST
   environment:
     IDAM_S2S_URL: http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     IDAM_USER_URL: https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net
@@ -40,3 +42,5 @@ job:
     ORG_ROLE_MAPPING_DB_OPTIONS: "?stringtype=unspecified&sslmode=require"
     AM_ORM_URL: http://am-org-role-mapping-service-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     AM_RAS_URL: http://am-role-assignment-service-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
+    EMAIL_ENABLED: false
+

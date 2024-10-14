@@ -49,7 +49,7 @@ def versions = [
         rest_assured   : '5.0.1',
         feign_jackson  : '13.4',
         jacksondata    : '2.18.0',
-        log4JVersion   : '2.24.0',
+        log4JVersion   : '2.24.1',
         logbackVersion : '1.3.14'
 ]
 
@@ -57,7 +57,7 @@ mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefresh
 def jarName = 'am-role-assignment-refresh-batch.jar'
 
 pmd {
-    toolVersion = '7.5.0'
+    toolVersion = '7.6.0'
     sourceSets = []
 }
 

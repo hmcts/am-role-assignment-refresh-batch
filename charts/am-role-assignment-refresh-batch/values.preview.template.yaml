@@ -18,7 +18,7 @@ job:
     #ORG_ROLE_MAPPING_DB_HOST: "{{ .Release.Name }}-postgresql"
     AM_ORM_URL: http://am-org-role-mapping-service-pr-1540.service.core-compute-preview.internal
     AM_RAS_URL: http://am-role-assignment-service-pr-1996.service.core-compute-preview.internal
-    ORG_ROLE_MAPPING_DB_HOST: am-org-role-mapping-service-pr-1540-postgresql
+    ORG_ROLE_MAPPING_DB_HOST: am-org-role-mapping-service-pr-2126-postgresql
     ORG_ROLE_MAPPING_DB_NAME: org_role_mapping
     ORG_ROLE_MAPPING_DB_USERNAME: org_role_mapping
     ORG_ROLE_MAPPING_DB_PORT: 5432

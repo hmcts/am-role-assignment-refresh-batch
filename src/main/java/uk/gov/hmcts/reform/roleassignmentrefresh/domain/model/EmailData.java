@@ -15,6 +15,5 @@ import java.util.Map;
 public class EmailData {
     private List<String> emailTo;
     private String emailSubject;
-    private String runId;
     Map<String, Object> templateMap;
 }

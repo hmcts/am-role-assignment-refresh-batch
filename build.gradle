@@ -50,7 +50,8 @@ def versions = [
         feign_jackson  : '13.4',
         jacksondata    : '2.18.0',
         log4JVersion   : '2.24.1',
-        logbackVersion : '1.2.13'
+        logbackVersion : '1.2.13',
+        thymeleaf      : '3.1.2.RELEASE'
 ]
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'
@@ -269,8 +270,8 @@ dependencies {
 
     //Sendgrid
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: versions.springBoot
-    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.1.2.RELEASE'
-    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.1.2.RELEASE'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: versions.thymeleaf
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: versions.thymeleaf
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
     implementation 'com.sendgrid:sendgrid-java:4.10.2'
     

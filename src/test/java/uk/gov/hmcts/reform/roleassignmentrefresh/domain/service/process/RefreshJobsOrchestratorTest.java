@@ -1,8 +1,8 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
-import com.sendgrid.Response;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -59,13 +59,7 @@ class RefreshJobsOrchestratorTest {
     @InjectMocks
     private final UserCountService userCountService = new UserCountService(rasFeignClient);
 
-    @InjectMocks
-    private final EmailService emailService = new EmailService() {
-        @Override
-        public Response sendEmail(EmailData emailData) {
-            return null;
-        }
-    };
+    private final EmailService emailService = mock(EmailService.class);
 
     @InjectMocks
     private final RefreshJobsOrchestrator sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService,
@@ -325,7 +319,9 @@ class RefreshJobsOrchestratorTest {
         verify(ormFeignClient, times(2)).sendJobToRoleAssignmentBatchService(any(), any());
         verify(rasFeignClient, times(2)).getUserCounts();
 
-        Map<String,Object> templateMap = sut.getTemplateMap();
+        ArgumentCaptor<EmailData> emailDataArgumentCaptor = ArgumentCaptor.forClass(EmailData.class);
+        verify(emailService, times(1)).sendEmail(emailDataArgumentCaptor.capture());
+        Map<String,Object> templateMap = emailDataArgumentCaptor.getValue().getTemplateMap();
 
         List<Count> jurisdictionCounts = (List<Count>) templateMap.get("jurisdictionCount");
 

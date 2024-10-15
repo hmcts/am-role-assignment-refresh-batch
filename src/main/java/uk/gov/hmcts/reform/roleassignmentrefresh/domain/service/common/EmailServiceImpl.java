@@ -70,7 +70,6 @@ public class EmailServiceImpl implements EmailService {
             mailTo.forEach(email -> personalization.addTo(new Email(email)));
             emailData.setEmailTo(mailTo);
             emailData.setEmailSubject(concatEmailSubject);
-            emailData.setRunId(emailData.getRunId());
 
             emailData.setTemplateMap(emailData.getTemplateMap());
             Context context = new Context();

@@ -3,7 +3,6 @@ package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +38,6 @@ public class RefreshJobsOrchestrator {
     private final SendJobDetailsService jobDetailsService;
     private final UserCountService userCountService;
     private final EmailService emailService;
-
-    @Getter
-    private Map<String,Object> templateMap = new HashMap<>();
 
     @Value("${refresh-job-delay-duration}")
     private long refreshJobDelayDuration;
@@ -252,6 +248,8 @@ public class RefreshJobsOrchestrator {
                 "OrgUserCountByJurisdiction");
         List<Count> jurisdictionAndRoleNameCount = compareCounts(responseBeforeRefresh, responseAfterRefresh,
                 "OrgUserCountByJurisdictionAndRoleName");
+
+        Map<String, Object> templateMap = new HashMap<>();
 
         templateMap.put("refreshJobs", refreshJobs);
         templateMap.put("jurisdictionCount", jurisdictionCount);

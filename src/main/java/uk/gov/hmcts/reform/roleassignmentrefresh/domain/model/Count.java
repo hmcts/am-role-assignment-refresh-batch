@@ -35,7 +35,8 @@ public class Count {
         this.roleCategory = node.get(ROLE_CATEGORY_KEY).asText();
         this.beforeCount = node.get(COUNT_KEY).asInt();
         this.afterCount = 0;
-        this.difference = 0;
+        // pre populate difference with negative value of count to cover case where role is not matched in after count
+        this.difference = -node.get(COUNT_KEY).asInt();
     }
 
     public void populateAfter(JsonNode node) {

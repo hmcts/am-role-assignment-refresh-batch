@@ -331,7 +331,7 @@ class RefreshJobsOrchestratorTest {
         assertCount(jurisdictionCounts.get(0), null, "LEGAL_OPERATIONS", null, 3, 2, -1);
         assertCount(jurisdictionCounts.get(1), "CIVIL", "LEGAL_OPERATIONS", null, 0, 2, 2);
         assertCount(jurisdictionCounts.get(2), "IA", "JUDICIAL", null, 7, 8, 1);
-        assertCount(jurisdictionCounts.get(3), "IA", "LEGAL_OPERATIONS", null, 3, 0, 0);
+        assertCount(jurisdictionCounts.get(3), "IA", "LEGAL_OPERATIONS", null, 3, 0, -3);
 
         List<Count> jurisdictionAndRoleNameCounts = (List<Count>) templateMap.get("jurisdictionAndRoleNameCount");
 
@@ -342,7 +342,7 @@ class RefreshJobsOrchestratorTest {
         assertCount(jurisdictionAndRoleNameCounts.get(1), "CIVIL", "LEGAL_OPERATIONS", "hmcts-legal-operations",
                 0, 4, 4);
         assertCount(jurisdictionAndRoleNameCounts.get(2), "IA", "JUDICIAL", "judge", 7, 8, 1);
-        assertCount(jurisdictionAndRoleNameCounts.get(3), "IA", "LEGAL_OPERATIONS", "case-allocator", 3, 0, 0);
+        assertCount(jurisdictionAndRoleNameCounts.get(3), "IA", "LEGAL_OPERATIONS", "case-allocator", 3, 0, -3);
         assertCount(jurisdictionAndRoleNameCounts.get(4), "IA", "LEGAL_OPERATIONS", "hearing-manager", 3, 2, -1);
         assertCount(jurisdictionAndRoleNameCounts.get(5), "IA", "LEGAL_OPERATIONS", "hearing-viewer", 3, 3, 0);
         assertCount(jurisdictionAndRoleNameCounts.get(6), "IA", "LEGAL_OPERATIONS", "senior-tribunal-caseworker",

@@ -97,7 +97,7 @@ class EmailServiceImplTest {
     }
 
     @Test
-    void sendEmail_enabled_deleteExpired() throws IOException {
+    void sendEmail_enabled() throws IOException {
 
         // GIVEN
         Map<String, Object> templateMap = Map.of(

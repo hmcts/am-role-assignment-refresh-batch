@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
+import com.sendgrid.Response;
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +14,10 @@ import org.springframework.http.ResponseEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.UnprocessableEntityException;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.EmailData;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.EmailService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.ORMFeignClient;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.PersistenceService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.RASFeignClient;
@@ -68,12 +71,20 @@ public class RefreshJobsOrchestratorIntegrationTest {
     @InjectMocks
     UserCountService userCountService;
 
+    @InjectMocks
+    EmailService emailService = new EmailService() {
+        @Override
+        public Response sendEmail(EmailData emailData) {
+            return null;
+        }
+    };
+
     RefreshJobsOrchestrator sut;
 
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService, userCountService);
+        sut = new RefreshJobsOrchestrator(persistenceService, sendJobDetailsService, userCountService, emailService);
     }
 
     @Test

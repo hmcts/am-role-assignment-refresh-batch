@@ -1,0 +1,67 @@
+{
+    "OrgUserCountByJurisdiction": [
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "JUDICIAL",
+            "count": 7
+        },
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "LEGAL_OPERATIONS",
+            "count": 3
+        },
+        {
+            "roleCategory": "LEGAL_OPERATIONS",
+            "count": 3
+        }
+    ],
+    "OrgUserCountByJurisdictionAndRoleName": [
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "JUDICIAL",
+            "roleName": "judge",
+            "count": 7
+        },
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "LEGAL_OPERATIONS",
+            "roleName": "case-allocator",
+            "count": 3
+        },
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "LEGAL_OPERATIONS",
+            "roleName": "hearing-manager",
+            "count": 3
+        },
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "LEGAL_OPERATIONS",
+            "roleName": "hearing-viewer",
+            "count": 3
+        },
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "LEGAL_OPERATIONS",
+            "roleName": "senior-tribunal-caseworker",
+            "count": 3
+        },
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "LEGAL_OPERATIONS",
+            "roleName": "task-supervisor",
+            "count": 3
+        },
+        {
+            "jurisdiction": "IA",
+            "roleCategory": "LEGAL_OPERATIONS",
+            "roleName": "tribunal-caseworker",
+            "count": 3
+        },
+        {
+            "roleCategory": "LEGAL_OPERATIONS",
+            "roleName": "hmcts-legal-operations",
+            "count": 3
+        }
+    ]
+}

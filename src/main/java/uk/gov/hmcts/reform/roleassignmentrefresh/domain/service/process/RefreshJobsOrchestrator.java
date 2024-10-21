@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -155,6 +156,7 @@ public class RefreshJobsOrchestrator {
 
     public List<Count> compareCounts(String before, String after, String countName) {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         List<Count> countOutput = new ArrayList<>();
 
         try {

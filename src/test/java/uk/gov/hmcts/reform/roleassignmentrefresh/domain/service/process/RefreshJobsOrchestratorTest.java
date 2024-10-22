@@ -1,5 +1,6 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +14,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.UnprocessableE
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobRepository;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.Count;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.CountResponse;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.EmailData;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.enums.Status;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.EmailService;
@@ -305,13 +307,16 @@ class RefreshJobsOrchestratorTest {
 
         String beforeFilePath = "src/test/resources/countResponseBefore.json";
         String beforeResponseString = new String(Files.readAllBytes(Paths.get(beforeFilePath)));
+        ObjectMapper mapper = new ObjectMapper();
+        CountResponse beforeCountResponse = mapper.readValue(beforeResponseString, CountResponse.class);
 
         String afterFilePath = "src/test/resources/countResponseAfter.json";
         String afterResponseString = new String(Files.readAllBytes(Paths.get(afterFilePath)));
+        CountResponse afterCountResponse = mapper.readValue(afterResponseString, CountResponse.class);
 
         when(rasFeignClient.getUserCounts())
-                .thenReturn(new ResponseEntity<>(beforeResponseString, HttpStatus.OK))
-                .thenReturn(new ResponseEntity<>(afterResponseString, HttpStatus.OK));
+                .thenReturn(new ResponseEntity<>(beforeCountResponse, HttpStatus.OK))
+                .thenReturn(new ResponseEntity<>(afterCountResponse, HttpStatus.OK));
 
         sut.processRefreshJobs();
         assertTrue(true);
@@ -365,13 +370,16 @@ class RefreshJobsOrchestratorTest {
                 .thenReturn(new ResponseEntity<>(HttpStatus.ACCEPTED));
 
         String beforeResponseString = "{}";
+        ObjectMapper mapper = new ObjectMapper();
+        CountResponse beforeCountResponse = mapper.readValue(beforeResponseString, CountResponse.class);
 
         String afterFilePath = "src/test/resources/countResponseAfter.json";
         String afterResponseString = new String(Files.readAllBytes(Paths.get(afterFilePath)));
+        CountResponse afterCountResponse = mapper.readValue(afterResponseString, CountResponse.class);
 
         when(rasFeignClient.getUserCounts())
-                .thenReturn(new ResponseEntity<>(beforeResponseString, HttpStatus.OK))
-                .thenReturn(new ResponseEntity<>(afterResponseString, HttpStatus.OK));
+                .thenReturn(new ResponseEntity<>(beforeCountResponse, HttpStatus.OK))
+                .thenReturn(new ResponseEntity<>(afterCountResponse, HttpStatus.OK));
 
         sut.processRefreshJobs();
         assertTrue(true);

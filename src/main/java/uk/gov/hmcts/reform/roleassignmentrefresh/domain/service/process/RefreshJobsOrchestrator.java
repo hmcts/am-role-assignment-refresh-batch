@@ -1,8 +1,7 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
@@ -13,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import uk.gov.hmcts.reform.roleassignmentrefresh.advice.exception.UnprocessableEntityException;
 import uk.gov.hmcts.reform.roleassignmentrefresh.data.RefreshJobEntity;
-import uk.gov.hmcts.reform.roleassignmentrefresh.domain.exception.RasCountProcessingFailedException;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.Count;
+import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.CountResponse;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.EmailData;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.RefreshJob;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.model.UserRequest;
@@ -23,6 +22,7 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.Persisten
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.UserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -34,6 +34,8 @@ import java.util.Objects;
 @Service
 public class RefreshJobsOrchestrator {
     public static final String EMAIL_SUBJECT = "Refresh Job Task";
+    public static final String ORG_USER_COUNT_BY_JURISDICTION = "OrgUserCountByJurisdiction";
+    public static final String ORG_USER_COUNT_BY_JURISDICTION_AND_ROLE_NAME = "OrgUserCountByJurisdictionAndRoleName";
 
     private final PersistenceService persistenceService;
     private final SendJobDetailsService jobDetailsService;
@@ -72,7 +74,7 @@ public class RefreshJobsOrchestrator {
 
         } else {
             log.info("Calling RAS User Count Before Refresh");
-            final ResponseEntity<Object> responseEntityBeforeRefresh = triggerRASUserCount();
+            final ResponseEntity<CountResponse> responseEntityBeforeRefresh = triggerRASUserCount();
 
             for (RefreshJobEntity job : jobs) {
                 runRefreshJob(job);
@@ -87,11 +89,11 @@ public class RefreshJobsOrchestrator {
             refreshJobDelay(refreshJobCountDelayDuration);
 
             log.info("Calling RAS User Count After Refresh");
-            final ResponseEntity<Object> responseEntityAfterRefresh = triggerRASUserCount();
+            final ResponseEntity<CountResponse> responseEntityAfterRefresh = triggerRASUserCount();
 
             if (responseEntityBeforeRefresh.getBody() != null && responseEntityAfterRefresh.getBody() != null) {
-                final String responseBeforeRefresh = responseEntityBeforeRefresh.getBody().toString();
-                final String responseAfterRefresh = responseEntityAfterRefresh.getBody().toString();
+                final CountResponse responseBeforeRefresh = responseEntityBeforeRefresh.getBody();
+                final CountResponse responseAfterRefresh = responseEntityAfterRefresh.getBody();
                 List<RefreshJob> refreshJobs = populateRefreshJobs(jobs);
 
                 sendEmailWithCounts(responseBeforeRefresh, responseAfterRefresh, refreshJobs);
@@ -145,8 +147,8 @@ public class RefreshJobsOrchestrator {
         }
     }
 
-    public ResponseEntity<Object> triggerRASUserCount() {
-        ResponseEntity<Object> responseEntity =  userCountService.getRasUserCounts();
+    public ResponseEntity<CountResponse> triggerRASUserCount() {
+        ResponseEntity<CountResponse> responseEntity =  userCountService.getRasUserCounts();
         if (responseEntity.getStatusCode() != HttpStatus.OK) {
             log.error("Error return from RAS User Count: " + responseEntity.toString());
         }
@@ -154,41 +156,39 @@ public class RefreshJobsOrchestrator {
     }
 
 
-    public List<Count> compareCounts(String before, String after, String countName) {
+    public List<Count> compareCounts(CountResponse before, CountResponse after, String countName) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         List<Count> countOutput = new ArrayList<>();
 
-        try {
-            JsonNode beforeObj = mapper.readTree(before);
-            JsonNode afterObj = mapper.readTree(after);
+        List<CountResponse.CountData> beforeList;
+        if (ORG_USER_COUNT_BY_JURISDICTION.equals(countName)) {
+            beforeList = before.getOrgUserCountByJurisdiction() != null
+                    ? List.of(before.getOrgUserCountByJurisdiction()) : new ArrayList<>();
+        } else {
+            beforeList = before.getOrgUserCountByJurisdictionAndRoleName() != null
+                    ? List.of(before.getOrgUserCountByJurisdictionAndRoleName()) : new ArrayList<>();
+        }
 
-            JsonNode beforeJurisdiction = beforeObj.get(countName);
-            JsonNode afterJurisdiction = afterObj.get(countName);
+        for (CountResponse.CountData countData : beforeList) {
+            Count count = new Count();
+            count.populateBefore(countData);
+            countOutput.add(count);
+        }
 
-            if (beforeJurisdiction != null) {
-                // pre populate the count output from the before count
-                for (int x = 0; x < beforeJurisdiction.size(); x++) {
-                    JsonNode currentNode = beforeJurisdiction.get(x);
-                    Count count = new Count();
-                    count.populateBefore(currentNode);
-                    countOutput.add(count);
-                }
-            }
+        List<CountResponse.CountData> afterList;
+        if (ORG_USER_COUNT_BY_JURISDICTION.equals(countName)) {
+            afterList = after.getOrgUserCountByJurisdiction() != null
+                    ? List.of(after.getOrgUserCountByJurisdiction()) : new ArrayList<>();
+        } else {
+            afterList = after.getOrgUserCountByJurisdictionAndRoleName() != null
+                    ? List.of(after.getOrgUserCountByJurisdictionAndRoleName()) : new ArrayList<>();
+        }
 
-            if (afterJurisdiction != null) {
-                // merge the after count into the count output
-                for (int i = 0; i < afterJurisdiction.size(); i++) {
-                    JsonNode currentNode = afterJurisdiction.get(i);
-                    Count count = new Count();
-                    count.populateAfter(currentNode);
-                    updateWithAfterCountOrCreateNew(count, countOutput);
-                }
-            }
-
-
-        } catch (JsonProcessingException e) {
-            throw new RasCountProcessingFailedException("An error occurred while processing RAS Count JSON",e);
+        for (CountResponse.CountData countData : afterList) {
+            Count count = new Count();
+            count.populateAfter(countData);
+            updateWithAfterCountOrCreateNew(count, countOutput);
         }
 
         countOutput.sort(Comparator
@@ -244,12 +244,12 @@ public class RefreshJobsOrchestrator {
         }
     }
 
-    public void sendEmailWithCounts(String responseBeforeRefresh, String responseAfterRefresh,
+    public void sendEmailWithCounts(CountResponse responseBeforeRefresh, CountResponse responseAfterRefresh,
                                     List<RefreshJob> refreshJobs) {
         List<Count> jurisdictionCount = compareCounts(responseBeforeRefresh, responseAfterRefresh,
-                "OrgUserCountByJurisdiction");
+                ORG_USER_COUNT_BY_JURISDICTION);
         List<Count> jurisdictionAndRoleNameCount = compareCounts(responseBeforeRefresh, responseAfterRefresh,
-                "OrgUserCountByJurisdictionAndRoleName");
+                ORG_USER_COUNT_BY_JURISDICTION_AND_ROLE_NAME);
 
         Map<String, Object> templateMap = new HashMap<>();
 
@@ -263,5 +263,25 @@ public class RefreshJobsOrchestrator {
                 .templateMap(templateMap)
                 .build();
         emailService.sendEmail(emailData);
+    }
+
+    @JsonPropertyOrder({ "jurisdiction", "roleCategory", "count"})
+    public interface JurisdictionRoleCategoryAndCount {
+        String getJurisdiction();
+
+        String getRoleCategory();
+
+        BigInteger getCount();
+    }
+
+    @JsonPropertyOrder({ "jurisdiction", "roleCategory", "roleName", "count"})
+    public interface JurisdictionRoleCategoryNameAndCount {
+        String getJurisdiction();
+
+        String getRoleCategory();
+
+        String getRoleName();
+
+        BigInteger getCount();
     }
 }

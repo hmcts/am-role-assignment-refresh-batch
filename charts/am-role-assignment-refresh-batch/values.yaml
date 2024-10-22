@@ -30,6 +30,8 @@ job:
           alias: ORG_ROLE_MAPPING_DB_HOST
         - name: role-assignment-refresh-batch-EMAIL-LIST
           alias: EMAIL_LIST
+        - name: am-sendgrid-api-key
+          alias: AM_SENDGRID_API_KEY
   environment:
     IDAM_S2S_URL: http://rpe-service-auth-provider-{{ .Values.global.environment }}.service.core-compute-{{ .Values.global.environment }}.internal
     IDAM_USER_URL: https://idam-api.{{ .Values.global.environment }}.platform.hmcts.net

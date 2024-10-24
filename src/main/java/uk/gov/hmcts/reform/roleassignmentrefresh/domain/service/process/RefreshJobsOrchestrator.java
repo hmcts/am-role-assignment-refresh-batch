@@ -1,8 +1,5 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +19,6 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.Persisten
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.UserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;

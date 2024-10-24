@@ -157,8 +157,6 @@ public class RefreshJobsOrchestrator {
 
 
     public List<Count> compareCounts(CountResponse before, CountResponse after, String countName) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
         List<Count> countOutput = new ArrayList<>();
 
         List<CountResponse.CountData> beforeList;
@@ -263,25 +261,5 @@ public class RefreshJobsOrchestrator {
                 .templateMap(templateMap)
                 .build();
         emailService.sendEmail(emailData);
-    }
-
-    @JsonPropertyOrder({ "jurisdiction", "roleCategory", "count"})
-    public interface JurisdictionRoleCategoryAndCount {
-        String getJurisdiction();
-
-        String getRoleCategory();
-
-        BigInteger getCount();
-    }
-
-    @JsonPropertyOrder({ "jurisdiction", "roleCategory", "roleName", "count"})
-    public interface JurisdictionRoleCategoryNameAndCount {
-        String getJurisdiction();
-
-        String getRoleCategory();
-
-        String getRoleName();
-
-        BigInteger getCount();
     }
 }

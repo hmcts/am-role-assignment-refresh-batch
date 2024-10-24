@@ -10,12 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Count {
-
-    static final String JURISDICTION_KEY = "jurisdiction";
-    static final String ROLE_NAME_KEY = "roleName";
-    static final String ROLE_CATEGORY_KEY = "roleCategory";
-    static final String COUNT_KEY = "count";
-
     private String jurisdiction;
     private String roleCategory;
     private String roleName;

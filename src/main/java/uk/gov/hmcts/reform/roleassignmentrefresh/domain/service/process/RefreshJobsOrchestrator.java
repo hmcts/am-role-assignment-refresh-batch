@@ -91,9 +91,9 @@ public class RefreshJobsOrchestrator {
             refreshJobDelay(refreshJobCountDelayDuration);
 
             log.info("Calling RAS User Count After Refresh");
+            final ResponseEntity<CountResponse> responseEntityAfterRefresh = triggerRASUserCount();
             String afterRefreshTime = ZonedDateTime.now(ZoneId.systemDefault())
                     .format(DateTimeFormatter.ofPattern(DATETIME_FORMAT));
-            final ResponseEntity<CountResponse> responseEntityAfterRefresh = triggerRASUserCount();
 
             if (responseEntityBeforeRefresh.getBody() != null && responseEntityAfterRefresh.getBody() != null) {
                 final CountResponse responseBeforeRefresh = responseEntityBeforeRefresh.getBody();

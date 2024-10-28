@@ -19,6 +19,9 @@ import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.Persisten
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.UserCountService;
 import uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.common.SendJobDetailsService;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -32,6 +35,7 @@ public class RefreshJobsOrchestrator {
     public static final String EMAIL_SUBJECT = "Refresh Job Task";
     public static final String ORG_USER_COUNT_BY_JURISDICTION = "OrgUserCountByJurisdiction";
     public static final String ORG_USER_COUNT_BY_JURISDICTION_AND_ROLE_NAME = "OrgUserCountByJurisdictionAndRoleName";
+    public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss z Z";
 
     private final PersistenceService persistenceService;
     private final SendJobDetailsService jobDetailsService;
@@ -70,6 +74,8 @@ public class RefreshJobsOrchestrator {
 
         } else {
             log.info("Calling RAS User Count Before Refresh");
+            String beforeRefreshTime = ZonedDateTime.now(ZoneId.systemDefault())
+                    .format(DateTimeFormatter.ofPattern(DATETIME_FORMAT));
             final ResponseEntity<CountResponse> responseEntityBeforeRefresh = triggerRASUserCount();
 
             for (RefreshJobEntity job : jobs) {
@@ -85,6 +91,8 @@ public class RefreshJobsOrchestrator {
             refreshJobDelay(refreshJobCountDelayDuration);
 
             log.info("Calling RAS User Count After Refresh");
+            String afterRefreshTime = ZonedDateTime.now(ZoneId.systemDefault())
+                    .format(DateTimeFormatter.ofPattern(DATETIME_FORMAT));
             final ResponseEntity<CountResponse> responseEntityAfterRefresh = triggerRASUserCount();
 
             if (responseEntityBeforeRefresh.getBody() != null && responseEntityAfterRefresh.getBody() != null) {
@@ -92,7 +100,8 @@ public class RefreshJobsOrchestrator {
                 final CountResponse responseAfterRefresh = responseEntityAfterRefresh.getBody();
                 List<RefreshJob> refreshJobs = populateRefreshJobs(jobs);
 
-                sendEmailWithCounts(responseBeforeRefresh, responseAfterRefresh, refreshJobs);
+                sendEmailWithCounts(responseBeforeRefresh, responseAfterRefresh, refreshJobs, beforeRefreshTime,
+                        afterRefreshTime);
             }
 
         }
@@ -239,7 +248,7 @@ public class RefreshJobsOrchestrator {
     }
 
     public void sendEmailWithCounts(CountResponse responseBeforeRefresh, CountResponse responseAfterRefresh,
-                                    List<RefreshJob> refreshJobs) {
+                                    List<RefreshJob> refreshJobs, String beforeRefreshTime, String afterRefreshTime) {
         List<Count> jurisdictionCount = compareCounts(responseBeforeRefresh, responseAfterRefresh,
                 ORG_USER_COUNT_BY_JURISDICTION);
         List<Count> jurisdictionAndRoleNameCount = compareCounts(responseBeforeRefresh, responseAfterRefresh,
@@ -250,6 +259,8 @@ public class RefreshJobsOrchestrator {
         templateMap.put("refreshJobs", refreshJobs);
         templateMap.put("jurisdictionCount", jurisdictionCount);
         templateMap.put("jurisdictionAndRoleNameCount", jurisdictionAndRoleNameCount);
+        templateMap.put("beforeRefreshTime", beforeRefreshTime);
+        templateMap.put("afterRefreshTime", afterRefreshTime);
 
         EmailData emailData = EmailData
                 .builder()

@@ -1,0 +1,17 @@
+## Sendgrid configuration ##
+spring:
+  mail:
+    host: ${EMAIL_HOST:mta.reform.hmcts.net}
+    port: 25
+    enabled: ${EMAIL_ENABLED:false} # Disabled this property for integration test.
+    properties:
+      mail-smtp:
+        starttls:
+          enable: false
+        ssl:
+          trust: "*"
+
+sendgrid:
+  key: ${AM_SENDGRID_API_KEY:dummyValue}
+  mail:
+    from: ${AM_SENDGRID_API_EMAIL_FROM:no-reply@mail-am-nonprod.platform.hmcts.net}

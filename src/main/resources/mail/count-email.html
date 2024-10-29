@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <h3 align="center">Refresh Times</h3>
+    <table class="table table-bordered table-striped table-dark">
+        <tbody>
+        <tr>
+            <td>Start Refresh Job DateTime</td>
+            <td th:text="${beforeRefreshTime}"></td>
+        </tr>
+        <tr>
+            <td>Finish Refresh Job DateTime</td>
+            <td th:text="${afterRefreshTime}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 align="center">Refresh Jobs</h3>
+    <table class="table table-bordered table-striped table-dark">
+        <thead class="thead-dark">
+        <tr>
+            <th>Job ID</th>
+            <th>Jurisdiction</th>
+            <th>Role Category</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="job : ${refreshJobs}">
+            <td th:text="${job.jobId}"></td>
+            <td th:text="${job.jurisdiction}"></td>
+            <td th:text="${job.roleCategory}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 align="center">Jurisdiction Count</h3>
+    <table class="table table-bordered table-striped table-dark">
+        <thead class="thead-dark">
+        <tr>
+            <th>Jurisdiction</th>
+            <th>Role Category</th>
+            <th>Before Count</th>
+            <th>After Count</th>
+            <th>Difference</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="count : ${jurisdictionCount}">
+            <td th:text="${count.jurisdiction}"></td>
+            <td th:text="${count.roleCategory}"></td>
+            <td th:text="${count.beforeCount}"></td>
+            <td th:text="${count.afterCount}"></td>
+            <td th:text="${count.difference}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 align="center">Jurisdiction and Role Name Count</h3>
+    <table class="table table-bordered table-striped table-dark">
+        <thead class="thead-dark">
+        <tr>
+            <th>Jurisdiction</th>
+            <th>Role Category</th>
+            <th>Role Name</th>
+            <th>Before Count</th>
+            <th>After Count</th>
+            <th>Difference</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="count : ${jurisdictionAndRoleNameCount}">
+            <td th:text="${count.jurisdiction}"></td>
+            <td th:text="${count.roleCategory}"></td>
+            <td th:text="${count.roleName}"></td>
+            <td th:text="${count.beforeCount}"></td>
+            <td th:text="${count.afterCount}"></td>
+            <td th:text="${count.difference}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <b>Regards,<br>Access Management</br></b>
+    </br>
+</body>
+</html>

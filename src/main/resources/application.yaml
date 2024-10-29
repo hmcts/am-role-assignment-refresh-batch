@@ -32,6 +32,19 @@ spring:
     properties:
       charSet: UTF-8
 
+  ## Sendgrid configuration ##
+  mail:
+    to: ${EMAIL_LIST:}
+    host: ${EMAIL_HOST:mta.reform.hmcts.net}
+    port: 25
+    enabled: ${EMAIL_ENABLED:false}
+    properties:
+      mail-smtp:
+        starttls:
+          enable: false
+        ssl:
+          trust: "*"
+
 feign:
   hystrix:
     enabled: false
@@ -57,6 +70,7 @@ refresh-job-delay-duration: ${REFRESH_JOB_DELAY_DURATION:60000}
 # Refresh job is an async call, delay to allow the last refresh to complete before user count is run
 #      540000 milliseconds = 9 minutes
 refresh-job-count-delay-duration: ${REFRESH_JOB_COUNT_DELAY_DURATION:540000}
+refresh-environment: ${REFRESH_ENV:local}
 
 idam:
   s2s-auth:
@@ -75,5 +89,8 @@ idam:
 
 logging.level.uk.gov.hmcts: ${APPLICATION_LOGGING_LEVEL:INFO}
 
-refresh:
-  environment: ${REFRESH_ENV:}
+sendgrid:
+  key: ${AM_SENDGRID_API_KEY:}
+  mail:
+    from: ${AM_SENDGRID_API_EMAIL_FROM:no-reply@mail-am-nonprod.platform.hmcts.net}
+

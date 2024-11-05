@@ -40,7 +40,7 @@ def versions = [
         reformS2sClient: '4.0.2',
         serenity       : '2.2.12',
         sonarPitest    : '0.5',
-        pitest         : '1.17.0',
+        pitest         : '1.17.1',
         springBoot     : '2.7.18',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.39',

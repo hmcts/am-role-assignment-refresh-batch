@@ -18,8 +18,6 @@ public class RefreshORMRules implements Tasklet {
 
     private static final Logger log = LoggerFactory.getLogger(RefreshORMRules.class);
 
-    private static final String SERVICE_NAME = "am_role_assignment_refresh_batch";
-
     @Autowired
     private RefreshJobsOrchestrator refreshJobsOrchestrator;
 

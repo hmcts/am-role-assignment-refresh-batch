@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.config;
 
-import com.launchdarkly.sdk.server.LDClient;
 import feign.Feign;
 import feign.jackson.JacksonEncoder;
 import lombok.extern.slf4j.Slf4j;
@@ -66,9 +65,4 @@ public class BatchConfig extends DefaultBatchConfigurer {
         return new ServiceAuthTokenGenerator(secret, microService, serviceAuthorisationApi);
     }
 
-    @Bean
-    public LDClient ldClient(@Value("${launchdarkly.sdk.key}") String sdkKey) {
-
-        return new LDClient(sdkKey);
-    }
 }

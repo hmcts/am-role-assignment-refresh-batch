@@ -89,13 +89,8 @@ idam:
 
 logging.level.uk.gov.hmcts: ${APPLICATION_LOGGING_LEVEL:INFO}
 
-launchdarkly:
-  sdk:
-    key: ${LD_SDK_KEY:}
-    environment: ${LAUNCH_DARKLY_ENV:pr}
-    user: am-${LAUNCH_DARKLY_ENV:local}
-
 sendgrid:
   key: ${AM_SENDGRID_API_KEY:}
   mail:
     from: ${AM_SENDGRID_API_EMAIL_FROM:no-reply@mail-am-nonprod.platform.hmcts.net}
+

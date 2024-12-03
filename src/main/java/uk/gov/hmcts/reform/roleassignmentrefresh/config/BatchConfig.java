@@ -1,6 +1,5 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.config;
 
-import com.launchdarkly.sdk.server.LDClient;
 import feign.Feign;
 import feign.jackson.JacksonEncoder;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +55,6 @@ public class BatchConfig {
                 .target(ServiceAuthorisationApi.class, s2sUrl);
     }
 
-
     @Bean
     public ServiceAuthTokenGenerator authTokenGenerator(
             @Value("${idam.s2s-auth.totp_secret}") final String secret,
@@ -66,16 +64,11 @@ public class BatchConfig {
     }
 
     @Bean
-    public LDClient ldClient(@Value("${launchdarkly.sdk.key}") String sdkKey) {
-
-        return new LDClient(sdkKey);
-    }
-
-    @Bean
     public JobLauncher jobLauncher(JobRepository jobRepository) throws Exception {
         TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
         jobLauncher.setJobRepository(jobRepository);
         jobLauncher.afterPropertiesSet();
         return jobLauncher;
     }
+  
 }

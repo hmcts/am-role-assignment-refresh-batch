@@ -47,7 +47,7 @@ def versions = [
         springSecurity : '5.8.16',
         tomcat         : '9.0.98',
         rest_assured   : '3.3.0',
-        feign_jackson  : '13.5',
+        feign_jackson  : '13.6',
         jacksondata    : '2.18.3',
         log4JVersion   : '2.24.3',
         logbackVersion : '1.2.13',

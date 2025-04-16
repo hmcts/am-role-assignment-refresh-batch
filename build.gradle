@@ -40,12 +40,12 @@ def versions = [
         reformS2sClient: '4.0.2',
         serenity       : '2.2.12',
         sonarPitest    : '0.5',
-        pitest         : '1.17.0',
+        pitest         : '1.19.1',
         springBoot     : '2.7.18',
         springHystrix  : '2.1.1.RELEASE',
         spring         : '5.3.39',
         springSecurity : '5.8.16',
-        tomcat         : '9.0.98',
+        tomcat         : '9.0.104',
         rest_assured   : '3.3.0',
         feign_jackson  : '13.6',
         jacksondata    : '2.18.3',
@@ -239,7 +239,7 @@ dependencies {
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.10.RELEASE'
     implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.9'
 
-    implementation group: 'com.google.guava', name: 'guava', version: '33.4.6-jre'
+    implementation group: 'com.google.guava', name: 'guava', version: '33.4.7-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.5'
@@ -264,7 +264,7 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
 
-    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.14.0'
+    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.15.0'
 
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-spring-boot-starter', version: '2.6.4'
 

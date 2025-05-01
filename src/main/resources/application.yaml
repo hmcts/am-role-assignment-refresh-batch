@@ -7,7 +7,8 @@ spring:
   config:
     import: "optional:configtree:/mnt/secrets/am/"
   batch:
-    initialize-schema: always
+    jdbc:
+      initialize-schema: always
     job:
       enabled: true
   main:

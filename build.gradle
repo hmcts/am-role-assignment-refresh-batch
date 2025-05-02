@@ -239,7 +239,7 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: versions.springSecurity
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurity
 
-    implementation group: 'com.google.guava', name: 'guava', version: '33.4.7-jre'
+    implementation group: 'com.google.guava', name: 'guava', version: '33.4.8-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.5'

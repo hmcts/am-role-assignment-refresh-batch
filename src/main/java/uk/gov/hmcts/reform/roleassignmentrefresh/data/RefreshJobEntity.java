@@ -8,14 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 
 
 @Builder(toBuilder = true)
@@ -45,7 +44,6 @@ public class RefreshJobEntity {
     private String comments;
 
     @Column(name = "user_ids")
-    @Type(type = "uk.gov.hmcts.reform.roleassignmentrefresh.data.GenericArrayUserType")
     private String[] userIds;
 
     @Column(name = "log")

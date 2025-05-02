@@ -5,24 +5,24 @@ import feign.jackson.JacksonEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
+import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 import uk.gov.hmcts.reform.authorisation.ServiceAuthorisationApi;
 import uk.gov.hmcts.reform.authorisation.generators.ServiceAuthTokenGenerator;
 import uk.gov.hmcts.reform.roleassignmentrefresh.task.RefreshORMRules;
 
 @Configuration
-@EnableBatchProcessing
 @Slf4j
-public class BatchConfig extends DefaultBatchConfigurer {
+public class BatchConfig {
 
     @Value("${refresh-orm-records}")
     String taskParent;
@@ -31,20 +31,19 @@ public class BatchConfig extends DefaultBatchConfigurer {
     String jobName;
 
     @Bean
-    public Step stepOrchestration(@Autowired StepBuilderFactory steps,
-                                  @Autowired RefreshORMRules refreshORMRules) {
-        return steps.get(taskParent)
-                .tasklet(refreshORMRules)
+    public Step stepOrchestration(JobRepository jobRepository, RefreshORMRules refreshORMRules,
+                                  PlatformTransactionManager transactionManager) {
+        return new StepBuilder(taskParent, jobRepository)
+                .tasklet(refreshORMRules, transactionManager)
                 .build();
     }
 
     @Bean
-    public Job runRoutesJob(@Autowired JobBuilderFactory jobs,
-                            @Autowired StepBuilderFactory steps,
-                            @Autowired RefreshORMRules refreshORMRules) {
-        return jobs.get(jobName)
+    public Job runRoutesJob(JobRepository jobRepository,
+                            RefreshORMRules refreshORMRules, PlatformTransactionManager transactionManager) {
+        return new JobBuilder(jobName, jobRepository)
                 .incrementer(new RunIdIncrementer())
-                .start(stepOrchestration(steps, refreshORMRules))
+                .start(stepOrchestration(jobRepository, refreshORMRules, transactionManager))
                 .build();
     }
 
@@ -56,7 +55,6 @@ public class BatchConfig extends DefaultBatchConfigurer {
                 .target(ServiceAuthorisationApi.class, s2sUrl);
     }
 
-
     @Bean
     public ServiceAuthTokenGenerator authTokenGenerator(
             @Value("${idam.s2s-auth.totp_secret}") final String secret,
@@ -65,4 +63,12 @@ public class BatchConfig extends DefaultBatchConfigurer {
         return new ServiceAuthTokenGenerator(secret, microService, serviceAuthorisationApi);
     }
 
+    @Bean
+    public JobLauncher jobLauncher(JobRepository jobRepository) throws Exception {
+        TaskExecutorJobLauncher jobLauncher = new TaskExecutorJobLauncher();
+        jobLauncher.setJobRepository(jobRepository);
+        jobLauncher.afterPropertiesSet();
+        return jobLauncher;
+    }
+  
 }

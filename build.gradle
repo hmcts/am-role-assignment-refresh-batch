@@ -15,7 +15,7 @@ plugins {
     id 'uk.gov.hmcts.java' version '0.12.65'
     id 'pmd'
     id 'jacoco'
-    id 'org.springframework.boot' version '2.7.18'
+    id 'org.springframework.boot' version '3.3.7'
     id 'info.solidsoft.pitest' version '1.15.0'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
@@ -37,22 +37,23 @@ def versions = [
         junit          : '5.9.3',
         lombok         : '1.18.38',
         reformLogging  : '6.1.8',
-        reformS2sClient: '4.0.2',
-        serenity       : '2.2.12',
+        reformS2sClient: '5.1.2',
+        serenity       : '3.3.10',
         sonarPitest    : '0.5',
         pitest         : '1.19.1',
-        springBoot     : '2.7.18',
-        springHystrix  : '2.1.1.RELEASE',
-        spring         : '5.3.39',
-        springSecurity : '5.8.16',
-        tomcat         : '9.0.104',
-        rest_assured   : '3.3.0',
+        spring         : '6.1.6',
+        springSecurity : '6.4.4',
+        rest_assured   : '5.0.1',
         feign_jackson  : '13.6',
         jacksondata    : '2.19.0',
         log4JVersion   : '2.24.3',
-        logbackVersion : '1.2.13',
+        logbackVersion : '1.3.14',
         thymeleaf      : '3.1.3.RELEASE'
 ]
+
+ext {
+    springCloudVersion = '2023.0.5'
+}
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'
 def jarName = 'am-role-assignment-refresh-batch.jar'
@@ -71,7 +72,7 @@ tasks.withType(JavaExec).configureEach {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -144,7 +145,7 @@ jacocoTestReport {
 project.tasks['sonarqube'].dependsOn test, integration, jacocoTestReport
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.11"
 }
 
 pitest {
@@ -154,7 +155,6 @@ pitest {
     excludedClasses = ['uk.gov.hmcts.reform.roleassignmentrefresh.*Application',
                        '*config*',
                        '*exception*',
-                       '*GenericArrayUserType*',
                        '*oidc*',
                        '*RefreshORMRules*,',
                        'uk.gov.hmcts.reform.roleassignmentrefresh.util.Swagger2SpringBoot']
@@ -225,7 +225,9 @@ repositories {
 
 dependencies {
     implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-batch')
-    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: versions.springBoot)
+    implementation(group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa')
+    implementation group: 'org.springframework.boot', name: 'spring-boot-autoconfigure'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     implementation(group: 'org.springframework', name: 'spring-core', version: versions.spring)
     implementation(group: 'org.springframework', name: 'spring-beans', version: versions.spring)
     implementation(group: 'org.springframework', name: 'spring-context', version: versions.spring)
@@ -236,8 +238,6 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-core', version: versions.springSecurity
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: versions.springSecurity
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurity
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-hystrix', version: '2.2.10.RELEASE'
-    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.9'
 
     implementation group: 'com.google.guava', name: 'guava', version: '33.4.7-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
@@ -245,8 +245,6 @@ dependencies {
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.5'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'commons-io:commons-io:20030203.000550'
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-websocket', version: versions.tomcat
-    implementation group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: versions.tomcat
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksondata
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: versions.jacksondata, ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.0.3'
@@ -263,21 +261,22 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-web', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
+    implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
 
     implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.15.0'
-
-    implementation group: 'com.microsoft.azure', name: 'applicationinsights-spring-boot-starter', version: '2.6.4'
+    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.4.11'
 
     //Sendgrid
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: versions.springBoot
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
     implementation group: 'org.thymeleaf', name: 'thymeleaf', version: versions.thymeleaf
     implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: versions.thymeleaf
-    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: versions.springBoot
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation 'com.sendgrid:sendgrid-java:4.10.3'
-    
+
+    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.17.1'
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.17'
     testImplementation 'org.springframework.batch:spring-batch-test:5.2.2'
-    testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: versions.springBoot) {
+    testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         exclude group: 'junit', module: 'junit'
         exclude group: "org.apache.tomcat.embed", module: "tomcat-embed-websocket"
@@ -322,20 +321,8 @@ test {
 }
 
 dependencyManagement {
-    dependencies {
-        dependencySet(group: 'org.apache.logging.log4j', version: versions.log4JVersion) {
-            entry 'log4j-api'
-            entry 'log4j-to-slf4j'
-        }
-        dependencySet(group: 'ch.qos.logback', version: versions.logbackVersion) {
-            entry 'logback-classic'
-            entry 'logback-core'
-        }
-        dependencySet(group: 'com.fasterxml.jackson.core', version: versions.jacksondata) {
-            entry 'jackson-databind'
-            entry 'jackson-core'
-            entry 'jackson-annotations'
-        }
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
 

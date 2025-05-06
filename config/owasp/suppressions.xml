@@ -8,4 +8,12 @@
         <notes>https://tools.hmcts.net/jira/browse/DTSAM-843 tomcat</notes>
         <cve>CVE-2025-24813</cve>
     </suppress>
+    <suppress>
+        <notes>https://tools.hmcts.net/jira/browse/DTSAM-867</notes>
+        <cve>CVE-2025-31650</cve>
+    </suppress>
+    <suppress>
+        <notes>https://tools.hmcts.net/jira/browse/DTSAM-868</notes>
+        <cve>CVE-2025-31651</cve>
+    </suppress>
 </suppressions>

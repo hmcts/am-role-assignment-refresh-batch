@@ -298,7 +298,7 @@ dependencies {
 
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson
-    testImplementation('com.opentable.components:otj-pg-embedded:1.1.0')
+    testImplementation('com.opentable.components:otj-pg-embedded:1.1.1')
     testImplementation 'com.github.hmcts:fortify-client:1.4.8:all'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok

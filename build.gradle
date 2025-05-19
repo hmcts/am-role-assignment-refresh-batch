@@ -40,7 +40,7 @@ def versions = [
         reformS2sClient: '5.1.2',
         serenity       : '4.2.22',
         sonarPitest    : '0.5',
-        pitest         : '1.19.1',
+        pitest         : '1.19.3',
         spring         : '6.1.6',
         springSecurity : '6.4.5',
         rest_assured   : '5.0.1',
@@ -217,6 +217,9 @@ dependencyUpdates.resolutionStrategy = {
 repositories {
     mavenLocal()
     mavenCentral()
+    maven {
+        url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1'
+    }
     maven {
         url 'https://jitpack.io'
     }

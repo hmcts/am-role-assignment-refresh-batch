@@ -37,7 +37,7 @@ def versions = [
         junit          : '5.9.3',
         lombok         : '1.18.38',
         reformLogging  : '6.1.9',
-        reformS2sClient: '5.1.2',
+        reformS2sClient: '5.3.2',
         serenity       : '4.2.22',
         sonarPitest    : '0.5',
         pitest         : '1.19.3',
@@ -220,9 +220,6 @@ repositories {
     maven {
         url 'https://pkgs.dev.azure.com/hmcts/Artifacts/_packaging/hmcts-lib/maven/v1'
     }
-    maven {
-        url 'https://jitpack.io'
-    }
 }
 
 
@@ -299,7 +296,7 @@ dependencies {
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson
     testImplementation('com.opentable.components:otj-pg-embedded:1.1.1')
-    testImplementation 'com.github.hmcts:fortify-client:1.4.8:all'
+    testImplementation 'com.github.hmcts:fortify-client:1.4.9:all'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok

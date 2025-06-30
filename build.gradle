@@ -38,7 +38,7 @@ def versions = [
         lombok         : '1.18.38',
         reformLogging  : '6.1.9',
         reformS2sClient: '5.3.2',
-        serenity       : '4.2.22',
+        serenity       : '4.2.34',
         sonarPitest    : '0.5',
         pitest         : '1.19.3',
         spring         : '6.2.8',

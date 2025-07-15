@@ -36,7 +36,7 @@ def versions = [
         junit          : '5.9.3',
         lombok         : '1.18.38',
         reformLogging  : '6.1.9',
-        reformS2sClient: '5.3.2',
+        reformS2sClient: '5.3.3',
         serenity       : '4.2.34',
         sonarPitest    : '0.5',
         pitest         : '1.20.0',
@@ -241,7 +241,7 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '33.4.8-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.5'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.7'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksondata
@@ -282,7 +282,7 @@ dependencies {
         exclude group: "org.apache.tomcat.embed", module: "tomcat-embed-core"
     }
 
-    pitest 'org.pitest:pitest-junit5-plugin:1.2.2'
+    pitest 'org.pitest:pitest-junit5-plugin:1.2.3'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: versions.junit
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: versions.junit
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: versions.junit
@@ -290,7 +290,7 @@ dependencies {
     testImplementation 'org.codehaus.sonar-plugins:sonar-pitest-plugin:0.5'
     testImplementation group: 'org.pitest', name: 'pitest', version: versions.pitest
     testImplementation 'info.solidsoft.gradle.pitest:gradle-pitest-plugin:1.15.0'
-    testImplementation group: 'org.pitest', name: 'pitest-junit5-plugin', version: '1.2.2'
+    testImplementation group: 'org.pitest', name: 'pitest-junit5-plugin', version: '1.2.3'
 
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson

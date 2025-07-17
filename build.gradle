@@ -259,7 +259,7 @@ dependencies {
     implementation group: 'org.springframework', name: 'spring-tx', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-web', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
-    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.6.0'
     implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
 
     implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.15.0'

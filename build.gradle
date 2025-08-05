@@ -39,9 +39,9 @@ def versions = [
         reformS2sClient: '5.3.3',
         serenity       : '4.2.34',
         sonarPitest    : '0.5',
-        pitest         : '1.20.0',
+        pitest         : '1.20.1',
         spring         : '6.2.9',
-        springSecurity : '6.4.5',
+        springSecurity : '6.5.2',
         rest_assured   : '5.5.5',
         feign_jackson  : '13.6',
         jacksondata    : '2.18.3',
@@ -51,7 +51,7 @@ def versions = [
 ]
 
 ext {
-    springCloudVersion = '2023.0.6'
+    springCloudVersion = '2025.0.0'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'
@@ -248,7 +248,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: versions.jacksondata, ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.0.4'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.12.0'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.1.0'
     implementation 'org.jetbrains:annotations:26.0.2'
     implementation group: 'org.springframework', name: 'spring-aop', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-aspects', version: versions.spring

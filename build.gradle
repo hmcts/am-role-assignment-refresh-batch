@@ -51,7 +51,7 @@ def versions = [
 ]
 
 ext {
-    springCloudVersion = '2025.0.0'
+    springCloudVersion = '2023.0.6'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'

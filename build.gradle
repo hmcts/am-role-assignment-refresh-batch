@@ -272,7 +272,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation 'com.sendgrid:sendgrid-java:4.10.3'
 
-    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.17.6'
+    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.17.7'
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.17'
     testImplementation 'org.springframework.batch:spring-batch-test:5.2.2'
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {

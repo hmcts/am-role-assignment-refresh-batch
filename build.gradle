@@ -40,9 +40,9 @@ def versions = [
         serenity       : '4.2.34',
         sonarPitest    : '0.5',
         pitest         : '1.20.1',
-        spring         : '6.2.9',
+        spring         : '6.2.10',
         springSecurity : '6.5.2',
-        rest_assured   : '5.5.5',
+        rest_assured   : '5.5.6',
         feign_jackson  : '13.6',
         jacksondata    : '2.18.3',
         log4JVersion   : '2.24.3',
@@ -263,7 +263,7 @@ dependencies {
     implementation group: 'commons-lang', name: 'commons-lang', version: '2.6'
 
     implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.18.1'
-    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.3'
+    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.4'
 
     //Sendgrid
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'

@@ -249,7 +249,7 @@ dependencies {
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.0.4'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.1.0'
-    implementation 'org.jetbrains:annotations:26.0.2'
+    implementation 'org.jetbrains:annotations:26.0.2-1'
     implementation group: 'org.springframework', name: 'spring-aop', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-aspects', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-expression', version: versions.spring

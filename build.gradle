@@ -144,7 +144,7 @@ jacocoTestReport {
 project.tasks['sonarqube'].dependsOn test, integration, jacocoTestReport
 
 jacoco {
-    toolVersion = "0.8.13"
+    toolVersion = "0.8.14"
 }
 
 pitest {
@@ -272,7 +272,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation 'com.sendgrid:sendgrid-java:4.10.3'
 
-    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.17.7'
+    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.17.8'
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.17'
     testImplementation 'org.springframework.batch:spring-batch-test:5.2.3'
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {

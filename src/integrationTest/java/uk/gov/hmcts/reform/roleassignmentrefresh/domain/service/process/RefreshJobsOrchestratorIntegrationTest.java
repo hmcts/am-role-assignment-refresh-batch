@@ -1,7 +1,7 @@
 package uk.gov.hmcts.reform.roleassignmentrefresh.domain.service.process;
 
 import com.sendgrid.Response;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;

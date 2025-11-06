@@ -7,16 +7,16 @@ import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Email;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
@@ -61,10 +61,10 @@ class EmailServiceImplTest {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    @MockBean
+    @MockitoBean
     private SendGrid sendGrid;
 
-    @MockBean
+    @MockitoBean
     private ITemplateEngine templateEngine;
 
     @Autowired
@@ -142,9 +142,9 @@ class EmailServiceImplTest {
         tos.forEach(email -> assertTrue(List.of(MAIL_TO_1, MAIL_TO_2).contains(email.getEmail())));
         // MAIL SUBJECT
         // ... must contain ENV
-        assertTrue(StringUtils.containsIgnoreCase(mail.getSubject(), REFRESH_ENV));
+        assertTrue(Strings.CI.contains(mail.getSubject(), REFRESH_ENV));
         // ... must contain original subject
-        assertTrue(StringUtils.containsIgnoreCase(mail.getSubject(), TEST_SUBJECT));
+        assertTrue(Strings.CI.contains(mail.getSubject(), TEST_SUBJECT));
         // MAIL CONTENT
         assertEquals(TEST_CONTENT, mail.getContent().get(0).getValue());
 

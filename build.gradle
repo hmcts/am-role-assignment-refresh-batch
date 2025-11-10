@@ -275,7 +275,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang
 
     implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.21.0'
-    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.5'
+    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.6'
 
     //Sendgrid
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'

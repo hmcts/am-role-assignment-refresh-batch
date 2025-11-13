@@ -39,9 +39,9 @@ def versions = [
         reformS2sClient: '5.3.3',
         serenity       : '4.2.34',
         sonarPitest    : '0.5',
-        pitest         : '1.21.0',
+        pitest         : '1.21.1',
         spring         : '6.2.12',
-        springSecurity : '6.5.5',
+        springSecurity : '6.5.6',
         rest_assured   : '5.5.6',
         feign_jackson  : '13.6',
         jacksondata    : '2.20.1',
@@ -260,7 +260,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: versions.jacksondata, ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.0.4'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.2.1'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.3.0'
     implementation 'org.jetbrains:annotations:26.0.2-1'
     implementation group: 'org.springframework', name: 'spring-aop', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-aspects', version: versions.spring
@@ -275,7 +275,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang
 
     implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.21.0'
-    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.5'
+    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.6'
 
     //Sendgrid
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'

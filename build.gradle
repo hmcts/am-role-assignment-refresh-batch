@@ -14,7 +14,7 @@ plugins {
     id 'uk.gov.hmcts.java' version '0.12.67'
     id 'pmd'
     id 'jacoco'
-    id 'org.springframework.boot' version '3.5.8'
+    id 'org.springframework.boot' version '3.5.9'
     id 'info.solidsoft.pitest' version '1.15.0'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
@@ -40,9 +40,9 @@ def versions = [
         serenity       : '4.3.4',
         sonarPitest    : '0.5',
         pitest         : '1.21.1',
-        spring         : '6.2.14',
+        spring         : '6.2.15',
         springSecurity : '6.5.7',
-        rest_assured   : '5.5.6',
+        rest_assured   : '6.0.0',
         feign_jackson  : '13.6',
         jacksondata    : '2.20.1',
         log4JVersion   : '2.25.2',
@@ -52,7 +52,7 @@ def versions = [
 ]
 
 ext {
-    springCloudVersion = '2025.0.0'
+    springCloudVersion = '2025.1.0'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'
@@ -274,7 +274,7 @@ dependencies {
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.6.0'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang
 
-    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.21.0'
+    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.23.0'
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.6'
 
     //Sendgrid

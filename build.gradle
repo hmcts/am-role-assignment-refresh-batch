@@ -43,7 +43,7 @@ def versions = [
         spring         : '6.2.15',
         springSecurity : '7.0.2',
         rest_assured   : '6.0.0',
-        feign_jackson  : '13.6',
+        feign_jackson  : '13.8',
         jacksondata    : '2.20.1',
         log4JVersion   : '2.25.2',
         logbackVersion : '1.5.20',
@@ -274,7 +274,7 @@ dependencies {
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.6.0'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang
 
-    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.23.0'
+    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.25.0'
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.7'
 
     //Sendgrid

@@ -40,7 +40,7 @@ def versions = [
         serenity       : '5.1.0',
         sonarPitest    : '0.5',
         pitest         : '1.22.1',
-        spring         : '6.2.15',
+        spring         : '6.2.16',
         springSecurity : '7.0.2',
         rest_assured   : '6.0.0',
         feign_jackson  : '13.8',
@@ -253,7 +253,7 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '33.5.0-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.9'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.10'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksondata
@@ -284,7 +284,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation 'com.sendgrid:sendgrid-java:4.10.3'
 
-    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.18.4'
+    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.18.5'
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.17'
     testImplementation 'org.springframework.batch:spring-batch-test:6.0.2'
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {

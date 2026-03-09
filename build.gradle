@@ -45,6 +45,7 @@ def versions = [
         rest_assured   : '6.0.0',
         feign_jackson  : '13.8',
         jacksondata    : '2.20.1',
+        testcontainers : '1.21.4',
         log4JVersion   : '2.25.2',
         logbackVersion : '1.5.20',
         commonsLang    : '3.20.0',
@@ -307,6 +308,9 @@ dependencies {
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson
     testImplementation('com.opentable.components:otj-pg-embedded:1.1.1')
+    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: versions.testcontainers
+    testImplementation group: 'org.testcontainers', name: 'postgresql', version: versions.testcontainers
+
     testImplementation 'com.github.hmcts:fortify-client:1.4.10:all'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
@@ -324,6 +328,12 @@ dependencies {
 configurations.all {
     exclude group: 'org.springframework.security', module: 'spring-security-rsa'
     exclude group: 'org.codehaus.jettison', module: 'jettison'
+
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'org.testcontainers') {
+            details.useVersion versions.testcontainers
+        }
+    }
 }
 
 test {

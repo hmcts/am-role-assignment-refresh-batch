@@ -14,7 +14,7 @@ plugins {
     id 'uk.gov.hmcts.java' version '0.12.67'
     id 'pmd'
     id 'jacoco'
-    id 'org.springframework.boot' version '3.5.10'
+    id 'org.springframework.boot' version '3.5.11'
     id 'info.solidsoft.pitest' version '1.15.0'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
@@ -41,10 +41,11 @@ def versions = [
         sonarPitest    : '0.5',
         pitest         : '1.22.1',
         spring         : '6.2.16',
-        springSecurity : '7.0.2',
+        springSecurity : '7.0.3',
         rest_assured   : '6.0.0',
         feign_jackson  : '13.8',
         jacksondata    : '2.20.1',
+        testcontainers : '1.21.4',
         log4JVersion   : '2.25.2',
         logbackVersion : '1.5.20',
         commonsLang    : '3.20.0',
@@ -307,6 +308,9 @@ dependencies {
     testImplementation group: 'io.rest-assured', name: 'rest-assured', version: versions.rest_assured
     testImplementation group: 'io.github.openfeign', name: 'feign-jackson', version: versions.feign_jackson
     testImplementation('com.opentable.components:otj-pg-embedded:1.1.1')
+    testImplementation group: 'org.testcontainers', name: 'testcontainers', version: versions.testcontainers
+    testImplementation group: 'org.testcontainers', name: 'postgresql', version: versions.testcontainers
+
     testImplementation 'com.github.hmcts:fortify-client:1.4.10:all'
 
     compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok

@@ -40,11 +40,12 @@ spring:
     port: 25
     enabled: ${EMAIL_ENABLED:false}
     properties:
-      mail-smtp:
-        starttls:
-          enable: false
-        ssl:
-          trust: "*"
+      mail:
+        smtp:
+          starttls:
+            enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE:true}
+          ssl:
+            trust: ${EMAIL_SMTP_SSL_TRUST:*}
 
 feign:
   hystrix:

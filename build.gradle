@@ -336,6 +336,14 @@ test {
 }
 
 dependencyManagement {
+    dependencies {
+        dependencySet(group: 'org.apache.tomcat.embed', version: '10.1.55') {
+            entry 'tomcat-embed-core'
+            entry 'tomcat-embed-el'
+            entry 'tomcat-embed-websocket'
+        }
+    }
+    
     imports {
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }

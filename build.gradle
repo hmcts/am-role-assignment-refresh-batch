@@ -14,7 +14,7 @@ plugins {
     id 'uk.gov.hmcts.java' version '0.12.70'
     id 'pmd'
     id 'jacoco'
-    id 'org.springframework.boot' version '3.5.13'
+    id 'org.springframework.boot' version '3.5.14'
     id 'info.solidsoft.pitest' version '1.15.0'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
@@ -49,7 +49,7 @@ def versions = [
         log4JVersion   : '2.25.2',
         logbackVersion : '1.5.20',
         commonsLang    : '3.20.0',
-        thymeleaf      : '3.1.4.RELEASE'
+        thymeleaf      : '3.1.5.RELEASE'
 ]
 
 ext {
@@ -251,7 +251,7 @@ dependencies {
     implementation group: 'org.springframework.security', name: 'spring-security-config', version: versions.springSecurity
     implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: versions.springSecurity
 
-    implementation group: 'com.google.guava', name: 'guava', version: '33.5.0-jre'
+    implementation group: 'com.google.guava', name: 'guava', version: '33.6.0-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.11'

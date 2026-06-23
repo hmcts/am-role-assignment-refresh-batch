@@ -14,7 +14,7 @@ plugins {
     id 'uk.gov.hmcts.java' version '0.12.68'
     id 'pmd'
     id 'jacoco'
-    id 'org.springframework.boot' version '3.5.14'
+    id 'org.springframework.boot' version '3.5.15'
     id 'info.solidsoft.pitest' version '1.15.0'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
@@ -40,7 +40,7 @@ def versions = [
         serenity       : '5.1.0',
         sonarPitest    : '0.5',
         pitest         : '1.22.1',
-        spring         : '6.2.18',
+        spring         : '6.2.19',
         springSecurity : '7.0.5',
         rest_assured   : '6.0.0',
         feign_jackson  : '13.11',
@@ -275,7 +275,7 @@ dependencies {
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.6.0'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang
 
-    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.28.1'
+    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.29.0'
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.8'
 
     //Sendgrid

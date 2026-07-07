@@ -53,7 +53,7 @@ def versions = [
 ]
 
 ext['log4j2.version'] = '2.25.4' // Fix CVE-2026-34477...CVE-2026-34481, CVE-2025-68161
-ext['kotlin.version'] = '2.1.21' // Fix CVE-2020-29582
+ext['kotlin.version'] = '2.3.21' // Fix CVE-2020-29582
 ext {
     springCloudVersion = '2025.0.0'
 }

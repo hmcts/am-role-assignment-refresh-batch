@@ -278,7 +278,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang
 
     implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.29.0'
-    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.8'
+    implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.9'
 
     //Sendgrid
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail'
@@ -339,7 +339,7 @@ test {
 
 dependencyManagement {
     dependencies {
-        dependencySet(group: 'org.apache.tomcat.embed', version: '10.1.55') {
+        dependencySet(group: 'org.apache.tomcat.embed', version: '10.1.56') {
             entry 'tomcat-embed-core'
             entry 'tomcat-embed-el'
             entry 'tomcat-embed-websocket'

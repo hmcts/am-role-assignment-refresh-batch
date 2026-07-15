@@ -46,13 +46,13 @@ def versions = [
         feign_jackson  : '13.11',
         jacksondata    : '2.21.5',
         testcontainers : '1.21.4',
-        log4JVersion   : '2.25.2',
+        log4JVersion   : '2.25.5',
         logbackVersion : '1.5.20',
         commonsLang    : '3.20.0',
         thymeleaf      : '3.1.5.RELEASE'
 ]
 
-ext['log4j2.version'] = '2.25.4' // Fix CVE-2026-34477...CVE-2026-34481, CVE-2025-68161
+ext['log4j2.version'] = '2.25.5' // Fix CVE-2026-34477...CVE-2026-34481, CVE-2025-68161
 ext['kotlin.version'] = '2.1.21' // Fix CVE-2020-29582
 ext {
     springCloudVersion = '2025.0.0'
@@ -339,7 +339,7 @@ test {
 
 dependencyManagement {
     dependencies {
-        dependencySet(group: 'org.apache.tomcat.embed', version: '10.1.56') {
+        dependencySet(group: 'org.apache.tomcat.embed', version: '10.1.57') {
             entry 'tomcat-embed-core'
             entry 'tomcat-embed-el'
             entry 'tomcat-embed-websocket'

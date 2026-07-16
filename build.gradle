@@ -14,7 +14,7 @@ plugins {
     id 'uk.gov.hmcts.java' version '0.12.68'
     id 'pmd'
     id 'jacoco'
-    id 'org.springframework.boot' version '3.5.15'
+    id 'org.springframework.boot' version '3.5.16'
     id 'info.solidsoft.pitest' version '1.15.0'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
@@ -254,14 +254,14 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '33.6.0-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.11'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.13'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksondata
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: versions.jacksondata, ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.0.5'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.3.2'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.4.0'
     implementation 'org.jetbrains:annotations:26.0.2-1'
     implementation group: 'org.springframework', name: 'spring-aop', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-aspects', version: versions.spring

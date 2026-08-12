@@ -39,12 +39,12 @@ def versions = [
         reformS2sClient: '5.3.5',
         serenity       : '5.1.0',
         sonarPitest    : '0.5',
-        pitest         : '1.22.1',
+        pitest         : '1.25.9',
         spring         : '6.2.19',
         springSecurity : '7.0.6',
         rest_assured   : '6.0.1',
         feign_jackson  : '13.13',
-        jacksondata    : '2.21.5',
+        jacksondata    : '2.22.1',
         testcontainers : '1.21.4',
         log4JVersion   : '2.26.1',
         logbackVersion : '1.5.20',
@@ -55,14 +55,14 @@ def versions = [
 ext['log4j2.version'] = '2.26.1' // Fix CVE-2026-34477...CVE-2026-34481, CVE-2025-68161
 ext['kotlin.version'] = '2.1.21' // Fix CVE-2020-29582
 ext {
-    springCloudVersion = '2025.0.0'
+    springCloudVersion = '2025.1.2'
 }
 
 mainClassName = 'uk.gov.hmcts.reform.roleassignmentrefresh.RoleAssignmentRefreshApplication'
 def jarName = 'am-role-assignment-refresh-batch.jar'
 
 pmd {
-    toolVersion = '7.20.0'
+    toolVersion = '7.26.0'
     sourceSets = []
 }
 

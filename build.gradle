@@ -41,7 +41,7 @@ def versions = [
         sonarPitest    : '0.5',
         pitest         : '1.25.9',
         spring         : '6.2.19',
-        springSecurity : '7.0.6',
+        springSecurity : '7.1.0',
         rest_assured   : '6.0.1',
         feign_jackson  : '13.13',
         jacksondata    : '2.22.1',

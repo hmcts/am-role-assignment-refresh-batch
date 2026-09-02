@@ -42,5 +42,9 @@
         <cve>CVE-2026-59283</cve>
         <cve>CVE-2026-47893</cve>
         <cve>CVE-2026-59280</cve>
-    </suppress>       
+    </suppress>  
+    <suppress>
+        <notes>https://tools.hmcts.net/jira/browse/DTSAM-1386 spring security</notes>
+        <cve>CVE-2026-59270</cve>
+    </suppress>
 </suppressions>

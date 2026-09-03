@@ -63,10 +63,10 @@ public class EmailConfiguration {
     @Getter
     @Configuration
     static class SmtpPropertiesConfiguration {
-        @Value("${spring.mail.properties.mail-smtp.starttls.enable}")
+        @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
         private String starttlsEnable;
 
-        @Value("${spring.mail.properties.mail-smtp.ssl.trust}")
+        @Value("${spring.mail.properties.mail.smtp.ssl.trust}")
         private String sslTrust;
     }
 }

@@ -50,5 +50,8 @@
     <suppress>
         <notes>https://tools.hmcts.net/jira/browse/DTSAM-1386 spring security</notes>
         <cve>CVE-2026-59270</cve>
+        <cve>CVE-2026-59276</cve>
+        <cve>CVE-2026-59277</cve>
+        <cve>CVE-2026-47877</cve> 
     </suppress>
 </suppressions>

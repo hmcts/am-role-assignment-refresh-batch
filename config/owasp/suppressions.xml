@@ -53,6 +53,7 @@
         <cve>CVE-2026-47889</cve> 
         <cve>CVE-2026-47883</cve> 
         <cve>CVE-2026-47887</cve>
+        <cve>CVE-2026-41707</cve>
     </suppress>  
     <suppress>
         <notes>https://tools.hmcts.net/jira/browse/DTSAM-1386 spring security</notes>

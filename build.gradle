@@ -41,10 +41,10 @@ def versions = [
         sonarPitest    : '0.5',
         pitest         : '1.25.9',
         spring         : '6.2.19',
-        springSecurity : '7.1.0',
+        springSecurity : '7.1.1',
         rest_assured   : '6.0.1',
         feign_jackson  : '13.13',
-        jacksondata    : '2.22.2',
+        jacksondata    : '2.22.4',
         testcontainers : '1.21.4',
         log4JVersion   : '2.26.1',
         logbackVersion : '1.5.20',
@@ -256,12 +256,12 @@ dependencies {
     implementation group: 'com.google.guava', name: 'guava', version: '33.7.2-jre'
     implementation group: 'com.github.hmcts', name: 'service-auth-provider-java-client', version: versions.reformS2sClient
     implementation group: 'com.github.hmcts.java-logging', name: 'logging', version: versions.reformLogging
-    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.13'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.7.14'
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: versions.jacksondata
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: versions.jacksondata, ext: 'pom'
-    implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.0.5'
+    implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.1.0'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.4.0'
     implementation 'org.jetbrains:annotations:26.1.0'
@@ -288,7 +288,7 @@ dependencies {
     implementation 'com.sendgrid:sendgrid-java:4.10.3'
 
     implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.18.14'
-    testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.19'
+    testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.20'
     testImplementation 'org.springframework.batch:spring-batch-test:6.0.5'
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

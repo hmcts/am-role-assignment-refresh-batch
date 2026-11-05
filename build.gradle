@@ -42,7 +42,7 @@ def versions = [
         pitest         : '1.25.9',
         spring         : '6.2.19',
         springSecurity : '7.1.2',
-        rest_assured   : '6.0.1',
+        rest_assured   : '6.3.0',
         feign_jackson  : '13.13',
         jacksondata    : '2.22.4',
         testcontainers : '1.21.4',

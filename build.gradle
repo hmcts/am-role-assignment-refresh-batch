@@ -41,7 +41,7 @@ def versions = [
         sonarPitest    : '0.5',
         pitest         : '1.25.9',
         spring         : '6.2.19',
-        springSecurity : '7.1.1',
+        springSecurity : '7.1.2',
         rest_assured   : '6.0.1',
         feign_jackson  : '13.13',
         jacksondata    : '2.22.4',
@@ -148,7 +148,7 @@ jacocoTestReport {
 project.tasks['sonarqube'].dependsOn test, integration, jacocoTestReport
 
 jacoco {
-    toolVersion = "0.8.15"
+    toolVersion = "0.8.16"
 }
 
 pitest {
@@ -263,7 +263,7 @@ dependencies {
     implementation group: 'com.fasterxml.jackson', name: 'jackson-bom', version: versions.jacksondata, ext: 'pom'
     implementation group: 'com.github.hmcts', name: 'idam-java-client', version: '3.1.0'
     implementation group: 'javax.inject', name: 'javax.inject', version: '1'
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.4.0'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '5.5.1'
     implementation 'org.jetbrains:annotations:26.1.0'
     implementation group: 'org.springframework', name: 'spring-aop', version: versions.spring
     implementation group: 'org.springframework', name: 'spring-aspects', version: versions.spring
@@ -339,7 +339,7 @@ test {
 
 dependencyManagement {
     dependencies {
-        dependencySet(group: 'org.apache.tomcat.embed', version: '10.1.60') {
+        dependencySet(group: 'org.apache.tomcat.embed', version: '10.1.61') {
             entry 'tomcat-embed-core'
             entry 'tomcat-embed-el'
             entry 'tomcat-embed-websocket'

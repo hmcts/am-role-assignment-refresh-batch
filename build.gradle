@@ -43,7 +43,7 @@ def versions = [
         spring         : '6.2.19',
         springSecurity : '7.1.2',
         rest_assured   : '6.0.1',
-        feign_jackson  : '13.13',
+        feign_jackson  : '13.17',
         jacksondata    : '2.22.4',
         testcontainers : '1.21.4',
         log4JVersion   : '2.26.1',
@@ -277,7 +277,7 @@ dependencies {
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.6.0'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: versions.commonsLang
 
-    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.31.1'
+    implementation group: 'io.opentelemetry.instrumentation', name: 'opentelemetry-instrumentation-annotations', version: '2.33.1'
     implementation group: 'com.microsoft.azure', name: 'applicationinsights-core', version: '3.7.10'
 
     //Sendgrid
@@ -287,7 +287,7 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     implementation 'com.sendgrid:sendgrid-java:4.10.3'
 
-    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.18.16-jdk5'
+    implementation group: 'net.bytebuddy', name: 'byte-buddy', version: '1.18.17-jdk5'
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.20'
     testImplementation 'org.springframework.batch:spring-batch-test:6.0.6'
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test') {
